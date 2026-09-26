@@ -4,7 +4,7 @@ Projekt Novi is a high-Octane 2D rougelike with Gacha elements.
 
 ## Story
 
-#Projekt Novi,” an unauthorized project by an unnamed Corporation in a futuristic dream city clouded with neon lights. 
+"Projekt Novi,” an unauthorized project by an unnamed Corporation in a futuristic dream city clouded with neon lights. 
 Its purpose: enhancing unknowing novice Mercenaries to test out newly made cybernetic implants. 
 Each Mercenary were tailored to their specific strengths: Hacking, Assassinating, and creating a being impervious to damage.
 Not all who enrolled into the program survived, nor were the number accounted for, simply being listed as “whereabouts unknown.” 
