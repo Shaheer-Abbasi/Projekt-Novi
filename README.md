@@ -45,7 +45,23 @@ We will be using the [GoDot](https://godotengine.org/) engine due to its easy le
 
 <img width="604" height="361" alt="Controller" src="https://github.com/user-attachments/assets/b6b8687d-d642-4407-8d19-d0c8bf80ba03" />
 
+## Setting up your workspace
+
+1. Run the following command to clone the repo:
+
+```bash
+git clone https://github.com/Shaheer-Abbasi/Projekt-Novi.git
+```
+2. Import on Godot by clicking the import button (Make sure to be on version 4.7.2)
+3. Navigate to the folder where you cloned your GitHub repository
+4. Find and select the `project.godot` file inside that folder, then click **Open**.
+5. Click the **Import & Edit** button
+
+> [!WARNING]
+> Make sure to never be on main to not alter the existing code, we will be never touching main only through pull requests and branches.
+
+
 ## Resources
 
-- [GoDot](https://godotengine.org/)
+- [GoDot 4.7.2](https://godotengine.org/)
 - 
