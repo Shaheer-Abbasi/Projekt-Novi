@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://b18miyt4d171k"]
 
 [ext_resource type="Script" uid="uid://d4ge4g72xfbjg" path="res://scripts/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="VideoStream" uid="uid://cmnkml4x77tar" path="res://assets/Background/MainmenuTemp.ogv" id="2_bqqt6"]
 [ext_resource type="Texture2D" uid="uid://cvna6mnaq4yri" path="res://assets/Background/Projekt Novi.png" id="2_ekxnf"]
 
 [node name="MainMenu" type="Control" unique_id=1240523588]
@@ -49,7 +50,19 @@ theme_override_font_sizes/font_size = 30
 toggle_mode = true
 text = "Exit"
 
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=1874333854]
+show_behind_parent = true
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+scale = Vector2(0.6016115, 0.6016115)
+offset_transform_enabled = true
+stream = ExtResource("2_bqqt6")
+autoplay = true
+loop = true
+
 [node name="ProjektNovi" type="Sprite2D" parent="." unique_id=624035047]
+visible = false
 position = Vector2(585, 117)
 texture = ExtResource("2_ekxnf")
 
