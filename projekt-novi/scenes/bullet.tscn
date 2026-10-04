@@ -3,6 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://c8br37vbye8wd" path="res://assets/bullet.png" id="1_v7oki"]
 [ext_resource type="Script" uid="uid://b2y8y1dp5svbw" path="res://scenes/bullet.gd" id="1_y25gk"]
 
+
 [sub_resource type="CircleShape2D" id="CircleShape2D_h0xbg"]
 radius = 7.0
 

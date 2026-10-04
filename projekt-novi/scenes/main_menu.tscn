@@ -1,58 +1,178 @@
 [gd_scene format=3 uid="uid://fotc0fmi5yq"]
 
-[ext_resource type="Script" uid="uid://d4ge4g72xfbjg" path="res://scripts/main_menu.gd" id="1_l6cm7"]
-[ext_resource type="Texture2D" uid="uid://cvna6mnaq4yri" path="res://assets/Background/Projekt Novi.png" id="2_ekxnf"]
+[ext_resource type="Script" uid="uid://d4ge4g72xfbjg" path="res://scripts/MainMenu_Scrips/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="Script" uid="uid://cgudegxae1078" path="res://scripts/MainMenu_Scrips/audio_control.gd" id="2_ekxnf"]
+[ext_resource type="Script" uid="uid://cxn34lqrfs0" path="res://scripts/MainMenu_Scrips/fullscreen_control.gd" id="3_bqqt6"]
+[ext_resource type="Script" uid="uid://cb1umgn16gjj4" path="res://scripts/MainMenu_Scrips/scale_control.gd" id="4_wu84c"]
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_py7os"]
+color = Color(1, 1, 1, 1)
+thickness = 6
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_t1jsv"]
+color = Color(0.15294118, 0.5411765, 0.9411765, 1)
+thickness = 6
 
 [node name="MainMenu" type="Control" unique_id=1240523588]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
+anchor_right = 1.9460001
 anchor_bottom = 1.0
+offset_left = 2.5385742
+offset_top = 2.1694336
+offset_right = -1088.792
+offset_bottom = 2.1693726
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l6cm7")
 
-[node name="Start_button" type="Button" parent="." unique_id=1595384514]
+[node name="MainButtons" type="VBoxContainer" parent="." unique_id=1759019988]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -84.5
-offset_top = -40.5
-offset_right = 84.5
-offset_bottom = 40.5
+offset_left = -61.0
+offset_top = -79.0
+offset_right = 61.0
+offset_bottom = 79.0
 grow_horizontal = 2
 grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Start_button" type="Button" parent="MainButtons" unique_id=1595384514]
+layout_mode = 2
 theme_override_font_sizes/font_size = 30
 toggle_mode = true
 text = "Start"
 
-[node name="Option_button" type="Button" parent="." unique_id=1202323513]
-layout_mode = 0
-offset_left = 493.0
-offset_top = 400.0
-offset_right = 662.0
-offset_bottom = 481.0
+[node name="Option_button" type="Button" parent="MainButtons" unique_id=1202323513]
+layout_mode = 2
 theme_override_font_sizes/font_size = 30
 toggle_mode = true
 text = "Options"
 
-[node name="Exit_button" type="Button" parent="." unique_id=1272823830]
-layout_mode = 0
-offset_left = 495.0
-offset_top = 520.0
-offset_right = 664.0
-offset_bottom = 601.0
+[node name="Exit_button" type="Button" parent="MainButtons" unique_id=1272823830]
+layout_mode = 2
 theme_override_font_sizes/font_size = 30
 toggle_mode = true
 text = "Exit"
 
-[node name="ProjektNovi" type="Sprite2D" parent="." unique_id=624035047]
-position = Vector2(585, 117)
-texture = ExtResource("2_ekxnf")
+[node name="Options Panel" type="Panel" parent="." unique_id=826016586]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -374.7693
+offset_top = -215.1694
+offset_right = 370.2307
+offset_bottom = 219.83066
+grow_horizontal = 2
+grow_vertical = 2
 
-[connection signal="pressed" from="Start_button" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="Option_button" to="." method="_on_option_button_pressed"]
-[connection signal="pressed" from="Exit_button" to="." method="_on_exit_button_pressed"]
+[node name="Label" type="Label" parent="Options Panel" unique_id=1219434084]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 65.55202
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Back_button" type="Button" parent="Options Panel" unique_id=307146748]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 30
+toggle_mode = true
+text = "Back"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Options Panel" unique_id=1953739489]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -205.76929
+offset_top = -108.1694
+offset_right = 241.23071
+offset_bottom = 101.8306
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Options Panel/VBoxContainer" unique_id=536248930]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="Options Panel/VBoxContainer/HBoxContainer" unique_id=194965096]
+layout_mode = 2
+text = "Music Volume"
+
+[node name="AudioControl" type="HSlider" parent="Options Panel/VBoxContainer/HBoxContainer" unique_id=1301696763]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/slider = SubResource("StyleBoxLine_py7os")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_t1jsv")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_t1jsv")
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = ExtResource("2_ekxnf")
+audio_bus_name = "Music"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Options Panel/VBoxContainer" unique_id=1466459897]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Options Panel/VBoxContainer/HBoxContainer3" unique_id=1826504478]
+layout_mode = 2
+text = "Fullscreen"
+
+[node name="FullscreenControl" type="CheckButton" parent="Options Panel/VBoxContainer/HBoxContainer3" unique_id=858690033]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("3_bqqt6")
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Options Panel/VBoxContainer" unique_id=998739269]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Options Panel/VBoxContainer/HBoxContainer2" unique_id=1053881425]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 0.8
+text = "3D Scale"
+
+[node name="ScaleControl" type="OptionButton" parent="Options Panel/VBoxContainer/HBoxContainer2" unique_id=1341983448]
+layout_mode = 2
+size_flags_vertical = 4
+selected = 0
+item_count = 4
+popup/item_0/text = "Ultra"
+popup/item_0/id = 0
+popup/item_1/text = "High"
+popup/item_1/id = 1
+popup/item_2/text = "Medium"
+popup/item_2/id = 2
+popup/item_3/text = "Low"
+popup/item_3/id = 3
+script = ExtResource("4_wu84c")
+
+[connection signal="pressed" from="MainButtons/Start_button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MainButtons/Option_button" to="." method="_on_option_button_pressed"]
+[connection signal="pressed" from="MainButtons/Exit_button" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="Options Panel/Back_button" to="." method="_on_back_button_pressed"]
+[connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer/AudioControl" method="_on_value_changed"]
+[connection signal="toggled" from="Options Panel/VBoxContainer/HBoxContainer3/FullscreenControl" to="Options Panel/VBoxContainer/HBoxContainer3/FullscreenControl" method="_on_toggled"]
+[connection signal="item_selected" from="Options Panel/VBoxContainer/HBoxContainer2/ScaleControl" to="Options Panel/VBoxContainer/HBoxContainer2/ScaleControl" method="_on_item_selected"]
