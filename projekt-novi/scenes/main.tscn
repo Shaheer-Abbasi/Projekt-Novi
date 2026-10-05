@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dbk4ukyyfuut1" path="res://scenes/bulletmanager.gd" id="2_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://tishgj7v3yhr" path="res://scenes/player.tscn" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://bb8lguxgt1c55" path="res://scenes/bullet.tscn" id="3_tbgi4"]
+[ext_resource type="Script" uid="uid://dfbb8rwcpyska" path="res://scenes/xp_ui.gd" id="5_tbgi4"]
 
 [node name="main" type="Node" unique_id=779268782]
 
@@ -16,5 +17,30 @@ bullet_scene = ExtResource("3_tbgi4")
 [node name="Player" parent="." unique_id=509533104 instance=ExtResource("2_sugp2")]
 position = Vector2(79.000015, 93.000015)
 scale = Vector2(0.15, 0.15)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=179055968]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=391104353]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("5_tbgi4")
+
+[node name="XPBar" type="ProgressBar" parent="CanvasLayer/Control" unique_id=1152985110]
+layout_mode = 0
+offset_top = 25.0
+offset_right = 250.0
+offset_bottom = 52.0
+show_percentage = false
+
+[node name="LevelLabel" type="Label" parent="CanvasLayer/Control" unique_id=1720999658]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+text = "Level 1
+"
 
 [connection signal="shoot" from="Player" to="bulletmanager" method="_on_player_shoot"]
