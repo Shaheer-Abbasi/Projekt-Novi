@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dbk4ukyyfuut1" path="res://scenes/bulletmanager.gd" id="2_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://tishgj7v3yhr" path="res://scenes/player.tscn" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://bb8lguxgt1c55" path="res://scenes/bullet.tscn" id="3_tbgi4"]
+[ext_resource type="PackedScene" path="res://Mobs/Robot/robot_enemy.tscn" id="4_tbgi4"]
 
 [node name="main" type="Node" unique_id=779268782]
 
@@ -13,6 +14,9 @@
 position = Vector2(1, 0)
 script = ExtResource("2_jyhfs")
 bullet_scene = ExtResource("3_tbgi4")
+
+[node name="Robot" parent="." unique_id=1607838852 instance=ExtResource("4_tbgi4")]
+position = Vector2(407, 415)
 
 [node name="Player" parent="." unique_id=509533104 instance=ExtResource("2_sugp2")]
 position = Vector2(79.000015, 93.000015)
