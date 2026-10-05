@@ -29,6 +29,7 @@ script = ExtResource("1_l6cm7")
 [node name="MenuMusic" type="AudioStreamPlayer" parent="." unique_id=182633827]
 stream = ExtResource("2_8ln24")
 autoplay = true
+bus = &"Music"
 
 [node name="MainButtons" type="VBoxContainer" parent="." unique_id=1759019988]
 layout_mode = 1
@@ -50,6 +51,12 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 30
 toggle_mode = true
 text = "Start"
+
+[node name="Level-Select_button" type="Button" parent="MainButtons" unique_id=94093654]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+toggle_mode = true
+text = "Level Select"
 
 [node name="Option_button" type="Button" parent="MainButtons" unique_id=1202323513]
 layout_mode = 2
@@ -196,6 +203,7 @@ popup/item_3/id = 3
 script = ExtResource("4_wu84c")
 
 [connection signal="pressed" from="MainButtons/Start_button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MainButtons/Level-Select_button" to="." method="_on_level_select_button_pressed"]
 [connection signal="pressed" from="MainButtons/Option_button" to="." method="_on_option_button_pressed"]
 [connection signal="pressed" from="MainButtons/Exit_button" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="Options Panel/Back_button" to="." method="_on_back_button_pressed"]
