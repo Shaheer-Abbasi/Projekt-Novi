@@ -21,6 +21,12 @@ func get_input():
 		shoot.emit(position, dir)
 		can_shoot = false
 		$ShotTimer.start()
+	
+	if Input.is_key_pressed(KEY_ESCAPE):
+		get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+		
+		
+	
 func _physics_process(_delta):
 	get_input()
 	move_and_slide()

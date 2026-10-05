@@ -11,18 +11,21 @@ config_version=5
 [application]
 
 config/name="Projekt Novi"
-run/main_scene="uid://7wdi2u8yylhp"
+run/main_scene="uid://fotc0fmi5yq"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
+
+[audio]
+
+buses/default_bus_layout="uid://c7jbljupxblhd"
 
 [autoload]
 
 XpManager="*uid://d3yg6po0t74ls"
+LevelManager="*uid://bung5uvj76hn"
 
 [display]
 
-window/size/viewport_width=768
-window/size/viewport_height=816
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 
@@ -64,3 +67,4 @@ textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+

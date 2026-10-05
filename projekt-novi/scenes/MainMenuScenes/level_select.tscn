@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://bypv6mifb0jsd"]
+
+[ext_resource type="Script" uid="uid://co3tgvax3gaay" path="res://scripts/Levels/level_select_button.gd" id="1_fp3ne"]
+[ext_resource type="Script" uid="uid://ceym6h7ajkuv" path="res://scripts/Levels/back_button.gd" id="2_f0th2"]
+
+[node name="Level-Select" type="Control" unique_id=1250742765]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="." unique_id=1247999724]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -640.0
+offset_right = 640.0
+offset_bottom = 180.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 120
+text = "LEVEL SELECT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=1888922556]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -576.0
+offset_top = -500.0
+offset_right = 579.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="GridContainer" type="GridContainer" parent="CenterContainer" unique_id=1394090357]
+layout_mode = 2
+offset_transform_enabled = true
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+columns = 3
+
+[node name="LevelSelectButton" type="Button" parent="CenterContainer/GridContainer" unique_id=1999448988]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "1"
+script = ExtResource("1_fp3ne")
+
+[node name="LevelSelectButton2" type="Button" parent="CenterContainer/GridContainer" unique_id=1390960732]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "2"
+script = ExtResource("1_fp3ne")
+
+[node name="LevelSelectButton3" type="Button" parent="CenterContainer/GridContainer" unique_id=1645782608]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "3"
+script = ExtResource("1_fp3ne")
+
+[node name="LevelSelectButton4" type="Button" parent="CenterContainer/GridContainer" unique_id=1553476863]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "4"
+script = ExtResource("1_fp3ne")
+
+[node name="LevelSelectButton5" type="Button" parent="CenterContainer/GridContainer" unique_id=1082239114]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "5"
+script = ExtResource("1_fp3ne")
+
+[node name="BackButton" type="Button" parent="." unique_id=946156166]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = -98.0
+offset_right = 115.0
+offset_bottom = -43.0
+grow_vertical = 0
+text = "Back"
+script = ExtResource("2_f0th2")
+
+[connection signal="pressed" from="BackButton" to="BackButton" method="_on_pressed"]
