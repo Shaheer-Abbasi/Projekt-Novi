@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://fotc0fmi5yq"]
 
 [ext_resource type="Script" uid="uid://d4ge4g72xfbjg" path="res://scripts/MainMenu_Scrips/main_menu.gd" id="1_l6cm7"]
+[ext_resource type="AudioStream" uid="uid://beeck8r4ihpga" path="res://assets/Music/MenuMusic.mp3" id="2_8ln24"]
 [ext_resource type="Script" uid="uid://cgudegxae1078" path="res://scripts/MainMenu_Scrips/audio_control.gd" id="2_ekxnf"]
 [ext_resource type="Script" uid="uid://cxn34lqrfs0" path="res://scripts/MainMenu_Scrips/fullscreen_control.gd" id="3_bqqt6"]
 [ext_resource type="Script" uid="uid://cb1umgn16gjj4" path="res://scripts/MainMenu_Scrips/scale_control.gd" id="4_wu84c"]
@@ -24,6 +25,10 @@ offset_bottom = 2.1693726
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_l6cm7")
+
+[node name="MenuMusic" type="AudioStreamPlayer" parent="." unique_id=182633827]
+stream = ExtResource("2_8ln24")
+autoplay = true
 
 [node name="MainButtons" type="VBoxContainer" parent="." unique_id=1759019988]
 layout_mode = 1
@@ -132,6 +137,27 @@ value = 1.0
 script = ExtResource("2_ekxnf")
 audio_bus_name = "Music"
 
+[node name="HBoxContainer4" type="HBoxContainer" parent="Options Panel/VBoxContainer" unique_id=1484757909]
+layout_mode = 2
+theme_override_constants/separation = 37
+
+[node name="Label" type="Label" parent="Options Panel/VBoxContainer/HBoxContainer4" unique_id=526718135]
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="AudioControl" type="HSlider" parent="Options Panel/VBoxContainer/HBoxContainer4" unique_id=1109043559]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/slider = SubResource("StyleBoxLine_py7os")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_t1jsv")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_t1jsv")
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = ExtResource("2_ekxnf")
+audio_bus_name = "SFX"
+
 [node name="HBoxContainer3" type="HBoxContainer" parent="Options Panel/VBoxContainer" unique_id=1466459897]
 layout_mode = 2
 
@@ -174,5 +200,6 @@ script = ExtResource("4_wu84c")
 [connection signal="pressed" from="MainButtons/Exit_button" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="Options Panel/Back_button" to="." method="_on_back_button_pressed"]
 [connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer/AudioControl" method="_on_value_changed"]
+[connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer4/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer4/AudioControl" method="_on_value_changed"]
 [connection signal="toggled" from="Options Panel/VBoxContainer/HBoxContainer3/FullscreenControl" to="Options Panel/VBoxContainer/HBoxContainer3/FullscreenControl" method="_on_toggled"]
 [connection signal="item_selected" from="Options Panel/VBoxContainer/HBoxContainer2/ScaleControl" to="Options Panel/VBoxContainer/HBoxContainer2/ScaleControl" method="_on_item_selected"]

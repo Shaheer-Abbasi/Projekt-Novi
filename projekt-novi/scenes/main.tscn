@@ -11,7 +11,7 @@
 [node name="World" parent="." unique_id=1389499995 instance=ExtResource("1_0wfyh")]
 
 [node name="bulletmanager" type="Node2D" parent="." unique_id=1526077745]
-position = Vector2(358, 383)
+position = Vector2(1, 0)
 script = ExtResource("2_jyhfs")
 bullet_scene = ExtResource("3_tbgi4")
 
