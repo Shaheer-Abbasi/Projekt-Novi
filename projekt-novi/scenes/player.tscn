@@ -157,8 +157,9 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bo3em"]
-size = Vector2(501.5, 560)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_vbdug"]
+radius = 202.0
+height = 578.0
 
 [node name="Player" type="CharacterBody2D" unique_id=509533104]
 script = ExtResource("1_qlg0r")
@@ -169,8 +170,8 @@ sprite_frames = SubResource("SpriteFrames_h0xbg")
 animation = &"walk7"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=979066978]
-position = Vector2(-14.25, 17)
-shape = SubResource("RectangleShape2D_bo3em")
+position = Vector2(5, 29)
+shape = SubResource("CapsuleShape2D_vbdug")
 
 [node name="ShotTimer" type="Timer" parent="." unique_id=1989914961]
 wait_time = 0.5
