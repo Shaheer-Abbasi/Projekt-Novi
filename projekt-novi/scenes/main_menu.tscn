@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b18miyt4d171k"]
 
 [ext_resource type="Script" uid="uid://d4ge4g72xfbjg" path="res://scripts/main_menu.gd" id="1_l6cm7"]
-[ext_resource type="VideoStream" uid="uid://cmnkml4x77tar" path="res://assets/Background/MainmenuTemp.ogv" id="2_bqqt6"]
+[ext_resource type="VideoStream" uid="uid://tosjbvmhnsf3" path="res://assets/Background/BGMenu_p2.ogv" id="2_bqqt6"]
 [ext_resource type="Texture2D" uid="uid://cvna6mnaq4yri" path="res://assets/Background/Projekt Novi.png" id="2_ekxnf"]
 
 [node name="MainMenu" type="Control" unique_id=1240523588]

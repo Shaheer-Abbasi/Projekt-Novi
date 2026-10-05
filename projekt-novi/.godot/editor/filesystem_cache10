@@ -1,13 +1,16 @@
 78098b89c88a74ebe8c20117b8754620
-::res://::1790888718
-icon.svg::CompressedTexture2D::1425196100034282338::1790300600::1790883749::1::::<><><>0<>0<>0a014018e511361f1b2f6fef520f6764<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
-::res://assets/::1790884528
-::res://assets/Background/::1790891596
-Projekt Novi.png::CompressedTexture2D::6273700004583919698::1790891596::1790891597::1::::<><><>0<>0<>30185d81f47a8de0e99c9400e68bce22<>res://.godot/imported/Projekt Novi.png-87b1b9072511a2bbc7366afa854cce78.ctex::
-::res://assets/Characters/::1790884530
-::res://scenes/::1790891512
-main_menu.tscn::PackedScene::4280199265664735838::1790891512::0::1::::<><><>0<>0<><>::uid://d4ge4g72xfbjg::::res://scripts/main_menu.gd
-options_menu.tscn::PackedScene::7398320500179101514::1790890105::0::1::::<><><>0<>0<><>::uid://4t1td6ts5rqd::::res://scripts/options_menu.gd
-::res://scripts/::1790890105
-main_menu.gd::GDScript::9207419804932441140::1790889883::0::1::::<>Control<><>0<>0<><>::
-options_menu.gd::GDScript::2076312421073709719::1790890105::0::1::::<>Control<><>0<>0<><>::
+::res://::1791217433
+icon.svg::CompressedTexture2D::1425196100034282338::1790896054::1791217434::1::::<><><>0<>0<>0a014018e511361f1b2f6fef520f6764<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.ctex::
+::res://assets/::1791189815
+::res://assets/Background/::1791189815
+BGMenu_p2.ogv::VideoStreamTheora::1363598381213746854::1791189647::0::1::::<><><>0<>0<><>::
+MainmenuTemp.ogv::VideoStreamTheora::5642573624945128061::1791189815::0::1::::<><><>0<>0<><>::
+Projekt Novi.png::CompressedTexture2D::6273700004583919698::1790896060::1791217434::1::::<><><>0<>0<>30185d81f47a8de0e99c9400e68bce22<>res://.godot/imported/Projekt Novi.png-87b1b9072511a2bbc7366afa854cce78.ctex::
+::res://assets/Background/Opening/::1791189647
+Opening_MM.ogv::VideoStreamTheora::6630031468079076792::1791189647::0::1::::<><><>0<>0<><>::
+::res://scenes/::1791189815
+main_menu.tscn::PackedScene::4280199265664735838::1791189815::0::1::::<><><>0<>0<><>::uid://d4ge4g72xfbjg::::res://scripts/main_menu.gd<>uid://cmnkml4x77tar::::res://assets/Background/MainmenuTemp.ogv<>uid://cvna6mnaq4yri::::res://assets/Background/Projekt Novi.png
+options_menu.tscn::PackedScene::7398320500179101514::1791189815::0::1::::<><><>0<>0<><>::uid://4t1td6ts5rqd::::res://scripts/options_menu.gd
+::res://scripts/::1791189815
+main_menu.gd::GDScript::9207419804932441140::1791189815::0::1::::<>Control<><>0<>0<><>::
+options_menu.gd::GDScript::2076312421073709719::1791189815::0::1::::<>Control<><>0<>0<><>::
