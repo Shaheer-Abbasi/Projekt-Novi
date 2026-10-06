@@ -1,16 +1,21 @@
 extends CharacterBody2D
 signal shoot
+signal health_changed(current_health: int, max_health: int)
 
 var speed : int
 var can_shoot : bool
 var screen_size : Vector2
+var max_health : int = 3
+var health : int = 3
 
 func _ready():
 	screen_size = get_viewport_rect().size
 	position = screen_size / 2
 	speed = 200
 	can_shoot = true
-	
+	XpManager.leveled_up.connect(_on_leveled_up)
+	max_health = 3 + XpManager.bonus_health
+	health = max_health
 
 func get_input():
 	var input_dir = Input.get_vector("left", "right", "up", "down")
@@ -48,3 +53,19 @@ func _physics_process(_delta):
 
 func _on_shot_timer_timeout() -> void:
 	can_shoot = true
+
+
+func _on_leveled_up(_new_level: int) -> void:
+	max_health = 3 + XpManager.bonus_health
+	health += 1
+	health_changed.emit(health, max_health)
+
+
+func take_damage(amount: int) -> void:
+	health -= amount
+	health_changed.emit(health, max_health)
+	if health <= 0:
+		queue_free()
+		
+	
+	

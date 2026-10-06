@@ -4,8 +4,38 @@
 [ext_resource type="Script" uid="uid://dbk4ukyyfuut1" path="res://scenes/bulletmanager.gd" id="2_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://tishgj7v3yhr" path="res://scenes/player.tscn" id="2_sugp2"]
 [ext_resource type="PackedScene" uid="uid://bb8lguxgt1c55" path="res://scenes/bullet.tscn" id="3_tbgi4"]
-[ext_resource type="Script" uid="uid://dfbb8rwcpyska" path="res://scenes/xp_ui.gd" id="5_tbgi4"]
 [ext_resource type="PackedScene" path="res://Mobs/Robot/robot_enemy.tscn" id="4_tbgi4"]
+[ext_resource type="Script" uid="uid://dfbb8rwcpyska" path="res://scenes/xp_ui.gd" id="5_tbgi4"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fua1t"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.24705882, 0.28235295, 0.32156864, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2lpc5"]
+content_margin_left = 2.0
+content_margin_top = 2.0
+content_margin_right = 2.0
+content_margin_bottom = 2.0
+bg_color = Color(0.18431373, 0.60784316, 1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+corner_detail = 6
+
+[sub_resource type="SystemFont" id="SystemFont_fua1t"]
+font_weight = 800
+
+[sub_resource type="SystemFont" id="SystemFont_2lpc5"]
+font_weight = 700
 
 [node name="main" type="Node" unique_id=779268782]
 
@@ -36,16 +66,34 @@ script = ExtResource("5_tbgi4")
 
 [node name="XPBar" type="ProgressBar" parent="CanvasLayer/Control" unique_id=1152985110]
 layout_mode = 0
-offset_top = 25.0
-offset_right = 250.0
-offset_bottom = 52.0
+offset_left = 10.0
+offset_top = 32.0
+offset_right = 260.0
+offset_bottom = 59.0
+theme_override_styles/background = SubResource("StyleBoxFlat_fua1t")
+theme_override_styles/fill = SubResource("StyleBoxFlat_2lpc5")
 show_percentage = false
 
 [node name="LevelLabel" type="Label" parent="CanvasLayer/Control" unique_id=1720999658]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 10.0
+offset_right = 64.0
+offset_bottom = 75.0
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("SystemFont_fua1t")
+theme_override_font_sizes/font_size = 22
 text = "Level 1
 "
+
+[node name="HealthLabel" type="Label" parent="CanvasLayer/Control" unique_id=291706522]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 60.0
+offset_right = 115.0
+offset_bottom = 86.0
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("SystemFont_2lpc5")
+theme_override_font_sizes/font_size = 18
+text = "Health: 3 / 3"
 
 [connection signal="shoot" from="Player" to="bulletmanager" method="_on_player_shoot"]

@@ -5,17 +5,30 @@ signal leveled_up(new_level: int)
 
 const BASE_XP: int = 100
 const GROWTH: float = 1.25
+const ENEMY_XP: int = 25
 
 @export var run_tests_on_start: bool = false
 
 var current_xp: int = 0
 var level: int = 1
 var xp_to_next: int = BASE_XP
+var attack_damage: int = 1
+var bonus_health: int = 0
 
 
 func _ready() -> void:
 	if run_tests_on_start:
 		run_tests()
+	get_tree().node_added.connect(_on_node_added)
+
+
+func _on_node_added(node: Node) -> void:
+	if node.has_signal("defeated"):
+		node.connect("defeated", _on_enemy_defeated)
+
+
+func _on_enemy_defeated() -> void:
+	add_xp(ENEMY_XP)
 
 
 func add_xp(amount: int) -> void:
@@ -32,6 +45,8 @@ func level_up() -> void:
 	current_xp -= xp_to_next
 	level += 1
 	xp_to_next = int(BASE_XP * pow(GROWTH, level - 1))
+	attack_damage += 1
+	bonus_health += 1
 	leveled_up.emit(level)
 
 
@@ -39,6 +54,8 @@ func reset() -> void:
 	current_xp = 0
 	level = 1
 	xp_to_next = BASE_XP
+	attack_damage = 1
+	bonus_health = 0
 	xp_changed.emit(current_xp, xp_to_next)
 
 
@@ -66,4 +83,5 @@ func run_tests() -> void:
 
 	reset()
 	check("reset", level == 1 and current_xp == 0)
+	
 	
