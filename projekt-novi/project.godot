@@ -27,6 +27,7 @@ buses/default_bus_layout="uid://c7jbljupxblhd"
 
 XpManager="*uid://d3yg6po0t74ls"
 LevelManager="*uid://bung5uvj76hn"
+RoundStats="*res://scripts/round_stats.gd"
 
 [display]
 
@@ -76,4 +77,3 @@ textures/canvas_textures/default_texture_filter=0
 rendering_device/driver.windows="d3d12"
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
-

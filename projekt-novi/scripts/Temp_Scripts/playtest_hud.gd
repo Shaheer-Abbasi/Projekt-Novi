@@ -10,6 +10,8 @@ const MENU_PATH := "res://scenes/MainMenuScenes/main_menu.tscn"
 
 @onready var timer_label := get_node_or_null("%TimerLabel") as Label
 @onready var kills_label := get_node_or_null("%KillsLabel") as Label
+@onready var currency_label := get_node_or_null("%CurrencyLabel") as Label
+@onready var survival_label := get_node_or_null("%SurvivalLabel") as Label
 @onready var name_label := get_node_or_null("%NameLabel") as Label
 @onready var hp_bar := get_node_or_null("%HPBar") as ProgressBar
 @onready var hp_label := get_node_or_null("%HPLabel") as Label
@@ -36,6 +38,12 @@ func _ready() -> void:
 	XpManager.leveled_up.connect(_on_leveled_up) 
 	_on_xp_changed(XpManager.current_xp, XpManager.xp_to_next)
 	_on_leveled_up(XpManager.level) 
+	RoundStats.currency_changed.connect(set_currency)
+	RoundStats.kills_changed.connect(set_kills)
+	RoundStats.survival_time_changed.connect(set_survival_time)
+	set_currency(RoundStats.currency)
+	set_kills(RoundStats.kills)
+	set_survival_time(RoundStats.survival_time)
 	if is_instance_valid(boss_panel):
 		boss_panel.visible = false
 	if is_instance_valid(end_panel):
@@ -138,6 +146,14 @@ func set_timer_text(t: String) -> void:
 
 func set_kills(n: int) -> void:
 	_set_text(kills_label, "Kills: %d" % n)
+
+
+func set_currency(amount: int) -> void:
+	_set_text(currency_label, "Credits: %d" % amount)
+
+
+func set_survival_time(seconds: float) -> void:
+	_set_text(survival_label, "Survived: %02d:%02d" % [floori(seconds / 60.0), int(seconds) % 60])
 
 
 func show_boss(boss: BossNPC) -> void:

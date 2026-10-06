@@ -27,7 +27,6 @@ const BOSS_PATH := "res://tempresources/boss_stats.tres"
 @export var spawn_distance: float = 700.0
 
 var time_left: float = 600.0
-var kills: int = 0
 var state: RoundState = RoundState.PLAYING
 var arena_rect: Rect2
 
@@ -50,6 +49,7 @@ func _ready() -> void:
 	_tank = _try_load(TANK_PATH) as EnemyStats
 	_shooter = shooter_stats if shooter_stats != null else _default_shooter()
 	time_left = round_duration
+	RoundStats.reset()  # new round: currency, kills, survival time back to 0
 	player.set_arena(arena_rect)
 	player.global_position = arena_rect.get_center()
 	player.died.connect(_on_player_died)
@@ -79,10 +79,15 @@ func _draw() -> void:
 
 
 func _process(delta: float) -> void:
+	if state == RoundState.BOSS:
+		# Countdown is stuck at 0 during the boss, but the player is still surviving.
+		RoundStats.set_survival_time(RoundStats.survival_time + delta)
+		return
 	if state != RoundState.PLAYING:
 		return
 	time_left = maxf(time_left - delta, 0.0)
 	hud.set_timer(time_left)
+	RoundStats.set_survival_time(round_duration - time_left)  # elapsed = from the round timer
 	_update_spawning(delta)
 	if time_left <= 0.0:
 		_start_boss_phase()
@@ -140,14 +145,8 @@ func _spawn_enemy(p: float) -> void:
 	var angle := randf() * TAU
 	var pos := player.global_position + Vector2.RIGHT.rotated(angle) * spawn_distance
 	enemy.global_position = pos.clamp(arena_rect.position + Vector2(50, 50), arena_rect.end - Vector2(50, 50))
-	enemy.died.connect(_on_enemy_died)
 	add_child(enemy)
 	enemy.scale_stats(1.0 + p * 2.0, 1.0 + p * 0.5)
-
-
-func _on_enemy_died(_e: EnemyNPC) -> void:
-	kills += 1
-	hud.set_kills(kills)
 
 
 # --- Boss -----------------------------------------------------------------
