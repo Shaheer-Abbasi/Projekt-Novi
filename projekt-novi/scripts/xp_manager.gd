@@ -25,9 +25,14 @@ func _ready() -> void:
 func _on_node_added(node: Node) -> void:
 	if node.has_signal("defeated"):
 		node.connect("defeated", _on_enemy_defeated)
+	if node is EnemyNPC and node.has_signal("died"):
+		node.connect("died", _on_enemy_died) 
 
 
 func _on_enemy_defeated() -> void:
+	add_xp(ENEMY_XP)
+	
+func _on_enemy_died(_enemy) -> void:
 	add_xp(ENEMY_XP)
 
 

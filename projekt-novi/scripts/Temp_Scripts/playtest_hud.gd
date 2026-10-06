@@ -13,6 +13,8 @@ const MENU_PATH := "res://scenes/MainMenuScenes/main_menu.tscn"
 @onready var name_label := get_node_or_null("%NameLabel") as Label
 @onready var hp_bar := get_node_or_null("%HPBar") as ProgressBar
 @onready var hp_label := get_node_or_null("%HPLabel") as Label
+@onready var xp_bar := get_node_or_null("%XPBar") as ProgressBar
+@onready var level_label := get_node_or_null("%LevelLabel") as Label
 @onready var ability_bar := get_node_or_null("%AbilityBar") as Control
 @onready var boss_panel := get_node_or_null("%BossPanel") as Control
 @onready var boss_name := get_node_or_null("%BossName") as Label
@@ -29,7 +31,11 @@ var _slot_enabled: Array[bool] = []  # false = you hid this box in the editor, s
 
 
 func _ready() -> void:
-	process_mode = Node.PROCESS_MODE_ALWAYS  # keep working while the game is paused
+	process_mode = Node.PROCESS_MODE_ALWAYS # keep working while the game is paused
+	XpManager.xp_changed.connect(_on_xp_changed)
+	XpManager.leveled_up.connect(_on_leveled_up) 
+	_on_xp_changed(XpManager.current_xp, XpManager.xp_to_next)
+	_on_leveled_up(XpManager.level) 
 	if is_instance_valid(boss_panel):
 		boss_panel.visible = false
 	if is_instance_valid(end_panel):
@@ -103,6 +109,12 @@ func _key_text(i: int) -> String:
 func _on_player_hp(cur: float, mx: float) -> void:
 	_set_bar(hp_bar, cur, mx)
 	_set_text(hp_label, "HP %d / %d" % [ceili(cur), ceili(mx)])
+	
+func _on_xp_changed(current_xp: int, xp_to_next: int) -> void:
+	_set_bar(xp_bar, current_xp, xp_to_next)
+	
+func _on_leveled_up(new_level: int) -> void:
+	_set_text(level_label, "Level " + str(new_level)) 
 
 
 func _process(_delta: float) -> void:
@@ -165,7 +177,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_R:
 			get_tree().paused = false
-			get_tree().reload_current_scene()
+			XpManager.reset()
+			get_tree().reload_current_scene() 
 		elif event.keycode == KEY_ESCAPE:
 			get_tree().paused = false
 			if ResourceLoader.exists(MENU_PATH):

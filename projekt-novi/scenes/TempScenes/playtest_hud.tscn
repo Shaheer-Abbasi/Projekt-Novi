@@ -5,6 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://crb6wn7pbjvec" path="res://assets/Characters/Vow/Vow_empwave.png" id="3_2lns3"]
 [ext_resource type="Texture2D" uid="uid://hoihp5hw30ui" path="res://assets/Characters/Vow/VowUltimate.png" id="3_kh2os"]
 
+[sub_resource type="SystemFont" id="SystemFont_kh2os"]
+font_names = PackedStringArray("Bahnschrift")
+font_weight = 600
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5cp65"]
 bg_color = Color(0.08, 0.08, 0.1, 0.9)
 corner_radius_top_left = 4
@@ -12,8 +16,15 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kh2os"]
+bg_color = Color(0.34901962, 0.8509804, 0.34901962, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ic8dp"]
-bg_color = Color(0.35, 0.85, 0.35, 1)
+bg_color = Color(0.21176471, 0.8117647, 0.9607843, 1)
 corner_radius_top_left = 4
 corner_radius_top_right = 4
 corner_radius_bottom_right = 4
@@ -74,6 +85,19 @@ theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 22
 text = "VOW"
 
+[node name="LevelLabel" type="Label" parent="Root/Node2D" unique_id=2093383326]
+unique_name_in_owner = true
+z_index = 1
+offset_left = 26.0
+offset_top = 172.0
+offset_right = 256.0
+offset_bottom = 206.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_fonts/font = SubResource("SystemFont_kh2os")
+theme_override_font_sizes/font_size = 24
+text = "VOW"
+
 [node name="HPLabel" type="Label" parent="Root/Node2D" unique_id=3569387]
 unique_name_in_owner = true
 visible = false
@@ -90,9 +114,21 @@ text = "HP 120 / 120"
 unique_name_in_owner = true
 custom_minimum_size = Vector2(230, 22)
 offset_left = 24.0
-offset_top = 100.0
+offset_top = 124.0
 offset_right = 316.0
-offset_bottom = 122.0
+offset_bottom = 146.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_5cp65")
+theme_override_styles/fill = SubResource("StyleBoxFlat_kh2os")
+show_percentage = false
+
+[node name="XPBar" type="ProgressBar" parent="Root/Node2D" unique_id=123708962]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(230, 22)
+offset_left = 24.0
+offset_top = 148.0
+offset_right = 316.0
+offset_bottom = 170.0
 mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_5cp65")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ic8dp")
