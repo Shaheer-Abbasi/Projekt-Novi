@@ -1,0 +1,390 @@
+[gd_scene format=3 uid="uid://dd2ujpgqjexxb"]
+
+[ext_resource type="Texture2D" uid="uid://df68chyi6nrjh" path="res://assets/Characters/Vow/VowPortrait.png" id="1_tf0qc"]
+[ext_resource type="Texture2D" uid="uid://dd07y62c4e5ah" path="res://assets/Characters/Vow/vow_waveslash.png" id="2_mfmaq"]
+[ext_resource type="Texture2D" uid="uid://crb6wn7pbjvec" path="res://assets/Characters/Vow/Vow_empwave.png" id="3_2lns3"]
+[ext_resource type="Texture2D" uid="uid://hoihp5hw30ui" path="res://assets/Characters/Vow/VowUltimate.png" id="3_kh2os"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5cp65"]
+bg_color = Color(0.08, 0.08, 0.1, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ic8dp"]
+bg_color = Color(0.35, 0.85, 0.35, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ne6ce"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.05, 0.06, 0.09, 0.78)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.78, 0.95, 0.1, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_c22if"]
+bg_color = Color(0.08, 0.08, 0.1, 0.9)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s7kug"]
+bg_color = Color(0.85, 0.1, 0.15, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="HUD" type="CanvasLayer" unique_id=337117531]
+
+[node name="Root" type="Control" parent="." unique_id=1909220485]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Node2D" type="Node2D" parent="Root" unique_id=1405021790]
+
+[node name="NameLabel" type="Label" parent="Root/Node2D" unique_id=1969466632]
+unique_name_in_owner = true
+z_index = 1
+offset_left = 26.0
+offset_top = 95.0
+offset_right = 256.0
+offset_bottom = 126.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 22
+text = "VOW"
+
+[node name="HPLabel" type="Label" parent="Root/Node2D" unique_id=3569387]
+unique_name_in_owner = true
+visible = false
+offset_left = 24.0
+offset_top = 136.0
+offset_right = 254.0
+offset_bottom = 159.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 16
+text = "HP 120 / 120"
+
+[node name="HPBar" type="ProgressBar" parent="Root/Node2D" unique_id=802844240]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(230, 22)
+offset_left = 24.0
+offset_top = 100.0
+offset_right = 316.0
+offset_bottom = 122.0
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_5cp65")
+theme_override_styles/fill = SubResource("StyleBoxFlat_ic8dp")
+show_percentage = false
+
+[node name="Sprite2D" type="Sprite2D" parent="Root/Node2D" unique_id=1254562346]
+position = Vector2(164, 69)
+scale = Vector2(0.32332194, 0.32332194)
+texture = ExtResource("1_tf0qc")
+
+[node name="TimerLabel" type="Label" parent="Root" unique_id=67587178]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 10.0
+offset_right = 150.0
+offset_bottom = 60.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 40
+text = "10:00"
+horizontal_alignment = 1
+
+[node name="KillsLabel" type="Label" parent="Root" unique_id=829084309]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -240.0
+offset_top = 16.0
+offset_right = -16.0
+offset_bottom = 48.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 24
+text = "Kills: 0"
+horizontal_alignment = 2
+
+[node name="AbilityBar" type="HBoxContainer" parent="Root" unique_id=532202257]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = -79.99994
+offset_right = 444.0
+offset_bottom = 23.000061
+grow_vertical = 0
+scale = Vector2(0.65, 0.65)
+mouse_filter = 2
+theme_override_constants/separation = 10
+
+[node name="Ability1" type="PanelContainer" parent="Root/AbilityBar" unique_id=1034382342]
+custom_minimum_size = Vector2(136, 96)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ne6ce")
+
+[node name="Box" type="VBoxContainer" parent="Root/AbilityBar/Ability1" unique_id=1365820320]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Root/AbilityBar/Ability1/Box" unique_id=867574864]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Root/AbilityBar/Ability1/Box" unique_id=1676938900]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 14
+text = "Wide Slash"
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="Root/AbilityBar/Ability1/Box" unique_id=2067696262]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 16
+text = "READY"
+horizontal_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Root/AbilityBar/Ability1" unique_id=1654711600]
+z_index = -1
+position = Vector2(67.4266, 51.538086)
+scale = Vector2(0.08300157, 0.07974482)
+texture = ExtResource("2_mfmaq")
+
+[node name="Ability2" type="PanelContainer" parent="Root/AbilityBar" unique_id=965741457]
+custom_minimum_size = Vector2(136, 96)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ne6ce")
+
+[node name="Box" type="VBoxContainer" parent="Root/AbilityBar/Ability2" unique_id=1652818094]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Root/AbilityBar/Ability2/Box" unique_id=290359089]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Root/AbilityBar/Ability2/Box" unique_id=1974334435]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 14
+text = "EMP Wave"
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="Root/AbilityBar/Ability2/Box" unique_id=424644550]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 16
+text = "READY"
+horizontal_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Root/AbilityBar/Ability2" unique_id=959578741]
+z_index = -1
+position = Vector2(67.16382, 51.538086)
+scale = Vector2(0.08205999, 0.079744846)
+texture = ExtResource("3_2lns3")
+
+[node name="Ability3" type="PanelContainer" parent="Root/AbilityBar" unique_id=1369707217]
+visible = false
+custom_minimum_size = Vector2(136, 96)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ne6ce")
+
+[node name="Box" type="VBoxContainer" parent="Root/AbilityBar/Ability3" unique_id=663822676]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Root/AbilityBar/Ability3/Box" unique_id=478028553]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Root/AbilityBar/Ability3/Box" unique_id=859210712]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 14
+text = "Bridal Cries"
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="Root/AbilityBar/Ability3/Box" unique_id=1804944218]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 16
+text = "READY"
+horizontal_alignment = 1
+
+[node name="Ability4" type="PanelContainer" parent="Root/AbilityBar" unique_id=777033945]
+custom_minimum_size = Vector2(136, 96)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ne6ce")
+
+[node name="Box" type="VBoxContainer" parent="Root/AbilityBar/Ability4" unique_id=407915544]
+layout_mode = 2
+mouse_filter = 2
+theme_override_constants/separation = 2
+alignment = 1
+
+[node name="Icon" type="TextureRect" parent="Root/AbilityBar/Ability4/Box" unique_id=682839941]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+size_flags_horizontal = 4
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Name" type="Label" parent="Root/AbilityBar/Ability4/Box" unique_id=640904731]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 14
+text = "Bridal Cries"
+horizontal_alignment = 1
+
+[node name="Status" type="Label" parent="Root/AbilityBar/Ability4/Box" unique_id=1557334195]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 16
+text = "READY"
+horizontal_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Root/AbilityBar/Ability4" unique_id=677569853]
+z_index = -1
+position = Vector2(68.000015, 51.538345)
+scale = Vector2(0.08178476, 0.07974488)
+texture = ExtResource("3_kh2os")
+
+[node name="BossPanel" type="VBoxContainer" parent="Root" unique_id=408337467]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -320.0
+offset_top = -30.0
+offset_right = 320.0
+offset_bottom = -30.0
+grow_vertical = 0
+mouse_filter = 2
+
+[node name="BossName" type="Label" parent="Root/BossPanel" unique_id=1332253854]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 26
+text = "Boss"
+horizontal_alignment = 1
+
+[node name="BossBar" type="ProgressBar" parent="Root/BossPanel" unique_id=402935083]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+mouse_filter = 2
+theme_override_styles/background = SubResource("StyleBoxFlat_c22if")
+theme_override_styles/fill = SubResource("StyleBoxFlat_s7kug")
+show_percentage = false
+
+[node name="BossPhase" type="Label" parent="Root/BossPanel" unique_id=1694854694]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 18
+text = "Phase 1"
+horizontal_alignment = 1
+
+[node name="EndPanel" type="ColorRect" parent="Root" unique_id=2126850506]
+unique_name_in_owner = true
+visible = false
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.6)
+
+[node name="Center" type="CenterContainer" parent="Root/EndPanel" unique_id=2058592254]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+
+[node name="Box" type="VBoxContainer" parent="Root/EndPanel/Center" unique_id=1862504969]
+layout_mode = 2
+mouse_filter = 2
+
+[node name="EndTitle" type="Label" parent="Root/EndPanel/Center/Box" unique_id=376744766]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 110
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="EndSub" type="Label" parent="Root/EndPanel/Center/Box" unique_id=1684239881]
+layout_mode = 2
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 30
+text = "R = restart    Esc = main menu"
+horizontal_alignment = 1

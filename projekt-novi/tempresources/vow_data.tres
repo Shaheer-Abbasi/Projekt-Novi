@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3]
+
+[ext_resource type="Script" path="res://playtest/scripts/CharacterData.gd" id="1"]
+[ext_resource type="Script" path="res://playtest/scripts/AbilityFanBurst.gd" id="2"]
+[ext_resource type="Script" path="res://playtest/scripts/AbilityShockwave.gd" id="3"]
+[ext_resource type="Script" path="res://playtest/scripts/AbilityDash.gd" id="4"]
+[ext_resource type="Script" path="res://playtest/scripts/AbilityUltimate.gd" id="5"]
+
+[resource]
+script = ExtResource("1")
+character_name = "Vow"
+max_health = 120.0
+move_speed = 220.0
+basic_damage = 12.0
+fire_cooldown = 0.4
+attack_range = 170.0
+bullet_speed = 750.0
+ability_1_script = ExtResource("2")
+ability_2_script = ExtResource("3")
+ability_3_script = ExtResource("4")
+ability_4_script = ExtResource("5")

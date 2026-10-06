@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="EnemyStats" format=3]
+
+[ext_resource type="Script" path="res://playtest/scripts/EnemyStats.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+enemy_name = "Brute"
+max_hp = 60.0
+damage = 10.0
+speed = 55.0
+durability = 3.0
+contact_cooldown = 1.2
+body_scale = 1.0
+tint = Color(0.5, 0.7, 1, 1)

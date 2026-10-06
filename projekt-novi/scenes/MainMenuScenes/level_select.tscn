@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://co3tgvax3gaay" path="res://scripts/Levels/level_select_button.gd" id="1_fp3ne"]
 [ext_resource type="Script" uid="uid://ceym6h7ajkuv" path="res://scripts/Levels/back_button.gd" id="2_f0th2"]
+[ext_resource type="Texture2D" uid="uid://bqvkrrsrbahdy" path="res://assets/Background/LevelSelect_BG.png" id="3_f0th2"]
 
 [node name="Level-Select" type="Control" unique_id=1250742765]
 layout_mode = 3
@@ -87,5 +88,11 @@ offset_bottom = -43.0
 grow_vertical = 0
 text = "Back"
 script = ExtResource("2_f0th2")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1925427046]
+z_index = -2
+position = Vector2(574.78986, 323.5693)
+scale = Vector2(0.60820514, 0.6082051)
+texture = ExtResource("3_f0th2")
 
 [connection signal="pressed" from="BackButton" to="BackButton" method="_on_pressed"]
