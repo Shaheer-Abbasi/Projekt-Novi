@@ -20,6 +20,9 @@ const BOSS_PATH := "res://tempresources/boss_stats.tres"
 @export var round_duration: float = 600.0
 @export var arena_size: Vector2 = Vector2(3200.0, 2200.0)
 @export var max_enemies: int = 70
+## Optional: your own stats for the ranged Shooter enemy. Leave empty to use the built-in one.
+## (If you make your own, remember to turn "Ranged" ON in it.)
+@export var shooter_stats: EnemyStats
 ## How far from the player enemies appear (keep above half the screen size).
 @export var spawn_distance: float = 700.0
 
@@ -32,6 +35,7 @@ var _spawn_cd: float = 1.0
 var _grunt: EnemyStats
 var _fast: EnemyStats
 var _tank: EnemyStats
+var _shooter: EnemyStats
 
 @onready var player: PlaytestPlayer = $Player
 @onready var hud: PlaytestHUD = $HUD
@@ -44,6 +48,7 @@ func _ready() -> void:
 		_grunt = EnemyStats.new()
 	_fast = _try_load(FAST_PATH) as EnemyStats
 	_tank = _try_load(TANK_PATH) as EnemyStats
+	_shooter = shooter_stats if shooter_stats != null else _default_shooter()
 	time_left = round_duration
 	player.set_arena(arena_rect)
 	player.global_position = arena_rect.get_center()
@@ -99,8 +104,28 @@ func _update_spawning(delta: float) -> void:
 		return
 	_spawn_enemy(p)
 
+## The ranged Shooter, built in code so it needs no extra file.
+func _default_shooter() -> EnemyStats:
+	var s := EnemyStats.new()
+	s.enemy_name = "Shooter"
+	s.max_hp = 16.0                       # takes about two slashes
+	s.damage = 4.0                        # contact damage
+	s.speed = 85.0                        # same as your Robot
+	s.contact_cooldown = 1.0
+	s.body_scale = 0.7
+	s.tint = Color(1.0, 0.6, 0.6)         # reddish, so you can tell them apart
+	s.ranged = true
+	s.preferred_distance = 300.0
+	s.too_close_distance = 150.0
+	s.attack_range = 520.0
+	s.attack_cooldown = 2.2
+	s.projectile_speed = 400.0
+	s.projectile_damage = 8.0
+	return s
 
 func _pick_stats(p: float) -> EnemyStats:
+	if _shooter != null and p > 0.05 and randf() < 0.15:   # about 1 in 7 spawns, after the first 30 seconds
+		return _shooter
 	var r := randf()
 	if _tank != null and p > 0.25 and r < 0.15:
 		return _tank
