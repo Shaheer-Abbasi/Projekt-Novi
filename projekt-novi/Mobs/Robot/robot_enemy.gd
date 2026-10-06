@@ -1,5 +1,5 @@
 extends CharacterBody2D
-
+signal defeated
 @export var move_speed: float = 85.0
 @export var preferred_distance: float = 300.0
 @export var too_close_distance: float = 150.0
@@ -91,7 +91,7 @@ func _on_hurtbox_area_entered(area: Area2D) -> void:
 	if is_instance_valid(area):
 		area.queue_free()
 
-	take_damage(1)
+	take_damage(XpManager.attack_damage)
 
 func take_damage(amount: int) -> void:
 	health -= amount
@@ -100,6 +100,7 @@ func take_damage(amount: int) -> void:
 	queue_redraw()
 
 	if health <= 0:
+		defeated.emit()
 		queue_free()
 
 func _on_contact_body_entered(body: Node2D) -> void:

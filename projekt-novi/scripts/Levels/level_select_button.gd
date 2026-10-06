@@ -12,4 +12,5 @@ func _ready() -> void:
 func _pressed() -> void:
 	if is_unlocked:
 		LevelManager.current_level = level
+		XpManager.reset()
 		get_tree().call_deferred("change_scene_to_file", LevelManager._load_level(level))

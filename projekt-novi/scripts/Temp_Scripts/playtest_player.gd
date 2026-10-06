@@ -85,6 +85,7 @@ func _ready() -> void:
 	character_name = character_data.character_name
 	max_hp = character_data.max_health
 	current_hp = max_hp
+	XpManager.leveled_up.connect(_on_leveled_up)
 	speed = character_data.move_speed
 	aim_radius = character_data.attack_range
 	_setup_abilities()
@@ -181,7 +182,7 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and _fire_left <= 0.0:
 		_fire_left = character_data.fire_cooldown
-		fire_bullet(_aim_dir, character_data.basic_damage)
+		fire_bullet(_aim_dir, character_data.basic_damage + XpManager.attack_damage - 1)
 
 
 # --- Aim cursor ---------------------------------------------------------
@@ -345,3 +346,10 @@ func _shake_step(t: float, strength: float) -> void:
 
 func _shake_end() -> void:
 	camera.offset = Vector2.ZERO
+	
+func _on_leveled_up(_new_level: int) -> void:
+	max_hp += 1
+	current_hp += 1
+	health_changed.emit(current_hp, max_hp)
+	
+	
