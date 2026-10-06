@@ -1,0 +1,131 @@
+[gd_scene format=3 uid="uid://byh4m73ybaqsu"]
+
+[ext_resource type="Script" uid="uid://bxcaorkai7w7h" path="res://scripts/Temp_Scripts/playtest.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://bd740f8hrlroe" path="res://scenes/TempScenes/playtest_player.tscn" id="2"]
+[ext_resource type="Texture2D" uid="uid://bg1dmaj8d2ujh" path="res://assets/Maps/CorpoHQ/Arasaka_1.png" id="2_b56qm"]
+[ext_resource type="Script" uid="uid://i7grus02o11p" path="res://scripts/Temp_Scripts/playtest_hud.gd" id="3"]
+[ext_resource type="Texture2D" uid="uid://bup4tyloit23b" path="res://assets/Maps/CorpoHQ/Arasaka2.png" id="3_3ob4o"]
+[ext_resource type="PackedScene" uid="uid://dd2ujpgqjexxb" path="res://scenes/TempScenes/playtest_hud.tscn" id="3_othej"]
+[ext_resource type="Script" uid="uid://djjyfgq6txhds" path="res://scripts/Temp_Scripts/ultimate_cutscene.gd" id="4"]
+[ext_resource type="Texture2D" uid="uid://ccoanp0et3omm" path="res://assets/Maps/CorpoHQ/Arasaka_2.png" id="4_xjs12"]
+[ext_resource type="AudioStream" uid="uid://pk1uiu3e6tjq" path="res://assets/Music/The Rebel Path.mp3" id="5_othej"]
+[ext_resource type="AudioStream" uid="uid://kvyayo73a2w0" path="res://assets/Music/swordslash.mp3" id="6_3ob4o"]
+[ext_resource type="Script" uid="uid://d0168il77yx0e" path="res://scripts/Temp_Scripts/AbilityFanBurst.gd" id="6_k5umx"]
+[ext_resource type="Script" uid="uid://c1f4e37o2sy4n" path="res://scripts/Temp_Scripts/AbilityShockwave.gd" id="7_tjmnq"]
+[ext_resource type="Script" uid="uid://bvlbg5t2grliw" path="res://scripts/Temp_Scripts/AbilityDash.gd" id="8_mnpca"]
+[ext_resource type="Script" uid="uid://1xtmfxmy7vct" path="res://scripts/Temp_Scripts/AbilityUltimate.gd" id="9_6v0qe"]
+[ext_resource type="Script" uid="uid://dad7ood8pbv8u" path="res://scripts/Temp_Scripts/CharacterData.gd" id="10_5uwqt"]
+[ext_resource type="Texture2D" uid="uid://c3p7iskri0cd5" path="res://assets/Characters/Vow/Vow_Illustration.png" id="15_tjmnq"]
+[ext_resource type="AudioStream" uid="uid://bgx4qr51i6eb4" path="res://assets/Music/Vow_Ult_quote.mp3" id="16_mnpca"]
+
+[sub_resource type="Resource" id="Resource_3ob4o"]
+script = ExtResource("10_5uwqt")
+ability_1_script = ExtResource("6_k5umx")
+ability_2_script = ExtResource("7_tjmnq")
+ability_3_script = ExtResource("8_mnpca")
+ability_4_script = ExtResource("9_6v0qe")
+metadata/_custom_type_script = "uid://dad7ood8pbv8u"
+
+[sub_resource type="Animation" id="Animation_tjmnq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:portrait_x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.03]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:portrait_y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.03]
+}
+
+[sub_resource type="Animation" id="Animation_mnpca"]
+resource_name = "vow_ult"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:portrait_x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.03]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:portrait_y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.03]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6v0qe"]
+_data = {
+&"RESET": SubResource("Animation_tjmnq"),
+&"vow_ult": SubResource("Animation_mnpca")
+}
+
+[node name="Playtest" type="Node2D" unique_id=436201814]
+script = ExtResource("1")
+arena_size = Vector2(4100, 1448)
+
+[node name="Stage" type="Sprite2D" parent="." unique_id=244336456]
+scale = Vector2(2, 2)
+texture = ExtResource("2_b56qm")
+
+[node name="Sprite2D" type="Sprite2D" parent="Stage" unique_id=1745483938]
+position = Vector2(0, -467.5)
+texture = ExtResource("3_3ob4o")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Stage" unique_id=774730785]
+z_index = 2
+position = Vector2(0, 409.5)
+texture = ExtResource("4_xjs12")
+
+[node name="Player" parent="." unique_id=1114683646 instance=ExtResource("2")]
+character_data = SubResource("Resource_3ob4o")
+slash_sound = ExtResource("6_3ob4o")
+
+[node name="HUD" parent="." unique_id=337117531 instance=ExtResource("3_othej")]
+script = ExtResource("3")
+
+[node name="UltimateCutscene" type="CanvasLayer" parent="." unique_id=1864899912]
+script = ExtResource("4")
+portrait = ExtResource("15_tjmnq")
+banner_text = "Bridal Cries"
+banner_font_size = 115
+banner_color = Color(0.75686276, 0, 0.20392157, 1)
+voice_line = ExtResource("16_mnpca")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UltimateCutscene" unique_id=1860973153]
+libraries/ = SubResource("AnimationLibrary_6v0qe")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=904793622]
+process_mode = 3
+stream = ExtResource("5_othej")
+volume_db = -20.07
+pitch_scale = 0.65
+autoplay = true
+parameters/looping = true

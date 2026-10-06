@@ -3,8 +3,21 @@
 [ext_resource type="Script" uid="uid://d4ge4g72xfbjg" path="res://scripts/MainMenu_Scrips/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="AudioStream" uid="uid://beeck8r4ihpga" path="res://assets/Music/MenuMusic.mp3" id="2_8ln24"]
 [ext_resource type="Script" uid="uid://cgudegxae1078" path="res://scripts/MainMenu_Scrips/audio_control.gd" id="2_ekxnf"]
+[ext_resource type="VideoStream" uid="uid://tosjbvmhnsf3" path="res://assets/Background/BGMenu_p2.ogv" id="3_460oo"]
 [ext_resource type="Script" uid="uid://cxn34lqrfs0" path="res://scripts/MainMenu_Scrips/fullscreen_control.gd" id="3_bqqt6"]
+[ext_resource type="Texture2D" uid="uid://bv8kgl5lkq0w" path="res://assets/Buttons/MM_Buttons/Start_N.png" id="4_fwirt"]
 [ext_resource type="Script" uid="uid://cb1umgn16gjj4" path="res://scripts/MainMenu_Scrips/scale_control.gd" id="4_wu84c"]
+[ext_resource type="Texture2D" uid="uid://c46c2ligwnrca" path="res://assets/Buttons/MM_Buttons/Start_P.png" id="5_yck0h"]
+[ext_resource type="Texture2D" uid="uid://ot2ophg66vgk" path="res://assets/Buttons/MM_Buttons/Start_H.png" id="6_g72vb"]
+[ext_resource type="Texture2D" uid="uid://rfldqepu0544" path="res://assets/Buttons/MM_Buttons/Options_N.png" id="7_kyccw"]
+[ext_resource type="Texture2D" uid="uid://dtctamia0ny2e" path="res://assets/Buttons/MM_Buttons/Options_P.png" id="8_jj6og"]
+[ext_resource type="Texture2D" uid="uid://ca5vpqn3apfsv" path="res://assets/Buttons/MM_Buttons/Options_H.png" id="9_rer4v"]
+[ext_resource type="Texture2D" uid="uid://bgbos8wdyh8ke" path="res://assets/Buttons/MM_Buttons/Exit_N.png" id="10_dfrt3"]
+[ext_resource type="Texture2D" uid="uid://j5r2m01pqmab" path="res://assets/Buttons/MM_Buttons/Exit_P.png" id="11_vbil6"]
+[ext_resource type="Texture2D" uid="uid://byiwgf5c08gil" path="res://assets/Buttons/MM_Buttons/Exit_H.png" id="12_u25lc"]
+[ext_resource type="Texture2D" uid="uid://deube1dhvwcxi" path="res://assets/Buttons/Level_Select/LevelSelect_N.png" id="13_kyccw"]
+[ext_resource type="Texture2D" uid="uid://c2txaypqc5wqe" path="res://assets/Buttons/Level_Select/LevelSelect_P.png" id="14_jj6og"]
+[ext_resource type="Texture2D" uid="uid://cce6fsv8bfjtc" path="res://assets/Buttons/Level_Select/LevelSelect_H.png" id="15_rer4v"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_py7os"]
 color = Color(1, 1, 1, 1)
@@ -31,46 +44,96 @@ stream = ExtResource("2_8ln24")
 autoplay = true
 bus = &"Music"
 
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=1901013342]
+z_index = -2
+layout_mode = 0
+offset_left = -3.5385742
+offset_top = -5.1694336
+offset_right = 1916.4614
+offset_bottom = 1074.8306
+scale = Vector2(0.60133916, 0.6059527)
+stream = ExtResource("3_460oo")
+autoplay = true
+loop = true
+
 [node name="MainButtons" type="VBoxContainer" parent="." unique_id=1759019988]
+visible = false
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -61.0
-offset_top = -79.0
-offset_right = 61.0
-offset_bottom = 79.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = -1
+anchor_left = 0.29419625
+anchor_top = 0.52751637
+anchor_right = 0.9895694
+anchor_bottom = 1.465788
+offset_right = 6.1035156e-05
+scale = Vector2(0.61, 0.61)
+theme_override_constants/separation = -86
 metadata/_edit_use_anchors_ = true
 
-[node name="Start_button" type="Button" parent="MainButtons" unique_id=1595384514]
+[node name="Start_button" type="TextureButton" parent="MainButtons" unique_id=1818083038]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
-toggle_mode = true
-text = "Start"
+texture_normal = ExtResource("4_fwirt")
+texture_pressed = ExtResource("5_yck0h")
+texture_hover = ExtResource("6_g72vb")
 
-[node name="Level-Select_button" type="Button" parent="MainButtons" unique_id=94093654]
+[node name="Option_button" type="TextureButton" parent="MainButtons" unique_id=443465813]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
-toggle_mode = true
-text = "Level Select"
+texture_normal = ExtResource("7_kyccw")
+texture_pressed = ExtResource("8_jj6og")
+texture_hover = ExtResource("9_rer4v")
 
-[node name="Option_button" type="Button" parent="MainButtons" unique_id=1202323513]
+[node name="Exit_button" type="TextureButton" parent="MainButtons" unique_id=743774512]
 layout_mode = 2
-theme_override_font_sizes/font_size = 30
-toggle_mode = true
+texture_normal = ExtResource("10_dfrt3")
+texture_pressed = ExtResource("11_vbil6")
+texture_hover = ExtResource("12_u25lc")
+
+[node name="LevelSelect" type="Panel" parent="." unique_id=1586653694]
+layout_mode = 0
+offset_left = 486.7307
+offset_top = 352.83057
+offset_right = 663.7307
+offset_bottom = 352.83057
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="LevelSelect" unique_id=1356529086]
+visible = false
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 65.55202
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
 text = "Options"
+horizontal_alignment = 1
+vertical_alignment = 1
 
-[node name="Exit_button" type="Button" parent="MainButtons" unique_id=1272823830]
-layout_mode = 2
+[node name="Level-Select_button" type="TextureButton" parent="LevelSelect" unique_id=148709334]
+layout_mode = 0
+offset_left = -167.26929
+offset_right = 632.7307
+offset_bottom = 200.0
+scale = Vector2(0.6438726, 0.6438726)
+texture_normal = ExtResource("13_kyccw")
+texture_pressed = ExtResource("14_jj6og")
+texture_hover = ExtResource("15_rer4v")
+
+[node name="Back_button" type="Button" parent="LevelSelect" unique_id=935750994]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 112.0
+offset_bottom = 162.0
+grow_horizontal = 2
+grow_vertical = 0
 theme_override_font_sizes/font_size = 30
 toggle_mode = true
-text = "Exit"
+text = "Back"
 
 [node name="Options Panel" type="Panel" parent="." unique_id=826016586]
+visible = false
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -202,10 +265,21 @@ popup/item_3/text = "Low"
 popup/item_3/id = 3
 script = ExtResource("4_wu84c")
 
+[node name="Label" type="Label" parent="." unique_id=1737569831]
+modulate = Color(1, 1, 1, 0.19607843)
+layout_mode = 0
+offset_left = 539.4614
+offset_top = 625.83057
+offset_right = 646.4614
+offset_bottom = 648.83057
+scale = Vector2(0.69086176, 0.69086176)
+text = "CyTac Studios"
+
 [connection signal="pressed" from="MainButtons/Start_button" to="." method="_on_start_button_pressed"]
-[connection signal="pressed" from="MainButtons/Level-Select_button" to="." method="_on_level_select_button_pressed"]
 [connection signal="pressed" from="MainButtons/Option_button" to="." method="_on_option_button_pressed"]
 [connection signal="pressed" from="MainButtons/Exit_button" to="." method="_on_exit_button_pressed"]
+[connection signal="pressed" from="LevelSelect/Level-Select_button" to="." method="_on_level_select_button_pressed"]
+[connection signal="pressed" from="LevelSelect/Back_button" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="Options Panel/Back_button" to="." method="_on_back_button_pressed"]
 [connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer/AudioControl" method="_on_value_changed"]
 [connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer4/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer4/AudioControl" method="_on_value_changed"]

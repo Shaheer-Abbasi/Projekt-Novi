@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Projekt Novi"
-run/main_scene="uid://fotc0fmi5yq"
+run/main_scene="uid://paeiprqqxcfi"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/use_filter=false
+boot_splash/image="uid://cv71we4cwyh3m"
 config/icon="res://icon.svg"
+boot_splash/minimum_display_time=4000
 
 [audio]
 
@@ -48,6 +52,11 @@ left={
 right={
 "deadzone": 0.2,
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":68,"key_label":0,"unicode":100,"location":0,"echo":false,"script":null)
+]
+}
+Dashing={
+"deadzone": 0.2,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":16,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
 
