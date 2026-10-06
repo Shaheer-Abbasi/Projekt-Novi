@@ -1,0 +1,63 @@
+[gd_scene format=3 uid="uid://paeiprqqxcfi"]
+
+[ext_resource type="Script" uid="uid://ngvfbc8t8m3p" path="res://disclaimer.gd" id="1_ytdvg"]
+[ext_resource type="Texture2D" uid="uid://buw58jgi3kn0n" path="res://assets/Background/Disclaimer.png" id="2_bn1hb"]
+[ext_resource type="Texture2D" uid="uid://cv71we4cwyh3m" path="res://assets/Background/black.png" id="3_bn1hb"]
+
+[sub_resource type="Animation" id="Animation_f0bc7"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_jsy5x"]
+resource_name = "disclaimer_fade"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.98, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_5y8nr"]
+_data = {
+&"RESET": SubResource("Animation_f0bc7"),
+&"disclaimer_fade": SubResource("Animation_jsy5x")
+}
+
+[node name="Node2D" type="Node2D" unique_id=832738841]
+texture_filter = 1
+script = ExtResource("1_ytdvg")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=582342377]
+position = Vector2(576.9604, 322.47772)
+scale = Vector2(0.60420793, 0.6042079)
+texture = ExtResource("2_bn1hb")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1254518345]
+libraries/ = SubResource("AnimationLibrary_5y8nr")
+autoplay = &"disclaimer_fade"
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=891266882]
+z_index = -3
+position = Vector2(568, 315)
+scale = Vector2(0.6685185, 0.66851854)
+texture = ExtResource("3_bn1hb")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
