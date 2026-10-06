@@ -265,10 +265,21 @@ popup/item_3/text = "Low"
 popup/item_3/id = 3
 script = ExtResource("4_wu84c")
 
+[node name="Label" type="Label" parent="." unique_id=1737569831]
+modulate = Color(1, 1, 1, 0.19607843)
+layout_mode = 0
+offset_left = 539.4614
+offset_top = 625.83057
+offset_right = 646.4614
+offset_bottom = 648.83057
+scale = Vector2(0.69086176, 0.69086176)
+text = "CyTac Studios"
+
 [connection signal="pressed" from="MainButtons/Start_button" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MainButtons/Option_button" to="." method="_on_option_button_pressed"]
 [connection signal="pressed" from="MainButtons/Exit_button" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="LevelSelect/Level-Select_button" to="." method="_on_level_select_button_pressed"]
+[connection signal="pressed" from="LevelSelect/Back_button" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="Options Panel/Back_button" to="." method="_on_back_button_pressed"]
 [connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer/AudioControl" method="_on_value_changed"]
 [connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer4/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer4/AudioControl" method="_on_value_changed"]

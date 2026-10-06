@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="Projekt Novi"
-run/main_scene="uid://fotc0fmi5yq"
+run/main_scene="uid://paeiprqqxcfi"
 config/features=PackedStringArray("4.7", "GL Compatibility")
+boot_splash/bg_color=Color(0, 0, 0, 1)
+boot_splash/use_filter=false
+boot_splash/image="uid://cv71we4cwyh3m"
 config/icon="res://icon.svg"
+boot_splash/minimum_display_time=4000
 
 [audio]
 

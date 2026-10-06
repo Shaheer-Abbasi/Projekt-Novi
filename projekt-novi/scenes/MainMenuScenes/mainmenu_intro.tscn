@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://d16ccel6ttjis"]
+
+[ext_resource type="Script" uid="uid://chh84hrsq2c0r" path="res://scenes/MainMenuScenes/mainmenu_intro.gd" id="1_eo1eg"]
+[ext_resource type="VideoStream" uid="uid://dfdemxleqhmmb" path="res://assets/Background/Opening_MM.ogv" id="2_42t0j"]
+[ext_resource type="AudioStream" uid="uid://bhatj1rwbm1xn" path="res://assets/Music/Glitch Sound Effect.mp3" id="3_42t0j"]
+
+[node name="Node2D" type="Node2D" unique_id=328276412]
+script = ExtResource("1_eo1eg")
+
+[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=578335332]
+z_index = -2
+offset_left = -3.5385742
+offset_top = -5.1694336
+offset_right = 1916.4614
+offset_bottom = 1074.8306
+scale = Vector2(0.60133916, 0.6059527)
+stream = ExtResource("2_42t0j")
+autoplay = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=459122170]
+stream = ExtResource("3_42t0j")
+autoplay = true
+
+[connection signal="finished" from="VideoStreamPlayer" to="." method="_on_video_stream_player_finished"]

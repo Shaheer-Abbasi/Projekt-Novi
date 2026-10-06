@@ -33,4 +33,6 @@ func _on_exit_button_pressed() -> void:
 
 
 func _on_back_button_pressed() -> void:
-	_ready()
+	main_buttons.visible = true
+	levelselect.visible = false
+	options_panel.visible = false
