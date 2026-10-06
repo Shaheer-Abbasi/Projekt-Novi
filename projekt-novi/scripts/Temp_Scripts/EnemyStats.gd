@@ -19,3 +19,19 @@ extends Resource
 ## Scales the whole enemy (sprite + collision).
 @export var body_scale: float = 1.0
 @export var tint: Color = Color.WHITE
+
+@export_group("Ranged attack")
+## Turn ON to make this enemy keep its distance and shoot lasers instead of charging you.
+@export var ranged: bool = false
+## Tries to stay about this far from the player.
+@export var preferred_distance: float = 300.0
+## Backs away if the player gets closer than this.
+@export var too_close_distance: float = 150.0
+## Only shoots when the player is within this distance.
+@export var attack_range: float = 520.0
+## Seconds between shots.
+@export var attack_cooldown: float = 2.2
+## Laser speed in pixels per second.
+@export var projectile_speed: float = 400.0
+## Damage of each laser.
+@export var projectile_damage: float = 8.0
