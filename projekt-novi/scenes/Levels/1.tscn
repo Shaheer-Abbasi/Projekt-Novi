@@ -12,6 +12,7 @@
 [ext_resource type="AudioStream" uid="uid://kvyayo73a2w0" path="res://assets/Music/swordslash.mp3" id="6_3ob4o"]
 [ext_resource type="Script" uid="uid://d0168il77yx0e" path="res://scripts/Temp_Scripts/AbilityFanBurst.gd" id="6_k5umx"]
 [ext_resource type="Script" uid="uid://c1f4e37o2sy4n" path="res://scripts/Temp_Scripts/AbilityShockwave.gd" id="7_tjmnq"]
+[ext_resource type="Script" uid="uid://cyots4pavwpa5" path="res://scripts/Temp_Scripts/AbilityBouquet.gd" id="8_1g8ht"]
 [ext_resource type="Script" uid="uid://bvlbg5t2grliw" path="res://scripts/Temp_Scripts/AbilityDash.gd" id="8_mnpca"]
 [ext_resource type="Script" uid="uid://1xtmfxmy7vct" path="res://scripts/Temp_Scripts/AbilityUltimate.gd" id="9_6v0qe"]
 [ext_resource type="Script" uid="uid://dad7ood8pbv8u" path="res://scripts/Temp_Scripts/CharacterData.gd" id="10_5uwqt"]
@@ -22,8 +23,9 @@
 script = ExtResource("10_5uwqt")
 ability_1_script = ExtResource("6_k5umx")
 ability_2_script = ExtResource("7_tjmnq")
-ability_3_script = ExtResource("8_mnpca")
+ability_3_script = ExtResource("8_1g8ht")
 ability_4_script = ExtResource("9_6v0qe")
+ability_5_script = ExtResource("8_mnpca")
 metadata/_custom_type_script = "uid://dad7ood8pbv8u"
 
 [sub_resource type="Animation" id="Animation_tjmnq"]
@@ -107,6 +109,7 @@ texture = ExtResource("4_xjs12")
 [node name="Player" parent="." unique_id=1114683646 instance=ExtResource("2")]
 character_data = SubResource("Resource_3ob4o")
 slash_sound = ExtResource("6_3ob4o")
+slash_volume_db = -5.0
 
 [node name="HUD" parent="." unique_id=337117531 instance=ExtResource("3_othej")]
 script = ExtResource("3")
@@ -114,10 +117,12 @@ script = ExtResource("3")
 [node name="UltimateCutscene" type="CanvasLayer" parent="." unique_id=1864899912]
 script = ExtResource("4")
 portrait = ExtResource("15_tjmnq")
+portrait_height = 1.0
 banner_text = "Bridal Cries"
 banner_font_size = 115
 banner_color = Color(0.75686276, 0, 0.20392157, 1)
 voice_line = ExtResource("16_mnpca")
+voice_volume_db = -3.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UltimateCutscene" unique_id=1860973153]
 libraries/ = SubResource("AnimationLibrary_6v0qe")

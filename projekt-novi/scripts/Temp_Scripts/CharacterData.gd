@@ -1,6 +1,6 @@
 class_name CharacterData
 extends Resource
-## One playable character: stats, basic attack, and its 4 abilities.
+## One playable character: stats, basic attack, 3 abilities, an Ultimate, and a Dash.
 ## Make a new .tres from this to add another character.
 
 @export var character_name: String = "Vow"
@@ -24,3 +24,5 @@ extends Resource
 @export var ability_3_script: GDScript
 ## Key 4 - the Ultimate (plays a short scene first)
 @export var ability_4_script: GDScript
+## Slot 5: NOT shown on the HUD. Put the Dash here (it uses the Shift key).
+@export var ability_5_script: GDScript

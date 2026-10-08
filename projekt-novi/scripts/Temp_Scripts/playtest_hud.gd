@@ -86,7 +86,7 @@ func bind_player(p: PlaytestPlayer) -> void:
 	for i in range(_slots.size()):
 		if not is_instance_valid(_slots[i]):
 			continue
-		var has_ability := i < p.abilities.size() and _slot_enabled[i]
+		var has_ability := i < p.abilities.size() and p.abilities[i] != null and _slot_enabled[i]
 		_slots[i].visible = has_ability
 		if has_ability:
 			_set_text(_slot_names[i], slot_label_format.replace("{key}", _key_text(i)).replace("{name}", p.abilities[i].ability_name))
@@ -112,6 +112,8 @@ func _process(_delta: float) -> void:
 		if not is_instance_valid(_slots[i]):
 			continue
 		var a: Ability = _player.abilities[i]
+		if a == null:
+			continue
 		_set_text(_slot_status[i], "READY" if a.is_ready() else "%.1fs" % a.cooldown_left())
 		_slots[i].modulate = Color.WHITE if a.is_ready() else Color(0.6, 0.6, 0.6)
 

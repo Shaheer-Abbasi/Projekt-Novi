@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dd2ujpgqjexxb"]
 
-[ext_resource type="Texture2D" uid="uid://df68chyi6nrjh" path="res://assets/Characters/Vow/VowPortrait.png" id="1_tf0qc"]
+[ext_resource type="Texture2D" uid="uid://b3ecrm5oqdisj" path="res://assets/Characters/Vow/VowPortrait_1.png" id="1_kh2os"]
 [ext_resource type="Texture2D" uid="uid://dd07y62c4e5ah" path="res://assets/Characters/Vow/vow_waveslash.png" id="2_mfmaq"]
 [ext_resource type="Texture2D" uid="uid://crb6wn7pbjvec" path="res://assets/Characters/Vow/Vow_empwave.png" id="3_2lns3"]
 [ext_resource type="Texture2D" uid="uid://hoihp5hw30ui" path="res://assets/Characters/Vow/VowUltimate.png" id="3_kh2os"]
@@ -61,6 +61,7 @@ grow_vertical = 2
 mouse_filter = 2
 
 [node name="Node2D" type="Node2D" parent="Root" unique_id=1405021790]
+position = Vector2(0, 19)
 
 [node name="NameLabel" type="Label" parent="Root/Node2D" unique_id=1969466632]
 unique_name_in_owner = true
@@ -86,6 +87,12 @@ theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 16
 text = "HP 120 / 120"
 
+[node name="Sprite2D" type="Sprite2D" parent="Root/Node2D" unique_id=1254562346]
+position = Vector2(103, 44.000004)
+rotation = 0.23374304
+scale = Vector2(0.32332194, 0.32332194)
+texture = ExtResource("1_kh2os")
+
 [node name="HPBar" type="ProgressBar" parent="Root/Node2D" unique_id=802844240]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(230, 22)
@@ -97,11 +104,6 @@ mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_5cp65")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ic8dp")
 show_percentage = false
-
-[node name="Sprite2D" type="Sprite2D" parent="Root/Node2D" unique_id=1254562346]
-position = Vector2(164, 69)
-scale = Vector2(0.32332194, 0.32332194)
-texture = ExtResource("1_tf0qc")
 
 [node name="TimerLabel" type="Label" parent="Root" unique_id=67587178]
 unique_name_in_owner = true
@@ -233,7 +235,6 @@ scale = Vector2(0.08205999, 0.079744846)
 texture = ExtResource("3_2lns3")
 
 [node name="Ability3" type="PanelContainer" parent="Root/AbilityBar" unique_id=1369707217]
-visible = false
 custom_minimum_size = Vector2(136, 96)
 layout_mode = 2
 mouse_filter = 2
@@ -258,7 +259,7 @@ layout_mode = 2
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 14
-text = "Bridal Cries"
+text = "Bouquet Toss"
 horizontal_alignment = 1
 
 [node name="Status" type="Label" parent="Root/AbilityBar/Ability3/Box" unique_id=1804944218]

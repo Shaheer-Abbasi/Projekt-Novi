@@ -51,6 +51,10 @@ const HIT_INVULN_TIME := 0.35
 ## Random pitch change so repeated slashes don't sound identical (0 = none, 0.1 = +/-10%).
 @export_range(0.0, 0.5, 0.01) var slash_pitch_variation: float = 0.08
 
+@export_group("Bouquet")
+## Your own bouquet art for the Bouquet Toss. Leave empty to use the built-in drawn bouquet.
+@export var bouquet_texture: Texture2D
+
 var character_name: String = "Vow"
 var max_hp: float = 120.0
 var current_hp: float = 120.0
@@ -98,7 +102,7 @@ func _exit_tree() -> void:
 
 
 func _ensure_input_actions() -> void:
-	var keys := {"ability_1": KEY_1, "ability_2": KEY_2, "ability_3": KEY_SHIFT, "ability_4": KEY_4}
+	var keys := {"ability_1": KEY_1, "ability_2": KEY_2, "ability_3": KEY_3, "ability_4": KEY_4, "ability_5": KEY_SHIFT}
 	for action in keys:
 		if InputMap.has_action(action):
 			continue
@@ -133,9 +137,11 @@ func _setup_abilities() -> void:
 		character_data.ability_2_script,
 		character_data.ability_3_script,
 		character_data.ability_4_script,
+		character_data.ability_5_script,
 	]
 	for s in scripts:
 		if s == null:
+			abilities.append(null)   # empty slot: keeps every other ability on its own number / key
 			continue
 		var ability := s.new() as Ability  # Script.new() so each ability's _init() runs
 		add_child(ability)

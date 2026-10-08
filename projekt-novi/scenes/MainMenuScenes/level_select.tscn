@@ -1,8 +1,12 @@
 [gd_scene format=3 uid="uid://bypv6mifb0jsd"]
 
 [ext_resource type="Script" uid="uid://co3tgvax3gaay" path="res://scripts/Levels/level_select_button.gd" id="1_fp3ne"]
+[ext_resource type="Texture2D" uid="uid://33rkhgjrup6v" path="res://assets/Buttons/Level_Select/LevelSelect_1_N_TEMP.png" id="1_oqaha"]
+[ext_resource type="Texture2D" uid="uid://c4fgdqamjjcsv" path="res://assets/Buttons/Level_Select/LevelSelect_1_H_TEMP.png" id="2_84l2m"]
 [ext_resource type="Script" uid="uid://ceym6h7ajkuv" path="res://scripts/Levels/back_button.gd" id="2_f0th2"]
 [ext_resource type="Texture2D" uid="uid://bqvkrrsrbahdy" path="res://assets/Background/LevelSelect_BG.png" id="3_f0th2"]
+[ext_resource type="Texture2D" uid="uid://dxhjjosblsl4j" path="res://assets/Buttons/Level_Select/LevelSelect_1_H_Side_TEMP.png" id="4_84l2m"]
+[ext_resource type="Texture2D" uid="uid://dq1fc7jiaoncs" path="res://assets/Buttons/Level_Select/LevelSelect_Fake_Button.png" id="4_oqaha"]
 
 [node name="Level-Select" type="Control" unique_id=1250742765]
 layout_mode = 3
@@ -17,10 +21,12 @@ layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -640.0
-offset_right = 640.0
-offset_bottom = 180.0
+offset_left = -685.0
+offset_top = 72.0
+offset_right = 595.0
+offset_bottom = 252.0
 grow_horizontal = 2
+scale = Vector2(0.561074, 0.561074)
 theme_override_font_sizes/font_size = 120
 text = "LEVEL SELECT"
 horizontal_alignment = 1
@@ -33,47 +39,48 @@ anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -576.0
-offset_top = -500.0
-offset_right = 579.0
+offset_left = -566.0
+offset_top = -421.0
+offset_right = 589.0
+offset_bottom = 147.0
 grow_horizontal = 2
 grow_vertical = 0
+scale = Vector2(0.40555644, 0.40555644)
 
 [node name="GridContainer" type="GridContainer" parent="CenterContainer" unique_id=1394090357]
 layout_mode = 2
 offset_transform_enabled = true
 theme_override_constants/h_separation = 12
 theme_override_constants/v_separation = 12
-columns = 3
 
-[node name="LevelSelectButton" type="Button" parent="CenterContainer/GridContainer" unique_id=1999448988]
+[node name="LevelSelectButton" type="TextureButton" parent="CenterContainer/GridContainer" unique_id=1567787635]
 layout_mode = 2
-theme_override_font_sizes/font_size = 60
-text = "1"
+texture_normal = ExtResource("1_oqaha")
+texture_pressed = ExtResource("2_84l2m")
+texture_hover = ExtResource("2_84l2m")
+script = ExtResource("1_fp3ne")
+level = 1
+preview_image = ExtResource("4_84l2m")
+
+[node name="LevelSelectButton2" type="TextureButton" parent="CenterContainer/GridContainer" unique_id=1332748469]
+layout_mode = 2
+texture_normal = ExtResource("4_oqaha")
+texture_pressed = ExtResource("4_oqaha")
+texture_hover = ExtResource("4_oqaha")
 script = ExtResource("1_fp3ne")
 
-[node name="LevelSelectButton2" type="Button" parent="CenterContainer/GridContainer" unique_id=1390960732]
+[node name="LevelSelectButton3" type="TextureButton" parent="CenterContainer/GridContainer" unique_id=1668591488]
 layout_mode = 2
-theme_override_font_sizes/font_size = 60
-text = "2"
+texture_normal = ExtResource("4_oqaha")
+texture_pressed = ExtResource("4_oqaha")
+texture_hover = ExtResource("4_oqaha")
 script = ExtResource("1_fp3ne")
 
-[node name="LevelSelectButton3" type="Button" parent="CenterContainer/GridContainer" unique_id=1645782608]
+[node name="LevelSelectButton4" type="TextureButton" parent="CenterContainer/GridContainer" unique_id=598461466]
 layout_mode = 2
-theme_override_font_sizes/font_size = 60
-text = "3"
-script = ExtResource("1_fp3ne")
-
-[node name="LevelSelectButton4" type="Button" parent="CenterContainer/GridContainer" unique_id=1553476863]
-layout_mode = 2
-theme_override_font_sizes/font_size = 60
-text = "4"
-script = ExtResource("1_fp3ne")
-
-[node name="LevelSelectButton5" type="Button" parent="CenterContainer/GridContainer" unique_id=1082239114]
-layout_mode = 2
-theme_override_font_sizes/font_size = 60
-text = "5"
+texture_normal = ExtResource("4_oqaha")
+texture_pressed = ExtResource("4_oqaha")
+texture_hover = ExtResource("4_oqaha")
 script = ExtResource("1_fp3ne")
 
 [node name="BackButton" type="Button" parent="." unique_id=946156166]
