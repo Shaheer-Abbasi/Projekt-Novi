@@ -22,6 +22,7 @@ const BOSS_PATH := "res://tempresources/boss_stats.tres"
 @export var max_enemies: int = 70
 @export var enemy_spawning_enabled: bool = true
 @export var boss_phase_enabled: bool = true
+@export var round_timer_enabled: bool = true
 ## Optional: your own stats for the ranged Shooter enemy. Leave empty to use the built-in one.
 ## (If you make your own, remember to turn "Ranged" ON in it.)
 @export var shooter_stats: EnemyStats
@@ -56,7 +57,13 @@ func _ready() -> void:
 	player.global_position = arena_rect.get_center()
 	player.died.connect(_on_player_died)
 	hud.bind_player(player)
-	hud.set_timer(time_left)
+	if round_timer_enabled:
+		hud.set_timer(time_left)
+	else:
+		hud.set_timer_text("BOSS")
+	var placed_boss := get_tree().get_first_node_in_group("boss") as BossNPC
+	if placed_boss != null:
+		hud.show_boss(placed_boss)
 	queue_redraw()
 
 
@@ -83,11 +90,12 @@ func _draw() -> void:
 func _process(delta: float) -> void:
 	if state != RoundState.PLAYING:
 		return
-	time_left = maxf(time_left - delta, 0.0)
-	hud.set_timer(time_left)
+	if round_timer_enabled:
+		time_left = maxf(time_left - delta, 0.0)
+		hud.set_timer(time_left)
 	if enemy_spawning_enabled:
 		_update_spawning(delta)
-	if time_left <= 0.0 and boss_phase_enabled:
+	if round_timer_enabled and time_left <= 0.0 and boss_phase_enabled:
 		_start_boss_phase()
 
 
