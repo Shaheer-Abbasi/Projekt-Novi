@@ -328,8 +328,17 @@ func take_damage(amount: float) -> void:
 		_die()
 
 
+func force_kill() -> void:
+	if _dead:
+		return
+	current_hp = 0.0
+	health_changed.emit(current_hp, max_hp)
+	_die()
+
+
 func _die() -> void:
 	_dead = true
+	velocity = Vector2.ZERO
 	aim_cursor.visible = false
 	died.emit()
 
