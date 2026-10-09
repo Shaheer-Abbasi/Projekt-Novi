@@ -20,7 +20,7 @@ enum RepoState { COMBAT, CONE_WINDUP, SPIN_WINDUP, KAMIKAZE }
 @export var cone_half_angle_degrees: float = 38.0
 @export var cone_damage: float = 14.0
 @export var cone_cooldown: float = 1.25
-@export var cone_windup: float = 0.42
+@export var cone_windup: float = 0.9
 
 @export_group("Anti-Camp Spin")
 @export var close_time_before_spin: float = 5.0
@@ -106,7 +106,7 @@ func _update_combat(delta: float, distance: float) -> void:
 		_close_time = maxf(_close_time - delta * 2.0, 0.0)
 
 	_laser_left -= delta
-	if distance > melee_range * 0.9 and _laser_left <= 0.0:
+	if distance > melee_range and _laser_left <= 0.0:
 		_fire_laser_burst()
 		_laser_left = laser_interval
 
@@ -129,6 +129,9 @@ func _begin_cone() -> void:
 	_repo_state_left = cone_windup
 	_facing_dir = (player.global_position - global_position).normalized()
 	_set_tint(Color(1.0, 0.52, 0.18))
+	var tw := create_tween()
+	tw.tween_property(sprite, "scale", Vector2(0.82, 0.82), cone_windup * 0.72)
+	tw.tween_property(sprite, "scale", Vector2(0.7, 0.7), cone_windup * 0.28)
 	queue_redraw()
 
 
@@ -263,14 +266,17 @@ func _draw() -> void:
 
 	if _repo_state == RepoState.CONE_WINDUP:
 		var half := deg_to_rad(cone_half_angle_degrees)
+		var charge := 1.0 - clampf(_repo_state_left / maxf(cone_windup, 0.01), 0.0, 1.0)
+		var telegraph_radius := lerpf(cone_radius * 0.25, cone_radius, charge)
 		var points := PackedVector2Array([Vector2.ZERO])
 		var segments := 18
 		for i in range(segments + 1):
 			var angle := lerpf(-half, half, float(i) / float(segments))
-			points.append(_facing_dir.rotated(angle) * cone_radius)
-		draw_colored_polygon(points, Color(1.0, 0.28, 0.05, 0.22))
+			points.append(_facing_dir.rotated(angle) * telegraph_radius)
+		draw_colored_polygon(points, Color(1.0, 0.28, 0.05, 0.12 + charge * 0.24))
 		draw_line(Vector2.ZERO, _facing_dir.rotated(-half) * cone_radius, Color(1.0, 0.55, 0.15, 0.9), 4.0)
 		draw_line(Vector2.ZERO, _facing_dir.rotated(half) * cone_radius, Color(1.0, 0.55, 0.15, 0.9), 4.0)
+		draw_arc(Vector2.ZERO, telegraph_radius, _facing_dir.angle() - half, _facing_dir.angle() + half, 24, Color(1.0, 0.85, 0.25, 0.95), 6.0)
 
 	if _repo_state == RepoState.SPIN_WINDUP:
 		var progress := 1.0 - clampf(_repo_state_left / maxf(spin_windup, 0.01), 0.0, 1.0)
