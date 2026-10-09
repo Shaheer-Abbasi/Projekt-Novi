@@ -31,7 +31,7 @@ enum RepoState { COMBAT, CONE_WINDUP, SPIN_WINDUP, KAMIKAZE }
 
 @export_group("Kamikaze")
 @export_range(0.05, 0.9, 0.01) var kamikaze_health_ratio: float = 0.25
-@export var kamikaze_windup: float = 2.35
+@export var kamikaze_windup: float = 11.5
 @export var explosion_radius: float = 900.0
 
 var _repo_state: RepoState = RepoState.COMBAT
@@ -43,8 +43,12 @@ var _repo_state_left: float = 0.0
 var _facing_dir: Vector2 = Vector2.RIGHT
 var _spin_recovery_left: float = 0.0
 var _message_layer: CanvasLayer
+var _message_panel: PanelContainer
 var _message_label: Label
 var _message_tween: Tween
+var _kamikaze_intro_left: float = 0.0
+var _countdown_value: int = 10
+var _countdown_tick_left: float = 0.0
 
 
 func _ready() -> void:
@@ -54,7 +58,7 @@ func _ready() -> void:
 	stats.ranged = false
 	stats.speed = 0.0
 	_setup_message_ui()
-	call_deferred("_announce", "CORPORATE PROPERTY DETECTED.\nBEGINNING REPOSSESSION OF CORPORATE ASSETS.", 3.8)
+	call_deferred("_announce", "Corporate property stolen detected.\ninitiating asset repossession protocal", 4.2)
 
 
 func _physics_process(delta: float) -> void:
@@ -193,9 +197,12 @@ func _begin_kamikaze() -> void:
 	phase_changed.emit(phase)
 	_repo_state = RepoState.KAMIKAZE
 	_repo_state_left = kamikaze_windup
+	_kamikaze_intro_left = 1.5
+	_countdown_value = 10
+	_countdown_tick_left = 0.0
 	velocity = Vector2.ZERO
 	_set_tint(Color(1.0, 0.02, 0.02))
-	_announce("INITIATING KAMIKAZE MODE", kamikaze_windup)
+	_announce("Corporate confidentiality compromised.\nBeginning total facility sterilization", 1.5)
 	if is_instance_valid(player):
 		player.shake(7.0, kamikaze_windup)
 	RingFX.spawn(get_parent(), global_position, 180.0, Color(1.0, 0.0, 0.0), kamikaze_windup)
@@ -204,6 +211,15 @@ func _begin_kamikaze() -> void:
 
 func _update_kamikaze(delta: float) -> void:
 	_repo_state_left -= delta
+	_kamikaze_intro_left -= delta
+
+	if _kamikaze_intro_left <= 0.0 and _countdown_value > 0:
+		_countdown_tick_left -= delta
+		if _countdown_tick_left <= 0.0:
+			_announce("%d..." % _countdown_value, 1.0)
+			_countdown_value -= 1
+			_countdown_tick_left = 1.0
+
 	# Faster pulse as the timer approaches zero.
 	var pulse := 0.55 + 0.45 * sin(Time.get_ticks_msec() * 0.02)
 	sprite.modulate = Color(1.0, 0.05 + pulse * 0.28, 0.05 + pulse * 0.08)
@@ -232,18 +248,43 @@ func _setup_message_ui() -> void:
 	_message_layer.layer = 20
 	add_child(_message_layer)
 
+	_message_panel = PanelContainer.new()
+	_message_panel.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	_message_panel.position = Vector2(-390.0, 72.0)
+	_message_panel.custom_minimum_size = Vector2(780.0, 118.0)
+
+	var bubble := StyleBoxFlat.new()
+	bubble.bg_color = Color(0.035, 0.035, 0.045, 0.96)
+	bubble.border_color = Color(0.95, 0.12, 0.14, 1.0)
+	bubble.set_border_width_all(3)
+	bubble.set_corner_radius_all(18)
+	bubble.content_margin_left = 28.0
+	bubble.content_margin_right = 28.0
+	bubble.content_margin_top = 18.0
+	bubble.content_margin_bottom = 18.0
+	_message_panel.add_theme_stylebox_override("panel", bubble)
+	_message_panel.visible = false
+	_message_layer.add_child(_message_panel)
+
 	_message_label = Label.new()
-	_message_label.set_anchors_preset(Control.PRESET_CENTER_TOP)
-	_message_label.position = Vector2(-440.0, 92.0)
-	_message_label.size = Vector2(880.0, 110.0)
+	_message_label.custom_minimum_size = Vector2(720.0, 78.0)
 	_message_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_message_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	_message_label.add_theme_font_size_override("font_size", 27)
-	_message_label.add_theme_color_override("font_color", Color(1.0, 0.22, 0.20))
-	_message_label.add_theme_color_override("font_outline_color", Color(0.02, 0.01, 0.01))
-	_message_label.add_theme_constant_override("outline_size", 8)
-	_message_label.visible = false
-	_message_layer.add_child(_message_label)
+	_message_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_message_label.add_theme_font_size_override("font_size", 26)
+	_message_label.add_theme_color_override("font_color", Color(1.0, 0.88, 0.88))
+	_message_label.add_theme_color_override("font_outline_color", Color(0.0, 0.0, 0.0))
+	_message_label.add_theme_constant_override("outline_size", 4)
+	_message_panel.add_child(_message_label)
+
+	var tail := Polygon2D.new()
+	tail.polygon = PackedVector2Array([
+		Vector2(365.0, 114.0),
+		Vector2(415.0, 114.0),
+		Vector2(390.0, 146.0)
+	])
+	tail.color = Color(0.95, 0.12, 0.14, 1.0)
+	_message_panel.add_child(tail)
 
 
 func _announce(message: String, duration: float = 2.0) -> void:
@@ -252,12 +293,12 @@ func _announce(message: String, duration: float = 2.0) -> void:
 	if _message_tween != null:
 		_message_tween.kill()
 	_message_label.text = message
-	_message_label.modulate.a = 1.0
-	_message_label.visible = true
+	_message_panel.modulate.a = 1.0
+	_message_panel.visible = true
 	_message_tween = create_tween()
-	_message_tween.tween_interval(maxf(duration - 0.35, 0.1))
-	_message_tween.tween_property(_message_label, "modulate:a", 0.0, 0.35)
-	_message_tween.tween_callback(_message_label.hide)
+	_message_tween.tween_interval(maxf(duration - 0.25, 0.1))
+	_message_tween.tween_property(_message_panel, "modulate:a", 0.0, 0.25)
+	_message_tween.tween_callback(_message_panel.hide)
 
 
 func _draw() -> void:
