@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="BossStats" format=3]
+
+[ext_resource type="Script" path="res://scripts/Temp_Scripts/BossStats.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+enemy_name = "Acarion Repo Unit"
+max_hp = 1500.0
+damage = 14.0
+speed = 0.0
+durability = 2.0
+contact_cooldown = 0.8
+body_scale = 2.7
+tint = Color(0.72, 0.78, 0.88, 1)
+boss_display_name = "ACARION REPO UNIT"
+phase_2_speed_multiplier = 1.0
+phase_2_damage_multiplier = 1.0
+attack_interval_phase_1 = 1.35
+attack_interval_phase_2 = 0.0
