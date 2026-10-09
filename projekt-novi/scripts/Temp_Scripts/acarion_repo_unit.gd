@@ -20,7 +20,7 @@ enum RepoState { COMBAT, CONE_WINDUP, SPIN_WINDUP, KAMIKAZE }
 @export var cone_half_angle_degrees: float = 38.0
 @export var cone_damage: float = 14.0
 @export var cone_cooldown: float = 1.25
-@export var cone_windup: float = 1.25
+@export var cone_windup: float = 1.0
 
 @export_group("Anti-Camp Spin")
 @export var close_time_before_spin: float = 5.0
