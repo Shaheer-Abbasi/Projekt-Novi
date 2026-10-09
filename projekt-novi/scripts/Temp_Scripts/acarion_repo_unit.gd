@@ -39,7 +39,7 @@ var _home_position: Vector2
 var _laser_left: float = 0.8
 var _melee_left: float = 0.0
 var _close_time: float = 0.0
-var _state_left: float = 0.0
+var _repo_state_left: float = 0.0
 var _facing_dir: Vector2 = Vector2.RIGHT
 var _spin_recovery_left: float = 0.0
 var _message_layer: CanvasLayer
@@ -78,14 +78,14 @@ func _physics_process(delta: float) -> void:
 		RepoState.KAMIKAZE:
 			_update_kamikaze(delta)
 		RepoState.CONE_WINDUP:
-			_state_left -= delta
+			_repo_state_left -= delta
 			queue_redraw()
-			if _state_left <= 0.0:
+			if _repo_state_left <= 0.0:
 				_execute_cone()
 		RepoState.SPIN_WINDUP:
-			_state_left -= delta
+			_repo_state_left -= delta
 			queue_redraw()
-			if _state_left <= 0.0:
+			if _repo_state_left <= 0.0:
 				_execute_spin()
 		RepoState.COMBAT:
 			_update_combat(delta, distance)
@@ -126,7 +126,7 @@ func _fire_laser_burst() -> void:
 
 func _begin_cone() -> void:
 	_repo_state = RepoState.CONE_WINDUP
-	_state_left = cone_windup
+	_repo_state_left = cone_windup
 	_facing_dir = (player.global_position - global_position).normalized()
 	_set_tint(Color(1.0, 0.52, 0.18))
 	queue_redraw()
@@ -148,7 +148,7 @@ func _execute_cone() -> void:
 
 func _begin_spin() -> void:
 	_repo_state = RepoState.SPIN_WINDUP
-	_state_left = spin_windup
+	_repo_state_left = spin_windup
 	_close_time = 0.0
 	_set_tint(Color(1.0, 0.12, 0.08))
 	_announce("PROXIMITY VIOLATION.\nCLEAR THE RETRIEVAL ZONE.", spin_windup)
@@ -189,7 +189,7 @@ func _begin_kamikaze() -> void:
 	phase = 2
 	phase_changed.emit(phase)
 	_repo_state = RepoState.KAMIKAZE
-	_state_left = kamikaze_windup
+	_repo_state_left = kamikaze_windup
 	velocity = Vector2.ZERO
 	_set_tint(Color(1.0, 0.02, 0.02))
 	_announce("INITIATING KAMIKAZE MODE", kamikaze_windup)
@@ -200,12 +200,12 @@ func _begin_kamikaze() -> void:
 
 
 func _update_kamikaze(delta: float) -> void:
-	_state_left -= delta
+	_repo_state_left -= delta
 	# Faster pulse as the timer approaches zero.
 	var pulse := 0.55 + 0.45 * sin(Time.get_ticks_msec() * 0.02)
 	sprite.modulate = Color(1.0, 0.05 + pulse * 0.28, 0.05 + pulse * 0.08)
 	queue_redraw()
-	if _state_left <= 0.0:
+	if _repo_state_left <= 0.0:
 		_detonate()
 
 
@@ -273,11 +273,11 @@ func _draw() -> void:
 		draw_line(Vector2.ZERO, _facing_dir.rotated(half) * cone_radius, Color(1.0, 0.55, 0.15, 0.9), 4.0)
 
 	if _repo_state == RepoState.SPIN_WINDUP:
-		var progress := 1.0 - clampf(_state_left / maxf(spin_windup, 0.01), 0.0, 1.0)
+		var progress := 1.0 - clampf(_repo_state_left / maxf(spin_windup, 0.01), 0.0, 1.0)
 		draw_circle(Vector2.ZERO, spin_radius, Color(1.0, 0.05, 0.02, 0.08), false, 10.0)
 		draw_arc(Vector2.ZERO, spin_radius, -PI * 0.5, -PI * 0.5 + TAU * progress, 96, Color(1.0, 0.2, 0.08), 12.0)
 
 	if _repo_state == RepoState.KAMIKAZE:
-		var progress := 1.0 - clampf(_state_left / maxf(kamikaze_windup, 0.01), 0.0, 1.0)
+		var progress := 1.0 - clampf(_repo_state_left / maxf(kamikaze_windup, 0.01), 0.0, 1.0)
 		var radius := lerpf(120.0, explosion_radius, progress)
 		draw_circle(Vector2.ZERO, radius, Color(1.0, 0.0, 0.0, 0.05), false, 8.0)
