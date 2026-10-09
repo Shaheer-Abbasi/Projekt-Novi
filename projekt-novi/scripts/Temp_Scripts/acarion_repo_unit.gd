@@ -59,7 +59,7 @@ func _ready() -> void:
 	stats.ranged = false
 	stats.speed = 0.0
 	_setup_message_ui()
-	call_deferred("_announce", "Corporate property stolen detected.\ninitiating asset repossession protocal", 4.2)
+	
 
 
 func _physics_process(delta: float) -> void:
@@ -206,12 +206,12 @@ func _begin_kamikaze() -> void:
 	phase_changed.emit(phase)
 	_repo_state = RepoState.KAMIKAZE
 	_repo_state_left = kamikaze_windup
-	_kamikaze_intro_left = 1.5
-	_countdown_value = 10
+	_kamikaze_intro_left = 0.0
+	_countdown_value = 0
 	_countdown_tick_left = 0.0
 	velocity = Vector2.ZERO
 	_set_tint(Color(1.0, 0.02, 0.02))
-	_announce("Corporate confidentiality compromised.\nBeginning total facility sterilization", 1.5)
+	_announce("Corporate confidentiality compromised.\nBeginning total facility sterilization", 4.5)
 	if is_instance_valid(player):
 		player.shake(7.0, kamikaze_windup)
 	RingFX.spawn(get_parent(), global_position, 180.0, Color(1.0, 0.0, 0.0), kamikaze_windup)
@@ -220,15 +220,6 @@ func _begin_kamikaze() -> void:
 
 func _update_kamikaze(delta: float) -> void:
 	_repo_state_left -= delta
-	_kamikaze_intro_left -= delta
-
-	if _kamikaze_intro_left <= 0.0 and _countdown_value > 0:
-		_countdown_tick_left -= delta
-		if _countdown_tick_left <= 0.0:
-			_announce("%d..." % _countdown_value, 1.0)
-			_countdown_value -= 1
-			_countdown_tick_left = 1.0
-
 	# Faster pulse as the timer approaches zero.
 	var pulse := 0.55 + 0.45 * sin(Time.get_ticks_msec() * 0.02)
 	sprite.modulate = Color(1.0, 0.05 + pulse * 0.28, 0.05 + pulse * 0.08)
