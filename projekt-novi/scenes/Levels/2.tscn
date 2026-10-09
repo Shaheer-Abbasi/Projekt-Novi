@@ -17,6 +17,7 @@
 [ext_resource type="Script" uid="uid://dad7ood8pbv8u" path="res://scripts/Temp_Scripts/CharacterData.gd" id="10_5uwqt"]
 [ext_resource type="Texture2D" uid="uid://c3p7iskri0cd5" path="res://assets/Characters/Vow/Vow_Illustration.png" id="15_tjmnq"]
 [ext_resource type="AudioStream" uid="uid://bgx4qr51i6eb4" path="res://assets/Music/Vow_Ult_quote.mp3" id="16_mnpca"]
+[ext_resource type="PackedScene" path="res://scenes/TempScenes/acarion_repo_unit.tscn" id="17_acarion"]
 
 [sub_resource type="Resource" id="Resource_3ob4o"]
 script = ExtResource("10_5uwqt")
@@ -93,6 +94,7 @@ arena_size = Vector2(4100, 1448)
 max_enemies = 0
 enemy_spawning_enabled = false
 boss_phase_enabled = false
+round_timer_enabled = false
 
 [node name="Stage" type="Sprite2D" parent="." unique_id=244336456]
 scale = Vector2(2, 2)
@@ -110,6 +112,9 @@ texture = ExtResource("4_xjs12")
 [node name="Player" parent="." unique_id=1114683646 instance=ExtResource("2")]
 character_data = SubResource("Resource_3ob4o")
 slash_sound = ExtResource("6_3ob4o")
+
+[node name="AcarionRepoUnit" parent="." instance=ExtResource("17_acarion")]
+position = Vector2(0, 0)
 
 [node name="HUD" parent="." unique_id=337117531 instance=ExtResource("3_othej")]
 script = ExtResource("3")
