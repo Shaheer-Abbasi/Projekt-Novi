@@ -12,7 +12,7 @@ enum RepoState { COMBAT, CONE_WINDUP, SPIN_WINDUP, KAMIKAZE }
 @export var laser_speed: float = 520.0
 @export var laser_damage: float = 9.0
 @export var laser_count: int = 3
-@export var laser_spread_degrees: float = 9.0
+@export var laser_spread_degrees: float = 22.0
 
 @export_group("Melee")
 @export var melee_range: float = 235.0
@@ -42,6 +42,7 @@ var _close_time: float = 0.0
 var _repo_state_left: float = 0.0
 var _facing_dir: Vector2 = Vector2.RIGHT
 var _spin_recovery_left: float = 0.0
+var _spin_queued: bool = false
 var _message_layer: CanvasLayer
 var _message_panel: PanelContainer
 var _message_label: Label
@@ -71,6 +72,15 @@ func _physics_process(delta: float) -> void:
 
 	var to_player := player.global_position - global_position
 	var distance := to_player.length()
+
+	if _repo_state != RepoState.KAMIKAZE and _spin_recovery_left <= 0.0 and not _spin_queued:
+		if distance <= melee_range:
+			_close_time += delta
+			if _close_time >= close_time_before_spin:
+				_spin_queued = true
+		else:
+			_close_time = 0.0
+
 	if _repo_state == RepoState.COMBAT and distance > 1.0:
 		_facing_dir = to_player.normalized()
 		sprite.flip_h = _facing_dir.x < 0.0
@@ -98,16 +108,14 @@ func _physics_process(delta: float) -> void:
 
 
 func _update_combat(delta: float, distance: float) -> void:
+	if _spin_queued and _spin_recovery_left <= 0.0:
+		_begin_spin()
+		return
+
 	if distance <= melee_range:
-		_close_time += delta
-		if _close_time >= close_time_before_spin and _spin_recovery_left <= 0.0:
-			_begin_spin()
-			return
 		if _melee_left <= 0.0:
 			_begin_cone()
 			return
-	else:
-		_close_time = maxf(_close_time - delta * 2.0, 0.0)
 
 	_laser_left -= delta
 	if distance > melee_range and _laser_left <= 0.0:
@@ -154,6 +162,7 @@ func _execute_cone() -> void:
 
 
 func _begin_spin() -> void:
+	_spin_queued = false
 	_repo_state = RepoState.SPIN_WINDUP
 	_repo_state_left = spin_windup
 	_close_time = 0.0
