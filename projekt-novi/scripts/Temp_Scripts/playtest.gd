@@ -20,6 +20,8 @@ const BOSS_PATH := "res://tempresources/boss_stats.tres"
 @export var round_duration: float = 600.0
 @export var arena_size: Vector2 = Vector2(3200.0, 2200.0)
 @export var max_enemies: int = 70
+@export var enemy_spawning_enabled: bool = true
+@export var boss_phase_enabled: bool = true
 ## Optional: your own stats for the ranged Shooter enemy. Leave empty to use the built-in one.
 ## (If you make your own, remember to turn "Ranged" ON in it.)
 @export var shooter_stats: EnemyStats
@@ -83,8 +85,9 @@ func _process(delta: float) -> void:
 		return
 	time_left = maxf(time_left - delta, 0.0)
 	hud.set_timer(time_left)
-	_update_spawning(delta)
-	if time_left <= 0.0:
+	if enemy_spawning_enabled:
+		_update_spawning(delta)
+	if time_left <= 0.0 and boss_phase_enabled:
 		_start_boss_phase()
 
 
@@ -188,7 +191,7 @@ func _on_player_died() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_F1 and state == RoundState.PLAYING:
+		if event.keycode == KEY_F1 and state == RoundState.PLAYING and boss_phase_enabled:
 			time_left = 0.0
 		elif event.keycode == KEY_ESCAPE and ResourceLoader.exists("res://scenes/MainMenuScenes/main_menu.tscn"):
 			get_tree().paused = false
