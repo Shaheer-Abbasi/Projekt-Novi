@@ -15,12 +15,12 @@ enum RepoState { COMBAT, CONE_WINDUP, SPIN_WINDUP, KAMIKAZE }
 @export var laser_spread_degrees: float = 9.0
 
 @export_group("Melee")
-@export var melee_range: float = 185.0
-@export var cone_radius: float = 175.0
+@export var melee_range: float = 235.0
+@export var cone_radius: float = 220.0
 @export var cone_half_angle_degrees: float = 38.0
 @export var cone_damage: float = 14.0
 @export var cone_cooldown: float = 1.25
-@export var cone_windup: float = 0.9
+@export var cone_windup: float = 1.25
 
 @export_group("Anti-Camp Spin")
 @export var close_time_before_spin: float = 5.0
@@ -67,7 +67,7 @@ func _physics_process(delta: float) -> void:
 
 	var to_player := player.global_position - global_position
 	var distance := to_player.length()
-	if distance > 1.0:
+	if _repo_state == RepoState.COMBAT and distance > 1.0:
 		_facing_dir = to_player.normalized()
 		sprite.flip_h = _facing_dir.x < 0.0
 
