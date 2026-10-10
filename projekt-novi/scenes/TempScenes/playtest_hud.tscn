@@ -169,6 +169,36 @@ theme_override_font_sizes/font_size = 24
 text = "Kills: 0"
 horizontal_alignment = 2
 
+[node name="CurrencyLabel" type="Label" parent="Root" unique_id=1427734501]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -240.0
+offset_top = 48.0
+offset_right = -16.0
+offset_bottom = 80.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 24
+text = "Credits: 0"
+horizontal_alignment = 2
+
+[node name="SurvivalLabel" type="Label" parent="Root" unique_id=1583302917]
+unique_name_in_owner = true
+layout_mode = 0
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -240.0
+offset_top = 80.0
+offset_right = -16.0
+offset_bottom = 112.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 6
+theme_override_font_sizes/font_size = 24
+text = "Survived: 00:00"
+horizontal_alignment = 2
+
 [node name="AbilityBar" type="HBoxContainer" parent="Root" unique_id=532202257]
 unique_name_in_owner = true
 layout_mode = 1
