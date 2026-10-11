@@ -1,7 +1,7 @@
 [gd_scene format=3]
 
 [ext_resource type="Script" path="res://scripts/Temp_Scripts/acarion_repo_unit.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/Enemies/acarion_repo_unit_cracked.png" id="2"]
+[ext_resource type="Texture2D" path="res://assets/Enemies/acarion_repo_unit_cracked.svg" id="2"]
 [ext_resource type="Resource" path="res://tempresources/acarion_repo_stats.tres" id="3"]
 
 [sub_resource type="CircleShape2D" id="BodyShape"]
