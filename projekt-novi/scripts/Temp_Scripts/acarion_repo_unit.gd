@@ -65,7 +65,7 @@ func _ready() -> void:
 
 func _setup_boss_visual() -> void:
 	scale = Vector2.ONE
-	var cracked := load("res://assets/Enemies/acarion_repo_unit_cracked.png") as Texture2D
+	var cracked := load("res://assets/Enemies/acarion_repo_unit_cracked.svg") as Texture2D
 	if cracked != null:
 		sprite.texture = cracked
 	sprite.visible = true
