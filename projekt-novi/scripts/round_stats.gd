@@ -66,6 +66,12 @@ func set_survival_time(seconds: float) -> void:
 	survival_time = maxf(seconds, 0.0)
 	survival_time_changed.emit(survival_time)
 
+func spend_currency(amount: int) -> bool:
+	if amount <= 0 or currency < amount:
+		return false
+	currency -= amount
+	currency_changed.emit(currency)
+	return true	
 
 ## Call when a new round starts.
 func reset() -> void:
