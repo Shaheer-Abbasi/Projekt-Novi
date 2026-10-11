@@ -54,12 +54,27 @@ var _countdown_tick_left: float = 0.0
 
 func _ready() -> void:
 	super._ready()
+	_setup_boss_visual()
 	_home_position = global_position
 	phase = 1
 	stats.ranged = false
 	stats.speed = 0.0
 	_setup_message_ui()
 	
+
+
+func _setup_boss_visual() -> void:
+	scale = Vector2.ONE
+	var cracked := load("res://assets/Enemies/acarion_repo_unit_cracked.png") as Texture2D
+	if cracked != null:
+		sprite.texture = cracked
+	sprite.visible = true
+	sprite.position = Vector2(0.0, -10.0)
+	sprite.scale = Vector2(1.35, 1.35)
+	sprite.modulate = Color.WHITE
+	sprite.self_modulate = Color.WHITE
+	sprite.z_as_relative = false
+	sprite.z_index = 100
 
 
 func _physics_process(delta: float) -> void:
