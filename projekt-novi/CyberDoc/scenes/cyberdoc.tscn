@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://bsaownee2xwo"]
+
+[ext_resource type="Script" uid="uid://dierbbuc3xp61" path="res://CyberDoc/scenes/cyberdoc.gd" id="1_cgnfb"]
+[ext_resource type="Texture2D" uid="uid://ukm1h501cq7s" path="res://icon.svg" id="3_icon"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_py7os"]
+size = Vector2(132.95198, 131.33434)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_range"]
+radius = 56.0
+
+[node name="Cyberdoc" type="Area2D" unique_id=1390288159]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_cgnfb")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=508533205]
+modulate = Color(0.3, 1, 0.9, 1)
+texture = ExtResource("3_icon")
+
+[node name="Blocker" type="StaticBody2D" parent="." unique_id=553040882]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Blocker" unique_id=1849899631]
+light_mask = 0
+position = Vector2(0.45262063, -0.60574496)
+rotation = 0.0226743
+scale = Vector2(0.9999999, 0.9999999)
+shape = SubResource("RectangleShape2D_py7os")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=999579731]
+scale = Vector2(1.7, 1.7)
+shape = SubResource("CircleShape2D_range")
+
+[node name="Prompt" type="Label" parent="." unique_id=1028932937]
+offset_left = -40.0
+offset_top = -48.0
+offset_right = 40.0
+offset_bottom = -25.0
+text = "[E] to interact"
+horizontal_alignment = 1
