@@ -56,6 +56,7 @@ var max_hp: float = 120.0
 var current_hp: float = 120.0
 var speed: float = 220.0
 var aim_radius: float = 170.0
+var basic_attack_cooldown_multiplier: float = 1.0
 var abilities: Array[Ability] = []
 var arena_rect: Rect2 = Rect2(-100000, -100000, 200000, 200000)
 
@@ -85,7 +86,6 @@ func _ready() -> void:
 	character_name = character_data.character_name
 	max_hp = character_data.max_health
 	current_hp = max_hp
-	XpManager.leveled_up.connect(_on_leveled_up)
 	speed = character_data.move_speed
 	aim_radius = character_data.attack_range
 	_setup_abilities()
@@ -181,7 +181,7 @@ func _physics_process(delta: float) -> void:
 	_update_animation(dir)
 
 	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and _fire_left <= 0.0:
-		_fire_left = character_data.fire_cooldown
+		_fire_left = maxf(0.10, character_data.fire_cooldown * basic_attack_cooldown_multiplier)
 		fire_bullet(_aim_dir, character_data.basic_damage + XpManager.attack_damage - 1)
 
 
@@ -346,10 +346,4 @@ func _shake_step(t: float, strength: float) -> void:
 
 func _shake_end() -> void:
 	camera.offset = Vector2.ZERO
-	
-func _on_leveled_up(_new_level: int) -> void:
-	max_hp += 1
-	current_hp += 1
-	health_changed.emit(current_hp, max_hp)
-	
 	
