@@ -167,7 +167,6 @@ func _begin_spin() -> void:
 	_repo_state_left = spin_windup
 	_close_time = 0.0
 	_set_tint(Color(1.0, 0.12, 0.08))
-	_announce("PROXIMITY VIOLATION.\nCLEAR THE RETRIEVAL ZONE.", spin_windup)
 	RingFX.spawn(get_parent(), global_position, spin_radius, Color(1.0, 0.2, 0.1), spin_windup)
 	queue_redraw()
 

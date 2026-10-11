@@ -11,6 +11,7 @@ radius = 34.0
 radius = 60.0
 
 [node name="AcarionRepoUnit" type="CharacterBody2D"]
+z_index = 5
 collision_layer = 4
 collision_mask = 1
 motion_mode = 1
