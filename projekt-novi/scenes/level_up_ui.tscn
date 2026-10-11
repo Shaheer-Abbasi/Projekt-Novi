@@ -1,0 +1,100 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://scripts/level_up_ui.gd" id="1_ui"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_panel"]
+bg_color = Color(0.055, 0.075, 0.10, 0.98)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.22, 0.95, 0.76, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[node name="LevelUpUI" type="CanvasLayer"]
+process_mode = 3
+layer = 30
+script = ExtResource("1_ui")
+
+[node name="Overlay" type="ColorRect" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+color = Color(0.015, 0.025, 0.045, 0.86)
+
+[node name="Center" type="CenterContainer" parent="Overlay"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Panel" type="PanelContainer" parent="Overlay/Center"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_panel")
+
+[node name="Margin" type="MarginContainer" parent="Overlay/Center/Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 24
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
+theme_override_constants/margin_bottom = 24
+
+[node name="Content" type="VBoxContainer" parent="Overlay/Center/Panel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="LevelTitle" type="Label" parent="Overlay/Center/Panel/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.31, 1, 0.8, 1)
+theme_override_font_sizes/font_size = 30
+text = "LEVEL 2  -  CHOOSE AN UPGRADE"
+horizontal_alignment = 1
+
+[node name="Info" type="Label" parent="Overlay/Center/Panel/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.78, 0.83, 0.86, 1)
+theme_override_font_sizes/font_size = 17
+text = "Select ONE of the three upgrades below. Upgrades stack across levels."
+horizontal_alignment = 1
+
+[node name="Options" type="HBoxContainer" parent="Overlay/Center/Panel/Margin/Content"]
+layout_mode = 2
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Option1" type="Button" parent="Overlay/Center/Panel/Margin/Content/Options"]
+custom_minimum_size = Vector2(235, 150)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Upgrade 1"
+autowrap_mode = 3
+
+[node name="Option2" type="Button" parent="Overlay/Center/Panel/Margin/Content/Options"]
+custom_minimum_size = Vector2(235, 150)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Upgrade 2"
+autowrap_mode = 3
+
+[node name="Option3" type="Button" parent="Overlay/Center/Panel/Margin/Content/Options"]
+custom_minimum_size = Vector2(235, 150)
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Upgrade 3"
+autowrap_mode = 3
+
+[node name="Instruction" type="Label" parent="Overlay/Center/Panel/Margin/Content"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.57, 0.66, 0.69, 1)
+text = "The game is paused until you choose an upgrade."
+horizontal_alignment = 1

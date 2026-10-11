@@ -120,6 +120,7 @@ func _on_player_hp(cur: float, mx: float) -> void:
 	
 func _on_xp_changed(current_xp: int, xp_to_next: int) -> void:
 	_set_bar(xp_bar, current_xp, xp_to_next)
+	_set_text(level_label, "Level " + str(XpManager.level))
 	
 func _on_leveled_up(new_level: int) -> void:
 	_set_text(level_label, "Level " + str(new_level)) 

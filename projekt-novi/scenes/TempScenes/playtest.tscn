@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://byh4m73ybaqsu"]
 
 [ext_resource type="Script" uid="uid://bxcaorkai7w7h" path="res://scripts/Temp_Scripts/playtest.gd" id="1"]
+[ext_resource type="PackedScene" path="res://scenes/level_up_ui.tscn" id="level_up_ui"]
 [ext_resource type="PackedScene" uid="uid://bd740f8hrlroe" path="res://scenes/TempScenes/playtest_player.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://bg1dmaj8d2ujh" path="res://assets/Maps/CorpoHQ/Arasaka_1.png" id="2_b56qm"]
 [ext_resource type="Script" uid="uid://i7grus02o11p" path="res://scripts/Temp_Scripts/playtest_hud.gd" id="3"]
@@ -110,6 +111,8 @@ slash_sound = ExtResource("6_3ob4o")
 
 [node name="HUD" parent="." unique_id=337117531 instance=ExtResource("3_othej")]
 script = ExtResource("3")
+
+[node name="LevelUpUI" parent="." instance=ExtResource("level_up_ui")]
 
 [node name="UltimateCutscene" type="CanvasLayer" parent="." unique_id=1864899912]
 script = ExtResource("4")
