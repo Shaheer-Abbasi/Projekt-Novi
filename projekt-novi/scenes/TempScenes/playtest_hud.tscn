@@ -8,6 +8,7 @@
 [sub_resource type="SystemFont" id="SystemFont_kh2os"]
 font_names = PackedStringArray("Bahnschrift")
 font_weight = 600
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5cp65"]
 bg_color = Color(0.08, 0.08, 0.1, 0.9)
@@ -76,10 +77,11 @@ mouse_filter = 2
 [node name="NameLabel" type="Label" parent="Root/Node2D" unique_id=1969466632]
 unique_name_in_owner = true
 z_index = 1
-offset_left = 26.0
-offset_top = 95.0
-offset_right = 256.0
-offset_bottom = 126.0
+offset_left = 9.0
+offset_top = 175.95724
+offset_right = 239.0
+offset_bottom = 206.95724
+rotation = -0.48367023
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
 theme_override_font_sizes/font_size = 22
@@ -88,10 +90,11 @@ text = "VOW"
 [node name="LevelLabel" type="Label" parent="Root/Node2D" unique_id=2093383326]
 unique_name_in_owner = true
 z_index = 1
-offset_left = 26.0
-offset_top = 172.0
-offset_right = 256.0
-offset_bottom = 206.0
+offset_left = 16.999996
+offset_top = 253.23654
+offset_right = 247.0
+offset_bottom = 287.23654
+rotation = -0.48367023
 theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
 theme_override_constants/outline_size = 6
 theme_override_fonts/font = SubResource("SystemFont_kh2os")
@@ -113,10 +116,11 @@ text = "HP 120 / 120"
 [node name="HPBar" type="ProgressBar" parent="Root/Node2D" unique_id=802844240]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(230, 22)
-offset_left = 24.0
-offset_top = 124.0
-offset_right = 316.0
-offset_bottom = 146.0
+offset_left = 14.999996
+offset_top = 205.23651
+offset_right = 307.0
+offset_bottom = 227.23651
+rotation = -0.48367023
 mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_5cp65")
 theme_override_styles/fill = SubResource("StyleBoxFlat_kh2os")
@@ -125,18 +129,20 @@ show_percentage = false
 [node name="XPBar" type="ProgressBar" parent="Root/Node2D" unique_id=123708962]
 unique_name_in_owner = true
 custom_minimum_size = Vector2(230, 22)
-offset_left = 24.0
-offset_top = 148.0
-offset_right = 316.0
-offset_bottom = 170.0
+offset_left = 14.999996
+offset_top = 229.23651
+offset_right = 307.0
+offset_bottom = 251.23653
+rotation = -0.48367023
 mouse_filter = 2
 theme_override_styles/background = SubResource("StyleBoxFlat_5cp65")
 theme_override_styles/fill = SubResource("StyleBoxFlat_ic8dp")
 show_percentage = false
 
 [node name="Sprite2D" type="Sprite2D" parent="Root/Node2D" unique_id=1254562346]
-position = Vector2(164, 69)
-scale = Vector2(0.32332194, 0.32332194)
+z_index = -1
+position = Vector2(101, 103)
+scale = Vector2(0.41253144, 0.3490832)
 texture = ExtResource("1_tf0qc")
 
 [node name="TimerLabel" type="Label" parent="Root" unique_id=67587178]
