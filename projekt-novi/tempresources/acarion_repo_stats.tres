@@ -5,7 +5,7 @@
 [resource]
 script = ExtResource("1")
 enemy_name = "Acarion Repo Unit"
-max_hp = 1500.0
+max_hp = 1125.0
 damage = 14.0
 speed = 0.0
 durability = 2.0
