@@ -17,6 +17,8 @@
 [ext_resource type="Script" uid="uid://dad7ood8pbv8u" path="res://scripts/Temp_Scripts/CharacterData.gd" id="10_5uwqt"]
 [ext_resource type="Texture2D" uid="uid://c3p7iskri0cd5" path="res://assets/Characters/Vow/Vow_Illustration.png" id="15_tjmnq"]
 [ext_resource type="AudioStream" uid="uid://bgx4qr51i6eb4" path="res://assets/Music/Vow_Ult_quote.mp3" id="16_mnpca"]
+[ext_resource type="PackedScene" uid="uid://bsaownee2xwo" path="res://CyberDoc/scenes/cyberdoc.tscn" id="18_1g8ht"]
+[ext_resource type="PackedScene" path="res://scenes/level_up_ui.tscn" id="level_up_ui"]
 
 [sub_resource type="Resource" id="Resource_3ob4o"]
 script = ExtResource("10_5uwqt")
@@ -87,7 +89,7 @@ _data = {
 &"vow_ult": SubResource("Animation_mnpca")
 }
 
-[node name="Playtest" type="Node2D" unique_id=436201814]
+[node name="Playtest" type="Node2D" unique_id=436201814 groups=["cyberdoc_spawn"]]
 script = ExtResource("1")
 arena_size = Vector2(4100, 1448)
 
@@ -111,6 +113,8 @@ slash_sound = ExtResource("6_3ob4o")
 [node name="HUD" parent="." unique_id=337117531 instance=ExtResource("3_othej")]
 script = ExtResource("3")
 
+[node name="LevelUpUI" parent="." unique_id=1109115803 instance=ExtResource("level_up_ui")]
+
 [node name="UltimateCutscene" type="CanvasLayer" parent="." unique_id=1864899912]
 script = ExtResource("4")
 portrait = ExtResource("15_tjmnq")
@@ -129,3 +133,42 @@ volume_db = -20.07
 pitch_scale = 0.65
 autoplay = true
 parameters/looping = true
+
+[node name="Cyberdoc" parent="." unique_id=1404802358 instance=ExtResource("18_1g8ht")]
+position = Vector2(-145, -97)
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=507439695 groups=["cyberdoc_spawn"]]
+position = Vector2(-1777.96, -460.55554)
+
+[node name="Marker2D2" type="Marker2D" parent="." unique_id=1043967575 groups=["cyberdoc_spawn"]]
+position = Vector2(-1899.2673, 378.48694)
+
+[node name="Marker2D3" type="Marker2D" parent="." unique_id=1582314149 groups=["cyberdoc_spawn"]]
+position = Vector2(-1818.3958, -116.85132)
+
+[node name="Marker2D4" type="Marker2D" parent="." unique_id=14143503 groups=["cyberdoc_spawn"]]
+position = Vector2(-655.8672, -495.93677)
+
+[node name="Marker2D12" type="Marker2D" parent="." unique_id=1620700791 groups=["cyberdoc_spawn"]]
+position = Vector2(1775.3342, 135.87231)
+
+[node name="Marker2D11" type="Marker2D" parent="." unique_id=199303161 groups=["cyberdoc_spawn"]]
+position = Vector2(1638.8635, -334.19373)
+
+[node name="Marker2D10" type="Marker2D" parent="." unique_id=603468305 groups=["cyberdoc_spawn"]]
+position = Vector2(1052.5447, -435.28308)
+
+[node name="Marker2D9" type="Marker2D" parent="." unique_id=582660570 groups=["cyberdoc_spawn"]]
+position = Vector2(97.24927, -506.04578)
+
+[node name="Marker2D8" type="Marker2D" parent="." unique_id=1974791826 groups=["cyberdoc_spawn"]]
+position = Vector2(-29.112549, 423.97717)
+
+[node name="Marker2D7" type="Marker2D" parent="." unique_id=1017937420 groups=["cyberdoc_spawn"]]
+position = Vector2(1178.9065, 216.74377)
+
+[node name="Marker2D5" type="Marker2D" parent="." unique_id=1819096623 groups=["cyberdoc_spawn"]]
+position = Vector2(-842.88257, -81.47009)
+
+[node name="Marker2D6" type="Marker2D" parent="." unique_id=1602383286 groups=["cyberdoc_spawn"]]
+position = Vector2(-1014.7346, 292.5609)

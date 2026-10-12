@@ -50,8 +50,7 @@ func level_up() -> void:
 	current_xp -= xp_to_next
 	level += 1
 	xp_to_next = int(BASE_XP * pow(GROWTH, level - 1))
-	attack_damage += 1
-	bonus_health += 1
+	# The player selects an upgrade from the level-up screen instead.
 	leveled_up.emit(level)
 
 

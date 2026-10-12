@@ -30,7 +30,6 @@ const BOSS_PATH := "res://tempresources/boss_stats.tres"
 @export var spawn_distance: float = 700.0
 
 var time_left: float = 600.0
-var kills: int = 0
 var state: RoundState = RoundState.PLAYING
 var arena_rect: Rect2
 
@@ -53,6 +52,8 @@ func _ready() -> void:
 	_tank = _try_load(TANK_PATH) as EnemyStats
 	_shooter = shooter_stats if shooter_stats != null else _default_shooter()
 	time_left = round_duration
+	RoundStats.reset()  # new round: currency, kills, survival time back to 0
+	XpManager.reset()  # new round: level, XP and chosen damage bonuses reset
 	player.set_arena(arena_rect)
 	player.global_position = arena_rect.get_center()
 	player.died.connect(_on_player_died)
@@ -88,14 +89,25 @@ func _draw() -> void:
 
 
 func _process(delta: float) -> void:
+	if state == RoundState.BOSS:
+		# Countdown is stuck at 0 during the boss, but the player is still surviving.
+		RoundStats.set_survival_time(RoundStats.survival_time + delta)
+		return
 	if state != RoundState.PLAYING:
 		return
+
 	if round_timer_enabled:
 		time_left = maxf(time_left - delta, 0.0)
 		hud.set_timer(time_left)
+		RoundStats.set_survival_time(round_duration - time_left)
+	else:
+		# Boss-test levels have no countdown, but survival time still advances.
+		RoundStats.set_survival_time(RoundStats.survival_time + delta)
+
 	if enemy_spawning_enabled:
 		_update_spawning(delta)
-	if round_timer_enabled and time_left <= 0.0 and boss_phase_enabled:
+
+	if round_timer_enabled and boss_phase_enabled and time_left <= 0.0:
 		_start_boss_phase()
 
 
@@ -151,14 +163,8 @@ func _spawn_enemy(p: float) -> void:
 	var angle := randf() * TAU
 	var pos := player.global_position + Vector2.RIGHT.rotated(angle) * spawn_distance
 	enemy.global_position = pos.clamp(arena_rect.position + Vector2(50, 50), arena_rect.end - Vector2(50, 50))
-	enemy.died.connect(_on_enemy_died)
 	add_child(enemy)
 	enemy.scale_stats(1.0 + p * 2.0, 1.0 + p * 0.5)
-
-
-func _on_enemy_died(_e: EnemyNPC) -> void:
-	kills += 1
-	hud.set_kills(kills)
 
 
 # --- Boss -----------------------------------------------------------------
@@ -199,7 +205,10 @@ func _on_player_died() -> void:
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_F1 and state == RoundState.PLAYING and boss_phase_enabled:
+		if event.keycode == KEY_F2 and state == RoundState.PLAYING and OS.is_debug_build():
+			# Debug build only: instantly earn exactly enough XP to test the selection popup.
+			XpManager.add_xp(XpManager.xp_to_next - XpManager.current_xp)
+		elif event.keycode == KEY_F1 and state == RoundState.PLAYING and boss_phase_enabled:
 			time_left = 0.0
 		elif event.keycode == KEY_ESCAPE and ResourceLoader.exists("res://scenes/MainMenuScenes/main_menu.tscn"):
 			get_tree().paused = false

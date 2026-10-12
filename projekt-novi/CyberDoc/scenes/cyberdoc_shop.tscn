@@ -1,0 +1,124 @@
+[gd_scene format=3 uid="uid://d18fu5w1v3cuq"]
+
+[ext_resource type="Script" uid="uid://c48p8cj214gba" path="res://CyberDoc/scenes/cyberdoc_shop.gd" id="1_gugnv"]
+[ext_resource type="Script" uid="uid://lvqu8vxdtqdl" path="res://CyberDoc/scenes/wheel_placeholder.gd" id="2_fddsr"]
+
+[node name="CyberdocShop" type="CanvasLayer" unique_id=2100656111]
+layer = 10
+script = ExtResource("1_gugnv")
+
+[node name="Dim" type="ColorRect" parent="." unique_id=1802807989]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.3529412)
+
+[node name="Stage" type="Control" parent="." unique_id=34559156]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="Wheel" type="Control" parent="Stage" unique_id=1356886902]
+anchors_preset = 0
+offset_left = 376.0
+offset_top = 30.0
+offset_right = 776.0
+offset_bottom = 430.0
+script = ExtResource("2_fddsr")
+
+[node name="Pointer" type="Polygon2D" parent="Stage" unique_id=575971237]
+polygon = PackedVector2Array(556, 6, 596, 6, 576, 50)
+
+[node name="Cyberdoc" type="ColorRect" parent="Stage" unique_id=637807643]
+layout_mode = 0
+offset_left = 506.0
+offset_top = 260.0
+offset_right = 646.0
+offset_bottom = 520.0
+color = Color(0.15, 0.45, 0.5, 1)
+
+[node name="Head" type="ColorRect" parent="Stage/Cyberdoc" unique_id=1114514859]
+layout_mode = 0
+offset_left = 25.0
+offset_top = -80.0
+offset_right = 115.0
+color = Color(0.4, 0.85, 0.85, 1)
+
+[node name="Counter" type="ColorRect" parent="Stage" unique_id=1632218776]
+layout_mode = 0
+offset_top = 470.0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.065534994, 0.04892099, 0.08163949, 1)
+
+[node name="DialogueLabel" type="Label" parent="Stage" unique_id=2106659963]
+layout_mode = 0
+offset_left = 276.0
+offset_top = 485.0
+offset_right = 876.0
+offset_bottom = 545.0
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Buttons" type="HBoxContainer" parent="Stage" unique_id=831125596]
+layout_mode = 0
+offset_left = 376.0
+offset_top = 560.0
+offset_right = 776.0
+offset_bottom = 610.0
+theme_override_constants/separation = 24
+alignment = 1
+
+[node name="SpinButton" type="Button" parent="Stage/Buttons" unique_id=751182045]
+custom_minimum_size = Vector2(150, 44)
+layout_mode = 2
+text = "Spin"
+
+[node name="LeaveButton" type="Button" parent="Stage/Buttons" unique_id=1228416528]
+custom_minimum_size = Vector2(150, 44)
+layout_mode = 2
+text = "Leave"
+
+[node name="RewardPopup" type="Panel" parent="." unique_id=287664154]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -160.0
+offset_top = -100.0
+offset_right = 160.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="RewardPopup" unique_id=611488866]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 12.0
+offset_top = 12.0
+offset_right = -12.0
+offset_bottom = -12.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RewardLabel" type="Label" parent="RewardPopup/VBox" unique_id=1193833862]
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="OkButton" type="Button" parent="RewardPopup/VBox" unique_id=581933123]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+text = "OK"
