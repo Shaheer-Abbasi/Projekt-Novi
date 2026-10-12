@@ -20,6 +20,9 @@ const BOSS_PATH := "res://tempresources/boss_stats.tres"
 @export var round_duration: float = 600.0
 @export var arena_size: Vector2 = Vector2(3200.0, 2200.0)
 @export var max_enemies: int = 70
+@export var enemy_spawning_enabled: bool = true
+@export var boss_phase_enabled: bool = true
+@export var round_timer_enabled: bool = true
 ## Optional: your own stats for the ranged Shooter enemy. Leave empty to use the built-in one.
 ## (If you make your own, remember to turn "Ranged" ON in it.)
 @export var shooter_stats: EnemyStats
@@ -55,7 +58,13 @@ func _ready() -> void:
 	player.global_position = arena_rect.get_center()
 	player.died.connect(_on_player_died)
 	hud.bind_player(player)
-	hud.set_timer(time_left)
+	if round_timer_enabled:
+		hud.set_timer(time_left)
+	else:
+		hud.set_timer_text("BOSS")
+	var placed_boss := get_tree().get_first_node_in_group("boss") as BossNPC
+	if placed_boss != null:
+		hud.show_boss(placed_boss)
 	queue_redraw()
 
 
@@ -86,11 +95,19 @@ func _process(delta: float) -> void:
 		return
 	if state != RoundState.PLAYING:
 		return
-	time_left = maxf(time_left - delta, 0.0)
-	hud.set_timer(time_left)
-	RoundStats.set_survival_time(round_duration - time_left)  # elapsed = from the round timer
-	_update_spawning(delta)
-	if time_left <= 0.0:
+
+	if round_timer_enabled:
+		time_left = maxf(time_left - delta, 0.0)
+		hud.set_timer(time_left)
+		RoundStats.set_survival_time(round_duration - time_left)
+	else:
+		# Boss-test levels have no countdown, but survival time still advances.
+		RoundStats.set_survival_time(RoundStats.survival_time + delta)
+
+	if enemy_spawning_enabled:
+		_update_spawning(delta)
+
+	if round_timer_enabled and boss_phase_enabled and time_left <= 0.0:
 		_start_boss_phase()
 
 
@@ -191,7 +208,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.keycode == KEY_F2 and state == RoundState.PLAYING and OS.is_debug_build():
 			# Debug build only: instantly earn exactly enough XP to test the selection popup.
 			XpManager.add_xp(XpManager.xp_to_next - XpManager.current_xp)
-		elif event.keycode == KEY_F1 and state == RoundState.PLAYING:
+		elif event.keycode == KEY_F1 and state == RoundState.PLAYING and boss_phase_enabled:
 			time_left = 0.0
 		elif event.keycode == KEY_ESCAPE and ResourceLoader.exists("res://scenes/MainMenuScenes/main_menu.tscn"):
 			get_tree().paused = false

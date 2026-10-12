@@ -1,0 +1,39 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/Temp_Scripts/acarion_repo_unit.gd" id="1"]
+[ext_resource type="Texture2D" path="res://assets/Enemies/acarion_repo_unit_cracked.svg" id="2"]
+[ext_resource type="Resource" path="res://tempresources/acarion_repo_stats.tres" id="3"]
+
+[sub_resource type="CircleShape2D" id="BodyShape"]
+radius = 34.0
+
+[sub_resource type="CircleShape2D" id="ContactShape"]
+radius = 60.0
+
+[node name="AcarionRepoUnit" type="CharacterBody2D"]
+z_index = 5
+collision_layer = 4
+collision_mask = 1
+motion_mode = 1
+script = ExtResource("1")
+stats = ExtResource("3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -12)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 10)
+shape = SubResource("BodyShape")
+
+[node name="ContactArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactArea"]
+position = Vector2(0, 10)
+shape = SubResource("ContactShape")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
