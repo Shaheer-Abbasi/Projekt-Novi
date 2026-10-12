@@ -65,16 +65,9 @@ func _ready() -> void:
 
 func _setup_boss_visual() -> void:
 	scale = Vector2.ONE
-	var cracked := load("res://assets/Enemies/acarion_repo_unit_cracked.svg") as Texture2D
-	if cracked != null:
-		sprite.texture = cracked
-	sprite.visible = true
-	sprite.position = Vector2(0.0, -10.0)
-	sprite.scale = Vector2(1.35, 1.35)
-	sprite.modulate = Color.WHITE
-	sprite.self_modulate = Color.WHITE
-	sprite.z_as_relative = false
-	sprite.z_index = 100
+	sprite.visible = false
+	z_index = 100
+	queue_redraw()
 
 
 func _physics_process(delta: float) -> void:
@@ -316,6 +309,12 @@ func _announce(message: String, duration: float = 2.0) -> void:
 
 
 func _draw() -> void:
+	# Temporary boss placeholder: black body with a smaller black head.
+	draw_rect(Rect2(-48.0, -34.0, 96.0, 72.0), Color.BLACK, true)
+	draw_rect(Rect2(-48.0, -34.0, 96.0, 72.0), Color(0.45, 0.45, 0.5), false, 4.0)
+	draw_rect(Rect2(-28.0, -68.0, 56.0, 34.0), Color.BLACK, true)
+	draw_rect(Rect2(-28.0, -68.0, 56.0, 34.0), Color(0.45, 0.45, 0.5), false, 4.0)
+
 	# EnemyNPC's small HP bar.
 	super._draw()
 
