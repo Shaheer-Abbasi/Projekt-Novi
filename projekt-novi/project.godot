@@ -17,7 +17,7 @@ boot_splash/bg_color=Color(0, 0, 0, 1)
 boot_splash/use_filter=false
 boot_splash/image="uid://cv71we4cwyh3m"
 config/icon="res://icon.svg"
-boot_splash/minimum_display_time=4000
+boot_splash/minimum_display_time=2000
 
 [audio]
 
