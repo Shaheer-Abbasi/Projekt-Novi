@@ -1,0 +1,102 @@
+[gd_scene format=3 uid="uid://paeiprqqxcfi"]
+
+[ext_resource type="Script" uid="uid://ngvfbc8t8m3p" path="res://Boot-Splash.gd" id="1_xxsu6"]
+[ext_resource type="Texture2D" uid="uid://cv71we4cwyh3m" path="res://assets/Background/black.png" id="2_cpyu8"]
+[ext_resource type="Texture2D" uid="uid://ylb2ts4gopa7" path="res://assets/Background/logo_large_color_dark.png" id="3_l4bph"]
+[ext_resource type="Texture2D" uid="uid://gpv0ptcxs4ii" path="res://assets/Background/CyTacStudiosLogo-frame0.png" id="4_cpyu8"]
+
+[sub_resource type="Animation" id="Animation_xxsu6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Godot-Logo:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cytac-Logo:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_cpyu8"]
+resource_name = "fade_out"
+length = 7.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Godot-Logo:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.4, 2.5, 3),
+"transitions": PackedFloat32Array(2, 0.5, 0.5, 2),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Cytac-Logo:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(3.6, 5, 6.1, 7),
+"transitions": PackedFloat32Array(2, 0.5, 0.5, 2),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_l4bph"]
+_data = {
+&"RESET": SubResource("Animation_xxsu6"),
+&"fade_out": SubResource("Animation_cpyu8")
+}
+
+[node name="Node2D" type="Node2D" unique_id=832738841]
+texture_filter = 1
+script = ExtResource("1_xxsu6")
+
+[node name="Black" type="Sprite2D" parent="." unique_id=1151495452]
+position = Vector2(621, 354)
+scale = Vector2(0.96927077, 0.7407408)
+texture = ExtResource("2_cpyu8")
+
+[node name="Godot-Logo" type="Node2D" parent="." unique_id=1065591070]
+position = Vector2(593.5, 327.99997)
+scale = Vector2(0.6192708, 0.66851854)
+
+[node name="Sprite2D" type="Sprite2D" parent="Godot-Logo" unique_id=1382852186]
+position = Vector2(10.496174, 5.983432)
+scale = Vector2(0.46410432, 0.4170571)
+texture = ExtResource("3_l4bph")
+
+[node name="Cytac-Logo" type="Node2D" parent="." unique_id=1871482515]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(593.5, 327.99997)
+scale = Vector2(0.6192708, 0.66851854)
+
+[node name="Sprite2D" type="Sprite2D" parent="Cytac-Logo" unique_id=279889285]
+position = Vector2(-4.8445, 5.983432)
+scale = Vector2(4.7119427, 3.99)
+texture = ExtResource("4_cpyu8")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=840139119]
+libraries/ = SubResource("AnimationLibrary_l4bph")
+autoplay = &"fade_out"
+
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
