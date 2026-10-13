@@ -1,7 +1,7 @@
-[gd_scene load_steps=6 format=3]
+[gd_scene format=3 uid="uid://bm4w0id356bq2"]
 
-[ext_resource type="Script" path="res://Mobs/Robot/robot_enemy.gd" id="1_robot"]
-[ext_resource type="Texture2D" path="res://Mobs/Robot/robot_idle.png" id="2_texture"]
+[ext_resource type="Script" uid="uid://ctqveo5xuyr6t" path="res://Mobs/Robot/robot_enemy.gd" id="1_robot"]
+[ext_resource type="Texture2D" uid="uid://di7kr6ah6j7bm" path="res://Mobs/Robot/robot_idle_new.png" id="2_viysa"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleBody"]
 radius = 28.0
@@ -14,35 +14,35 @@ height = 88.0
 [sub_resource type="CircleShape2D" id="CircleContact"]
 radius = 58.0
 
-[node name="Robot" type="CharacterBody2D"]
+[node name="Robot" type="CharacterBody2D" unique_id=17949160]
 script = ExtResource("1_robot")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_texture")
-scale = Vector2(0.55, 0.55)
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=498617735]
 position = Vector2(0, -8)
+scale = Vector2(0.08, 0.08)
+texture = ExtResource("2_viysa")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=124285922]
 position = Vector2(0, 12)
 shape = SubResource("CapsuleBody")
 
-[node name="Hurtbox" type="Area2D" parent="."]
+[node name="Hurtbox" type="Area2D" parent="." unique_id=152615379]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1259828657]
 position = Vector2(0, 4)
 shape = SubResource("CapsuleHurt")
 
-[node name="ContactArea" type="Area2D" parent="."]
+[node name="ContactArea" type="Area2D" parent="." unique_id=1515464427]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactArea"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactArea" unique_id=1821011772]
 position = Vector2(0, 8)
 shape = SubResource("CircleContact")
 
-[node name="StrafeTimer" type="Timer" parent="."]
+[node name="StrafeTimer" type="Timer" parent="." unique_id=1384950347]
 wait_time = 1.7
 autostart = true
 
-[node name="HitFlashTimer" type="Timer" parent="."]
+[node name="HitFlashTimer" type="Timer" parent="." unique_id=772119823]
 wait_time = 0.08
 one_shot = true
 
