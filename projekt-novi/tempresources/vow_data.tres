@@ -1,20 +1,13 @@
-[gd_resource type="Resource" script_class="CharacterData" format=3]
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://d3sor8yoa6v15"]
 
-[ext_resource type="Script" path="res://playtest/scripts/CharacterData.gd" id="1"]
-[ext_resource type="Script" path="res://playtest/scripts/AbilityFanBurst.gd" id="2"]
-[ext_resource type="Script" path="res://playtest/scripts/AbilityShockwave.gd" id="3"]
-[ext_resource type="Script" path="res://playtest/scripts/AbilityDash.gd" id="4"]
-[ext_resource type="Script" path="res://playtest/scripts/AbilityUltimate.gd" id="5"]
+[ext_resource type="Script" uid="uid://dad7ood8pbv8u" path="res://scripts/Temp_Scripts/CharacterData.gd" id="1"]
+[ext_resource type="Script" uid="uid://d0168il77yx0e" path="res://scripts/Temp_Scripts/AbilityFanBurst.gd" id="2"]
+[ext_resource type="Script" uid="uid://c1f4e37o2sy4n" path="res://scripts/Temp_Scripts/AbilityShockwave.gd" id="3"]
+[ext_resource type="Script" uid="uid://bvlbg5t2grliw" path="res://scripts/Temp_Scripts/AbilityDash.gd" id="4"]
+[ext_resource type="Script" uid="uid://1xtmfxmy7vct" path="res://scripts/Temp_Scripts/AbilityUltimate.gd" id="5"]
 
 [resource]
 script = ExtResource("1")
-character_name = "Vow"
-max_health = 120.0
-move_speed = 220.0
-basic_damage = 12.0
-fire_cooldown = 0.4
-attack_range = 170.0
-bullet_speed = 750.0
 ability_1_script = ExtResource("2")
 ability_2_script = ExtResource("3")
 ability_3_script = ExtResource("4")

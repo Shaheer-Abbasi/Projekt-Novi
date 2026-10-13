@@ -95,6 +95,10 @@ enum PromptWhen { AFTER_ENEMIES_APPEAR, WHEN_SHOT_INCOMING }
 ## How long doors take to fade in / out.
 @export var door_fade_seconds: float = 0.6
 
+@export_group("Clear cinematic")
+## Slow motion + zoom on the last enemy, the camera pans to the door that opens, then back to the player. The settings (speed, zoom...) are on the level node.
+@export var clear_cinematic: bool = true
+
 @export_group("After it is cleared")
 ## ON for the last encounter of a level: shows LEVEL COMPLETE, unlocks the next level, opens the next scene.
 @export var completes_level: bool = false
@@ -111,6 +115,8 @@ var _alive: Array = []
 var _pending: int = 0
 var _reached: bool = true
 var _prompt_ab: Ability
+var _last_death_pos: Vector2 = Vector2.ZERO
+var _had_kill: bool = false
 
 
 func _ready() -> void:
@@ -246,19 +252,23 @@ func _spawn_one(p: StorySpawnPoint) -> void:
 			stats.attack_interval_phase_1 *= p.boss_attack_slowdown
 			stats.attack_interval_phase_2 *= p.boss_attack_slowdown
 	e.stats = stats
-	_level.add_child(e)
 	var offset := Vector2.ZERO
 	if p.scatter_radius > 0.0:
 		offset = Vector2.RIGHT.rotated(randf() * TAU) * sqrt(randf()) * p.scatter_radius
-	e.global_position = p.global_position + offset
+	e.position = _level.to_local(p.global_position + offset)      # placed BEFORE it enters the game
 	e.add_to_group("story_enemy")
-	_alive.append(e)
+	_alive.append(e)                                              # counted at once, so the room can't clear early
 	e.died.connect(_on_enemy_died.bind(p.kind))
+	# Added at the END of the frame, never in the middle of a physics step
+	_level.add_child.call_deferred(e)
 	if is_boss and _level.hud != null:
-		_level.hud.show_boss(e)
+		_level.hud.show_boss.call_deferred(e)                     # (after it has been added)
 
 
 func _on_enemy_died(enemy: Node, kind: int) -> void:
+	if is_instance_valid(enemy) and enemy is Node2D:
+		_last_death_pos = (enemy as Node2D).global_position
+	_had_kill = true
 	_alive.erase(enemy)
 	_killed[kind] += 1
 	if _level != null:
@@ -336,21 +346,40 @@ func _on_cleared() -> void:
 	is_cleared = true
 	cleared.emit()
 	_notice().clear_progress()
+	var cinematic: bool = clear_cinematic and _had_kill and _level != null and _level.clear_cinematics
+	if cinematic:
+		await _level.play_clear_cinematic(_last_death_pos, _door_points(), _open_all_doors, _planned[StorySpawnPoint.Kind.BOSS] > 0)
+	else:
+		_open_all_doors()
 	if clear_message.strip_edges() != "":
 		_notice().show_message(clear_message, 3.0)
 	else:
 		_notice().hide_message()
-	_set_group(lock_during_fight, false, door_fade_seconds)
-	_set_group(open_when_cleared, false, door_fade_seconds)
-	_set_group(reveal_when_cleared, true, door_fade_seconds)
 	var clear_seq := _sequence(clear_dialogue_text, clear_dialogue)
 	if clear_seq != null:
-		await _wait(1.0)                       # let the player see the doors open first
+		if not cinematic:
+			await _wait(1.0)                   # let the player see the doors open first
 		await _say(clear_seq)
 	is_finished = true
 	finished.emit()
 	if completes_level and _level != null:
 		_level.complete_level()
+
+
+func _open_all_doors() -> void:
+	_set_group(lock_during_fight, false, door_fade_seconds)
+	_set_group(open_when_cleared, false, door_fade_seconds)
+	_set_group(reveal_when_cleared, true, door_fade_seconds)
+
+
+## Where the camera should look: the doors that open and the things that appear (not the gate behind the player).
+func _door_points() -> Array:
+	var pts: Array = []
+	for list in [open_when_cleared, reveal_when_cleared]:
+		for n in list:
+			if n is Node2D and is_instance_valid(n):
+				pts.append((n as Node2D).global_position)
+	return pts
 
 
 # =====================================================================
@@ -396,7 +425,7 @@ func _set_collisions(n: Node, on: bool) -> void:
 	if n is CollisionShape2D or n is CollisionPolygon2D:
 		n.set_deferred("disabled", not on)
 	elif n is TileMapLayer:
-		n.collision_enabled = on
+		n.set_deferred("collision_enabled", on)
 	for c in n.get_children():
 		_set_collisions(c, on)
 

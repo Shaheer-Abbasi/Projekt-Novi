@@ -31,6 +31,14 @@ const LEVEL_SELECT_PATH := "res://scenes/MainMenuScenes/level_select.tscn"
 @export var unlock_next_level: bool = true
 ## Where Esc goes. Empty = the main menu at its usual path.
 @export var menu_scene: PackedScene
+## ON: pressing Esc leaves the level for the menu. OFF: Esc does nothing in this level.
+@export var escape_to_menu: bool = true
+
+@export_group("Fade in")
+## The level starts on a plain color and fades up to the picture, instead of snapping on. 0 = no fade.
+@export var fade_in_seconds: float = 1.2
+## The color it fades in from (black by default; try white for a bright flash).
+@export var fade_color: Color = Color.BLACK
 
 @export_group("Opening run-in")
 ## Optional: a Marker2D. At the start the player runs from where she begins (PlayerStart) to this spot,
@@ -54,6 +62,9 @@ const LEVEL_SELECT_PATH := "res://scenes/MainMenuScenes/level_select.tscn"
 @export var cant_lose: bool = false
 ## TAB skips straight to the next scene (and counts as completed).
 @export var allow_tab_skip: bool = false
+## The player starts with NO abilities, whatever her character file says. Tick this for a tutorial that teaches them one at a time
+## (each room's key prompt gives her its ability). Off = she starts with the abilities in her character file.
+@export var start_with_no_abilities: bool = false
 
 @export_group("HUD counters: credits, kills, survived")
 ## Start this level with Credits, Kills and Survived at 0 (like a new roguelike round).
@@ -75,6 +86,34 @@ const LEVEL_SELECT_PATH := "res://scenes/MainMenuScenes/level_select.tscn"
 ## Add your level-up screen ("choose an upgrade", level_up_ui.tscn, found by file name) to this level.
 ## Skipped if the level already has one. Needs a node called Player in the level.
 @export var include_level_up_screen: bool = false
+
+@export_group("Clear cinematic (slow-mo, zoom, pan to the door)")
+## When the LAST enemy of a room falls: slow motion and a zoom on it, the player is held still, the camera pans to the door that opens, then back to her.
+## Bosses get a longer slow motion with a screen shake. Turn it off for the whole level here, or for one room on its encounter node.
+@export var clear_cinematics: bool = true
+## How slow time gets (0.25 = quarter speed).
+@export_range(0.05, 1.0, 0.01) var slow_mo_scale: float = 0.25
+## How long the slow motion lasts, in REAL seconds, for a normal room.
+@export var slow_mo_seconds: float = 1.3
+## The same for a boss.
+@export var boss_slow_mo_seconds: float = 3.0
+## How far the camera zooms in on the last enemy (1.5 = 50% closer).
+@export var cinematic_zoom: float = 1.5
+## Seconds for each camera move (to the door, then back to the player).
+@export var pan_seconds: float = 1.0
+## Seconds the camera stays on the door once it opens.
+@export var door_hold_seconds: float = 0.9
+## Screen shake strength for a boss, in pixels. 0 = none.
+@export var boss_shake: float = 8.0
+## Slow the sound down during the slow motion (it also drops in pitch). Turn off to keep the sound at normal speed.
+@export var slow_mo_audio: bool = true
+## How slow the sound gets: 1.0 = no change, 0.25 = as slow as the picture. Higher = gentler. (It eases in and out.)
+@export_range(0.25, 1.0, 0.01) var slow_mo_audio_speed: float = 0.6
+
+@export_group("Enemy death effect (blink, disintegrate, fade)")
+## Enemies blink a different color when they die, then break into pixels that drift away and fade (instead of vanishing at once).
+## The level adds a DeathEffects node for this. To change the colors / timing, add your own DeathEffects node to the level: the level then uses yours.
+@export var enemy_death_effect: bool = true
 
 @export_group("World")
 ## The walkable area. The player can't leave it and the camera stops at its edges.
@@ -117,6 +156,12 @@ const LEVEL_SELECT_PATH := "res://scenes/MainMenuScenes/level_select.tscn"
 @export var debug_keys: bool = true
 
 @export_group("Found automatically (only fill these if the level can't find them)")
+## Copy the Inspector settings of the Player AND of the Ultimate cinematic in your playtest scene (slash sound, slash pictures,
+## the Ultimate's voice line, portrait and text...) onto the ones this level builds. Those settings live in that scene, not in the
+## player / cutscene scripts, so without this they are lost. (Her character data and abilities are never copied.)
+@export var copy_player_settings: bool = true
+## The scene whose Player to copy. Empty = the level looks for playtest.tscn by name.
+@export var copy_player_settings_from: PackedScene
 @export var player_scene: PackedScene
 @export var hud_scene: PackedScene
 @export var character_data: CharacterData
@@ -127,7 +172,11 @@ var arena_rect: Rect2 = Rect2(-100000.0, -100000.0, 200000.0, 200000.0)
 var kills: int = 0
 var is_complete: bool = false
 var intro_running: bool = false
+var is_cinematic: bool = false
 
+var _settings_root: Node             # your playtest scene, opened once to copy settings from (freed at the end of _ready)
+var _settings_name: String = ""
+var _audio_tween: Tween
 var _skin_cache: UISkin             # the skin everything uses: your Ui Skin (if any) + the characters above
 var _player_source: String = ""     # where the Player came from (for the startup message)
 var _hud_source: String = ""
@@ -138,6 +187,7 @@ static var _file_cache: Dictionary = {}
 
 
 func _ready() -> void:
+	_start_fade_in()                              # first, so the very first frame is already covered
 	_round_stats = get_node_or_null("/root/RoundStats")
 	_xp = get_node_or_null("/root/XpManager")
 	if _round_stats != null and reset_round_stats and _round_stats.has_method("reset"):
@@ -157,13 +207,15 @@ func _ready() -> void:
 			_player_source = "a node in the 'player' group"
 	if player == null:
 		player = _spawn_player()
+	if start_with_no_abilities and player != null:
+		_clear_abilities()
 	hud = get_node_or_null("HUD") as PlaytestHUD
 	if hud != null:
 		_hud_source = "a node called HUD in the scene"
 	if hud == null:
 		hud = _spawn_hud()
 	if get_tree().get_first_node_in_group("ultimate_cutscene") == null:
-		add_child(UltimateCutscene.new())          # a plain one; put your own UltimateCutscene node in the scene to use yours
+		add_child(_make_cutscene())                # put your own UltimateCutscene node in the scene to use yours instead
 	if world_bounds.size != Vector2.ZERO:
 		arena_rect = world_bounds
 	if player != null:
@@ -173,6 +225,8 @@ func _ready() -> void:
 			player.health_changed.connect(_keep_alive)
 	if hud != null and player != null:
 		hud.bind_player(player)
+		if start_with_no_abilities:
+			_refresh_hud_abilities()
 		hud.set_timer_text(level_title)
 		if _round_stats == null:
 			hud.set_kills(0)                      # (with RoundStats the HUD follows it by itself)
@@ -183,11 +237,14 @@ func _ready() -> void:
 				n.visible = false
 	if include_level_up_screen and not _has_level_up_screen():
 		_add_level_up_screen()
+	if enemy_death_effect and _find_death_effects() == null:
+		add_child(DeathEffects.new())
 	if allow_tab_skip:
 		get_tree().root.window_input.connect(_on_window_input)
 	if intro_run_to != null and player != null:
 		intro_running = true
 		_run_intro.call_deferred()
+	_free_settings_source()
 	var encounter_count := 0
 	for n in find_children("*", "Area2D", true, false):
 		if n is StoryEncounter:
@@ -205,6 +262,8 @@ func _ready() -> void:
 
 
 func _exit_tree() -> void:
+	if is_cinematic:
+		_set_time_scale(1.0)                      # never leave the game in slow motion after a scene change
 	var root := get_tree().root if get_tree() != null else null
 	if root != null and root.window_input.is_connected(_on_window_input):
 		root.window_input.disconnect(_on_window_input)
@@ -222,6 +281,45 @@ func _on_leveled_up(new_level: int) -> void:
 	if not is_inside_tree() or get_tree().paused:
 		return                                   # it is showing "LEVEL N - CHOOSE AN UPGRADE" already
 	get_notice().show_big("LEVEL UP!   Level %d" % new_level, 2.5, Color(1.0, 0.85, 0.2))
+
+
+## Covers the screen with Fade Color and fades it away over Fade In Seconds (see FadeCover below).
+func _start_fade_in() -> void:
+	if fade_in_seconds <= 0.0:
+		return
+	var cover := FadeCover.new()
+	cover.name = "FadeIn"
+	cover.setup(fade_color, fade_in_seconds)
+	add_child(cover)
+
+
+## The cover used by Fade In. It never blocks the mouse or keys, sits above everything (HUD, dialogue), keeps going while the game
+## is paused, and removes itself when done. It stays fully covered through the first frames and then counts time in SMALL steps,
+## so a long first frame (a level that is slow to build) can not use up the fade before you ever see it.
+class FadeCover extends CanvasLayer:
+	var seconds: float = 1.0
+	var _rect: ColorRect
+	var _elapsed: float = 0.0
+	var _frames: int = 0
+
+	func setup(color: Color, secs: float) -> void:
+		layer = 120
+		process_mode = Node.PROCESS_MODE_ALWAYS
+		seconds = maxf(secs, 0.01)
+		_rect = ColorRect.new()
+		_rect.color = color
+		_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+		_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		add_child(_rect)
+
+	func _process(delta: float) -> void:
+		_frames += 1
+		if _frames <= 2:
+			return                                                        # the long first frames: stay fully covered
+		_elapsed += minf(delta / maxf(Engine.time_scale, 0.001), 1.0 / 30.0)      # real time (not slow motion), at most 1/30 s per frame
+		_rect.modulate.a = 1.0 - clampf(_elapsed / seconds, 0.0, 1.0)
+		if _elapsed >= seconds:
+			queue_free()
 
 
 ## True if the scene already contains your level-up screen (any node running level_up_ui.gd).
@@ -360,6 +458,7 @@ func _spawn_player() -> PlaytestPlayer:
 		return null
 	p.name = "Player"
 	_player_source = "built from %s" % (ps.resource_path if ps.resource_path != "" else "the Player Scene slot")
+	_copy_player_settings(p)
 	if p.character_data == null:
 		p.character_data = character_data
 	add_child(p)
@@ -367,6 +466,72 @@ func _spawn_player() -> PlaytestPlayer:
 	if start != null:
 		p.global_position = start.global_position
 	return p
+
+
+## Your playtest scene (the slot, else playtest.tscn by name), opened ONCE so settings can be copied from it. null = nothing to copy from.
+func _settings_source() -> Node:
+	if not copy_player_settings:
+		return null
+	if _settings_root != null:
+		return _settings_root
+	var src_scene := copy_player_settings_from
+	if src_scene == null:
+		src_scene = _load_found("playtest.tscn") as PackedScene
+	if src_scene == null:
+		return null
+	_settings_name = src_scene.resource_path if src_scene.resource_path != "" else "the scene in Copy Player Settings From"
+	_settings_root = src_scene.instantiate()
+	return _settings_root
+
+
+func _free_settings_source() -> void:
+	if _settings_root != null:
+		_settings_root.free()
+		_settings_root = null
+
+
+## Copies the Inspector settings of `src` onto `dst` (both use the same script), except the names in `skip`. Returns the names copied.
+static func _copy_settings(src: Node, dst: Node, skip: Array) -> PackedStringArray:
+	var copied: PackedStringArray = []
+	for prop in src.get_property_list():
+		var usage := int(prop["usage"])
+		if (usage & PROPERTY_USAGE_SCRIPT_VARIABLE) == 0 or (usage & PROPERTY_USAGE_EDITOR) == 0:
+			continue                                   # only the settings you see in the Inspector
+		var nm := String(prop["name"])
+		if nm in skip:
+			continue
+		var v = src.get(nm)
+		if v == null or (typeof(v) == typeof(dst.get(nm)) and v == dst.get(nm)):
+			continue                                   # nothing set, or the same as the new one
+		dst.set(nm, v)
+		copied.append(nm)
+	return copied
+
+
+## Copies the Inspector settings of the Player in your playtest scene onto the Player this level builds.
+func _copy_player_settings(p: Node) -> void:
+	var scene_root := _settings_source()
+	if scene_root == null:
+		return
+	var src: Node = scene_root.get_node_or_null("Player")
+	if src == null or src.get_script() != p.get_script():
+		push_warning("StoryLevel: could not copy Player settings: %s has no node called 'Player' using the same player script." % _settings_name)
+		return
+	var copied := _copy_settings(src, p, ["character_data"])      # character_data NEVER: it decides her stats and abilities, and the tutorial has its own
+	print("StoryLevel: copied %d Player settings from %s: %s" % [copied.size(), _settings_name, ", ".join(copied) if not copied.is_empty() else "(nothing differed)"])
+
+
+## The Ultimate cinematic this level uses: a new one, with the settings (voice line, portrait, text...) of the UltimateCutscene in your playtest scene.
+func _make_cutscene() -> UltimateCutscene:
+	var cs := UltimateCutscene.new()
+	var scene_root := _settings_source()
+	if scene_root != null:
+		for n in scene_root.find_children("*", "Node", true, false):
+			if n is UltimateCutscene:
+				var copied := _copy_settings(n, cs, [])
+				print("StoryLevel: copied %d Ultimate cinematic settings from %s: %s" % [copied.size(), _settings_name, ", ".join(copied) if not copied.is_empty() else "(nothing differed)"])
+				break
+	return cs
 
 
 func _spawn_hud() -> PlaytestHUD:
@@ -398,12 +563,13 @@ func get_or_grant_ability(kind: String, grant: bool = true) -> Ability:
 		return null
 	var script := _ability_script(kind)
 	if script == null:
-		push_warning("StoryLevel: no ability script called '%s' was found in the project." % kind)
+		push_warning("StoryLevel: no ability script called '%s' was found, so it could not be given to the player. The ability scripts in this project are: %s.  On the room's node, type the exact one in 'Prompt Ability Name'." % [kind, _known_ability_names()])
 		return null
 	for a in player.abilities:
 		if a != null and a.get_script() == script:
 			return a
 	if not grant:
+		print("StoryLevel: the player does not have %s and 'Grant Ability If Missing' is off, so it was not given." % kind)
 		return null
 	var ab := script.new() as Ability
 	if ab == null:
@@ -414,6 +580,11 @@ func get_or_grant_ability(kind: String, grant: bool = true) -> Ability:
 	player.abilities.append(ab)
 	_refresh_hud_abilities()
 	ability_granted.emit(kind)
+	var action := action_for_ability(ab)
+	if InputMap.has_action(action):
+		print("StoryLevel: gave the player %s (%s) on key %s." % [kind, script.resource_path.get_file(), TutorialUI.key_text(action)])
+	else:
+		push_warning("StoryLevel: gave the player %s, but it is the player's ability number %d and the player has no key for that (%s does not exist), so it cannot be pressed." % [kind, player.abilities.size(), action])
 	return ab
 
 
@@ -425,12 +596,68 @@ func action_for_ability(ab: Ability) -> String:
 	return "" if i < 0 else "ability_%d" % (i + 1)
 
 
+## Finds the script for an ability kind. Tries, in order: the exact class name, the exact file name, then any ability script
+## whose name CONTAINS the keyword (so "AbilityBouquet" also finds "AbilityBouquetThrow" or "AbilityBouquetToss").
 func _ability_script(kind: String) -> Script:
 	var sc := _script_of_class(kind)
 	if sc != null:
 		return sc
 	var path := find_project_file(kind + ".gd")
-	return load(path) as Script if path != "" else null
+	if path != "":
+		return load(path) as Script
+	var key := kind.trim_prefix("Ability").to_lower()
+	if key != "":
+		for c in ProjectSettings.get_global_class_list():
+			if String(c["class"]).to_lower().contains(key) and _is_ability_script(load(c["path"]) as Script):
+				print("StoryLevel: no ability called '%s'; using '%s' (its name contains '%s')." % [kind, c["class"], key])
+				return load(c["path"]) as Script
+		var files: Array = []
+		_scan_prefix("res://", "ability", files)
+		for f in files:
+			if String(f).get_file().to_lower().contains(key):
+				var cand := load(f) as Script
+				if _is_ability_script(cand):
+					print("StoryLevel: no ability called '%s'; using '%s' (its name contains '%s')." % [kind, String(f).get_file(), key])
+					return cand
+	return null
+
+
+static func _is_ability_script(sc: Script) -> bool:
+	if sc == null or not sc.can_instantiate():
+		return false
+	var b := sc.get_base_script()
+	while b != null:
+		if b.resource_path.get_file() == "Ability.gd" or String(b.get_global_name()) == "Ability":
+			return true
+		b = b.get_base_script()
+	return false
+
+
+## Every .gd file whose name starts with the prefix (case-insensitive), anywhere in res://.
+static func _scan_prefix(dir_path: String, prefix: String, out: Array) -> void:
+	var d := DirAccess.open(dir_path)
+	if d == null:
+		return
+	for f in d.get_files():
+		if f.to_lower().begins_with(prefix) and f.to_lower().ends_with(".gd"):
+			out.append(dir_path.path_join(f))
+	for sub in d.get_directories():
+		if not sub.begins_with("."):
+			_scan_prefix(dir_path.path_join(sub), prefix, out)
+
+
+## The names of the ability scripts this project has (to show you the real names when one is not found).
+func _known_ability_names() -> String:
+	var names: PackedStringArray = []
+	for c in ProjectSettings.get_global_class_list():
+		if String(c["base"]) == "Ability":
+			names.append(String(c["class"]))
+	if names.is_empty():
+		var files: Array = []
+		_scan_prefix("res://", "ability", files)
+		for f in files:
+			names.append(String(f).get_file().get_basename())
+	return ", ".join(names) if not names.is_empty() else "(none found)"
 
 
 ## Makes the HUD show the abilities the player has now (its own setup only runs once, when it is bound).
@@ -515,6 +742,133 @@ func _run_intro() -> void:
 
 
 # =====================================================================
+#  clear cinematic: slow-mo + zoom on the last enemy, pan to the door, pan back
+# =====================================================================
+
+## Plays the cinematic. focus = where the last enemy fell; doors = world positions to pan to; open_doors = called when the camera arrives at the first door;
+## boss = longer slow motion and a screen shake. Returns when the player has control again.
+func play_clear_cinematic(focus: Vector2, doors: Array, open_doors: Callable, boss: bool) -> void:
+	if is_cinematic or player == null or player.camera == null:
+		open_doors.call()
+		return
+	is_cinematic = true
+	await get_tree().process_frame
+	await get_tree().process_frame
+	while get_tree().paused and is_inside_tree():          # a level-up screen (or a conversation) first: the cinematic waits for it
+		await get_tree().process_frame
+	if not is_inside_tree():
+		return
+	var pcam: Camera2D = player.camera
+	var cam := Camera2D.new()                               # a separate camera, so the player's own camera is never touched
+	cam.name = "ClearCinematicCamera"
+	cam.limit_left = -10000000
+	cam.limit_top = -10000000
+	cam.limit_right = 10000000
+	cam.limit_bottom = 10000000
+	cam.position_smoothing_enabled = false
+	add_child(cam)
+	cam.global_position = pcam.get_screen_center_position()
+	cam.zoom = pcam.zoom
+	cam.make_current()
+	# hold the player still and safe, and freeze anything still alive
+	var was_locked: bool = player._input_locked
+	var invuln_before: float = player._invuln_left
+	player.set_input_locked(true)
+	player.velocity = Vector2.ZERO
+	player._invuln_left = 100000.0
+	var frozen: Array = []
+	for e in get_tree().get_nodes_in_group("enemies"):
+		if is_instance_valid(e):
+			frozen.append([e, e.process_mode])
+			e.process_mode = Node.PROCESS_MODE_DISABLED
+	# 1) slow motion, zooming in on the last enemy
+	var dur := boss_slow_mo_seconds if boss else slow_mo_seconds
+	var fx := _find_death_effects()
+	if fx != null and fx.enabled:
+		dur = maxf(dur, fx.total_seconds(boss))                # hold on the dying enemy until its effect is (mostly) done
+	_set_time_scale(slow_mo_scale, 0.2)
+	_move_camera(cam, focus, pcam.zoom * cinematic_zoom, dur * 0.7)
+	await _shake_for(cam, dur, boss_shake if boss else 0.0)
+	_set_time_scale(1.0, 0.4)
+	# 2) pan to the door; it opens when the camera gets there
+	var opened := false
+	for pt in doors:
+		await _move_camera_wait(cam, pt, pcam.zoom * 1.15, pan_seconds)
+		if not opened:
+			opened = true
+			open_doors.call()
+		await _real_wait(door_hold_seconds)
+	if not opened:
+		open_doors.call()
+	# 3) back to the player
+	await _move_camera_wait(cam, player.global_position, pcam.zoom, pan_seconds)
+	pcam.make_current()
+	cam.queue_free()
+	player.set_input_locked(was_locked)
+	player._invuln_left = invuln_before
+	for pair in frozen:
+		if is_instance_valid(pair[0]):
+			pair[0].process_mode = pair[1]
+	is_cinematic = false
+
+
+func _find_death_effects() -> DeathEffects:
+	return get_tree().get_first_node_in_group("death_effects") as DeathEffects
+
+
+## Sets the game speed. The sound follows more gently (slow_mo_audio_speed) and eases over `ease_seconds` instead of jumping.
+func _set_time_scale(scale: float, ease_seconds: float = 0.0) -> void:
+	Engine.time_scale = scale
+	if not slow_mo_audio:
+		return
+	var target := 1.0 if scale >= 1.0 else clampf(slow_mo_audio_speed, 0.05, 1.0)
+	if _audio_tween != null and _audio_tween.is_valid():
+		_audio_tween.kill()
+	if ease_seconds <= 0.0 or not is_inside_tree():
+		AudioServer.playback_speed_scale = target
+		return
+	_audio_tween = create_tween()
+	_audio_tween.set_ignore_time_scale(true)
+	_audio_tween.tween_property(AudioServer, "playback_speed_scale", target, ease_seconds)
+
+
+## A wait that is not slowed by the slow motion (and pauses with the game).
+func _real_wait(seconds: float) -> void:
+	var tw := create_tween()
+	tw.set_ignore_time_scale(true)
+	tw.tween_interval(maxf(seconds, 0.01))
+	await tw.finished
+
+
+func _move_camera(cam: Camera2D, pos: Vector2, zoom: Vector2, seconds: float) -> Tween:
+	var tw := create_tween()
+	tw.set_ignore_time_scale(true)
+	tw.set_parallel(true)
+	tw.tween_property(cam, "global_position", pos, maxf(seconds, 0.01)).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	tw.tween_property(cam, "zoom", zoom, maxf(seconds, 0.01)).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+	return tw
+
+
+func _move_camera_wait(cam: Camera2D, pos: Vector2, zoom: Vector2, seconds: float) -> void:
+	var tw := _move_camera(cam, pos, zoom, seconds)
+	await tw.finished
+
+
+## Waits `seconds` of real time, shaking the camera (strength fades out) if strength > 0.
+func _shake_for(cam: Camera2D, seconds: float, strength: float) -> void:
+	var elapsed := 0.0
+	while elapsed < seconds and is_inside_tree():
+		await get_tree().process_frame
+		if get_tree().paused:
+			continue
+		elapsed += get_process_delta_time() / maxf(Engine.time_scale, 0.001)
+		if strength > 0.0 and is_instance_valid(cam):
+			cam.offset = Vector2(randf_range(-1.0, 1.0), randf_range(-1.0, 1.0)) * strength * clampf(1.0 - elapsed / seconds, 0.0, 1.0)
+	if is_instance_valid(cam):
+		cam.offset = Vector2.ZERO
+
+
+# =====================================================================
 #  ending
 # =====================================================================
 
@@ -596,6 +950,17 @@ func _keep_alive(cur: float, mx: float) -> void:
 #  shared UI pieces
 # =====================================================================
 
+## Removes every ability the player was built with (Start With No Abilities). Her stats are untouched.
+func _clear_abilities() -> void:
+	var removed := 0
+	for a in player.abilities:
+		if a != null and is_instance_valid(a):
+			a.queue_free()
+			removed += 1
+	player.abilities.clear()
+	print("StoryLevel: Start With No Abilities removed %d abilities from the player." % removed)
+
+
 ## The skin everything uses: your Ui Skin (if you gave one), plus the characters from the easy fields above.
 func _skin() -> UISkin:
 	if _skin_cache == null:
@@ -669,6 +1034,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not (event is InputEventKey and event.pressed and not event.echo):
 		return
 	if event.keycode == KEY_ESCAPE:
+		if not escape_to_menu:
+			return
 		get_tree().paused = false
 		if menu_scene != null:
 			get_tree().change_scene_to_packed(menu_scene)

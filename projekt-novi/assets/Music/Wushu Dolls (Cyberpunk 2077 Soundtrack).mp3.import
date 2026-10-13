@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b128uw30h4wdm"
+path="res://.godot/imported/Wushu Dolls (Cyberpunk 2077 Soundtrack).mp3-8a4dd80647380d6b099cdbc3ad7188b3.mp3str"
+
+[deps]
+
+source_file="res://assets/Music/Wushu Dolls (Cyberpunk 2077 Soundtrack).mp3"
+dest_files=["res://.godot/imported/Wushu Dolls (Cyberpunk 2077 Soundtrack).mp3-8a4dd80647380d6b099cdbc3ad7188b3.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4
