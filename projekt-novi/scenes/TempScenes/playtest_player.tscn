@@ -2,17 +2,17 @@
 
 [ext_resource type="Script" uid="uid://dkqtoolrmalwc" path="res://scripts/Temp_Scripts/playtest_player.gd" id="1"]
 [ext_resource type="Texture2D" uid="uid://wf0ya7rroe3n" path="res://art/aim_cursor.png" id="2"]
-[ext_resource type="Texture2D" uid="uid://uwn6ki51sa7a" path="res://assets/Characters/Vow/slash1.png" id="2_c7cyg"]
-[ext_resource type="Texture2D" uid="uid://ky23ehojefwq" path="res://assets/Characters/Vow/slash2.png" id="3_q022q"]
-[ext_resource type="Texture2D" uid="uid://da34xwgov08hm" path="res://assets/Characters/Vow/vow_i1.png" id="3_wlq54"]
-[ext_resource type="Texture2D" uid="uid://mxnmnm35aap3" path="res://assets/Characters/Vow/vow_i2.png" id="4_lxvpw"]
-[ext_resource type="Texture2D" uid="uid://va5xuxe7he52" path="res://assets/Characters/Vow/slash3.png" id="4_wt8cj"]
-[ext_resource type="Texture2D" uid="uid://c17j61lae0rw5" path="res://assets/Characters/Vow/vow_r1.png" id="5_0joco"]
-[ext_resource type="Texture2D" uid="uid://brdkakypkvues" path="res://assets/Characters/Vow/vow_r2.png" id="6_lgnmr"]
-[ext_resource type="Texture2D" uid="uid://dt280hg0e4vmk" path="res://assets/Characters/Vow/vow_r3.png" id="7_q7fto"]
-[ext_resource type="Texture2D" uid="uid://b0iigd0xtbvij" path="res://assets/Characters/Vow/vow_r4.png" id="8_c7cyg"]
-[ext_resource type="Texture2D" uid="uid://br5bxdijalka1" path="res://assets/Characters/Vow/vow_r5.png" id="9_q022q"]
-[ext_resource type="Texture2D" uid="uid://diserk57mpng6" path="res://assets/Characters/Vow/vow_r6.png" id="10_wt8cj"]
+[ext_resource type="Texture2D" uid="uid://c15f6dsmhhi2x" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_slash_1_right.png" id="2_c7cyg"]
+[ext_resource type="Texture2D" uid="uid://wawbv5cbh5at" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_slash_2_right.png" id="3_q022q"]
+[ext_resource type="Texture2D" uid="uid://ckv1ijd8joc6k" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_idle.png" id="6_q7fto"]
+[ext_resource type="Texture2D" uid="uid://6bhxqmon511b" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_attack_1_right.png" id="6_q022q"]
+[ext_resource type="Texture2D" uid="uid://cvd7ixxyaebax" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_attack_2_right.png" id="7_wt8cj"]
+[ext_resource type="Texture2D" uid="uid://c0q8yw7ki3thc" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_run_1_left.png" id="8_c7cyg"]
+[ext_resource type="Texture2D" uid="uid://d10nv04n8cy1x" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_run_2_left.png" id="9_q022q"]
+[ext_resource type="Texture2D" uid="uid://b325507uvjjkd" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_run_3_left.png" id="10_wt8cj"]
+[ext_resource type="Texture2D" uid="uid://0ol7yjtcmids" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_run_1_right.png" id="14_q2boi"]
+[ext_resource type="Texture2D" uid="uid://peq4jhr1itw4" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_run_2_right.png" id="15_mxsrq"]
+[ext_resource type="Texture2D" uid="uid://cuf7a1f8hfqns" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_run_3_right.png" id="16_yjxfc"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
 radius = 18.0
@@ -20,11 +20,19 @@ radius = 18.0
 [sub_resource type="SpriteFrames" id="SpriteFrames_ryyu3"]
 animations = [{
 "frames": [{
-"duration": 2.0,
-"texture": ExtResource("3_wlq54")
+"duration": 1.0,
+"texture": ExtResource("6_q022q")
 }, {
-"duration": 2.0,
-"texture": ExtResource("4_lxvpw")
+"duration": 1.0,
+"texture": ExtResource("7_wt8cj")
+}],
+"loop": 2,
+"name": &"attack",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_q7fto")
 }],
 "loop": 1,
 "name": &"idle",
@@ -32,33 +40,38 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_0joco")
+"texture": ExtResource("14_q2boi")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_lgnmr")
+"texture": ExtResource("15_mxsrq")
 }, {
 "duration": 1.0,
-"texture": ExtResource("7_q7fto")
+"texture": ExtResource("16_yjxfc")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 5.0
 }, {
+"frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_c7cyg")
+"texture": ExtResource("10_wt8cj")
 }, {
 "duration": 1.0,
 "texture": ExtResource("9_q022q")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_wt8cj")
+"texture": ExtResource("8_c7cyg")
 }],
 "loop": 1,
-"name": &"run",
-"speed": 5.0
+"name": &"run_left",
+"speed": 4.0
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=590826995]
 collision_layer = 2
 motion_mode = 1
 script = ExtResource("1")
-slash_frames = Array[Texture2D]([ExtResource("2_c7cyg"), ExtResource("3_q022q"), ExtResource("4_wt8cj")])
+slash_frames = Array[Texture2D]([ExtResource("2_c7cyg"), ExtResource("3_q022q")])
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2068757560]
 visible = false
@@ -80,8 +93,9 @@ texture = ExtResource("2")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterSprite" unique_id=2143519473]
 texture_filter = 1
-position = Vector2(-8, -13)
+position = Vector2(0, 2)
 scale = Vector2(0.38100004, 0.38100004)
 sprite_frames = SubResource("SpriteFrames_ryyu3")
-animation = &"idle"
+animation = &"attack"
 autoplay = "idle"
+frame_progress = 0.7029539

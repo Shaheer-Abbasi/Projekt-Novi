@@ -89,7 +89,7 @@ _data = {
 &"vow_ult": SubResource("Animation_mnpca")
 }
 
-[node name="Playtest" type="Node2D" unique_id=436201814 groups=["cyberdoc_spawn"]]
+[node name="Playtest2" type="Node2D" unique_id=436201814 groups=["cyberdoc_spawn"]]
 script = ExtResource("1")
 arena_size = Vector2(4100, 1448)
 

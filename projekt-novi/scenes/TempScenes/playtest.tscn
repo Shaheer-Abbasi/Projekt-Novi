@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://byh4m73ybaqsu"]
 
 [ext_resource type="Script" uid="uid://bxcaorkai7w7h" path="res://scripts/Temp_Scripts/playtest.gd" id="1"]
-[ext_resource type="PackedScene" path="res://scenes/level_up_ui.tscn" id="level_up_ui"]
 [ext_resource type="PackedScene" uid="uid://bd740f8hrlroe" path="res://scenes/TempScenes/playtest_player.tscn" id="2"]
 [ext_resource type="Texture2D" uid="uid://bg1dmaj8d2ujh" path="res://assets/Maps/CorpoHQ/Arasaka_1.png" id="2_b56qm"]
 [ext_resource type="Script" uid="uid://i7grus02o11p" path="res://scripts/Temp_Scripts/playtest_hud.gd" id="3"]
@@ -18,9 +17,12 @@
 [ext_resource type="Script" uid="uid://dad7ood8pbv8u" path="res://scripts/Temp_Scripts/CharacterData.gd" id="10_5uwqt"]
 [ext_resource type="Texture2D" uid="uid://c3p7iskri0cd5" path="res://assets/Characters/Vow/Vow_Illustration.png" id="15_tjmnq"]
 [ext_resource type="AudioStream" uid="uid://bgx4qr51i6eb4" path="res://assets/Music/Vow_Ult_quote.mp3" id="16_mnpca"]
+[ext_resource type="PackedScene" path="res://scenes/level_up_ui.tscn" id="level_up_ui"]
 
 [sub_resource type="Resource" id="Resource_3ob4o"]
 script = ExtResource("10_5uwqt")
+basic_damage = 10.0
+fire_cooldown = 5.0
 ability_1_script = ExtResource("6_k5umx")
 ability_2_script = ExtResource("7_tjmnq")
 ability_3_script = ExtResource("8_mnpca")
@@ -108,11 +110,12 @@ texture = ExtResource("4_xjs12")
 [node name="Player" parent="." unique_id=1114683646 instance=ExtResource("2")]
 character_data = SubResource("Resource_3ob4o")
 slash_sound = ExtResource("6_3ob4o")
+slash_volume_db = -5.0
 
 [node name="HUD" parent="." unique_id=337117531 instance=ExtResource("3_othej")]
 script = ExtResource("3")
 
-[node name="LevelUpUI" parent="." instance=ExtResource("level_up_ui")]
+[node name="LevelUpUI" parent="." unique_id=2028047670 instance=ExtResource("level_up_ui")]
 
 [node name="UltimateCutscene" type="CanvasLayer" parent="." unique_id=1864899912]
 script = ExtResource("4")
@@ -121,6 +124,7 @@ banner_text = "Bridal Cries"
 banner_font_size = 115
 banner_color = Color(0.75686276, 0, 0.20392157, 1)
 voice_line = ExtResource("16_mnpca")
+voice_volume_db = -5.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="UltimateCutscene" unique_id=1860973153]
 libraries/ = SubResource("AnimationLibrary_6v0qe")

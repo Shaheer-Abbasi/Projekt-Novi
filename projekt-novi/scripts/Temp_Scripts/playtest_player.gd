@@ -244,6 +244,8 @@ func _update_animation(dir: Vector2) -> void:
 func _play_for_movement(moving: bool) -> void:
 	for n in find_children("*", "AnimatedSprite2D", true, false):
 		var s := n as AnimatedSprite2D
+		if s.animation == &"attack" and s.is_playing() and s.frame < s.sprite_frames.get_frame_count("attack") - 1:
+			continue
 		if s.sprite_frames == null:
 			continue
 		var frames := s.sprite_frames
@@ -288,10 +290,12 @@ func _play_slash_sound() -> void:
 	add_child(sfx)
 	sfx.finished.connect(sfx.queue_free)
 	sfx.play()
-	
+
 ## Fires one bullet. Default range is the aim ring, so it stops at the circle.
 func fire_bullet(dir: Vector2, damage: float, bullet_range: float = -1.0) -> void:
 	_play_slash_sound()
+	$CharacterSprite/AnimatedSprite2D.flip_h = dir.x < 0.0
+	$CharacterSprite/AnimatedSprite2D.play("attack")
 	var rng := aim_radius if bullet_range < 0.0 else bullet_range
 	var start := global_position + dir * MUZZLE_OFFSET
 	var look := {
@@ -355,4 +359,4 @@ func _shake_step(t: float, strength: float) -> void:
 
 func _shake_end() -> void:
 	camera.offset = Vector2.ZERO
-	
+

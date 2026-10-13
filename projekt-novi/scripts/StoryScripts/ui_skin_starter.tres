@@ -1,0 +1,114 @@
+[gd_resource type="Resource" script_class="UISkin" format=3]
+
+[ext_resource type="Texture2D" path="res://scripts/StoryScripts/skin_art/dialogue_box_yellow.png" id="1_phifn"]
+[ext_resource type="Texture2D" path="res://scripts/StoryScripts/skin_art/name_plate_yellow.png" id="2_6hdyp"]
+[ext_resource type="Texture2D" path="res://scripts/StoryScripts/skin_art/key_enter.png" id="3_gk723"]
+[ext_resource type="Script" path="res://scripts/StoryScripts/ui_skin.gd" id="4_x34ue"]
+[ext_resource type="Texture2D" path="res://scripts/StoryScripts/skin_art/key_shift.png" id="5_0by4x"]
+[ext_resource type="Script" path="res://scripts/StoryScripts/dialogue_speaker.gd" id="6_c5y6y"]
+[ext_resource type="Texture2D" path="res://scripts/StoryScripts/skin_art/portrait_vow.png" id="7_dn31a"]
+[ext_resource type="Texture2D" path="res://scripts/StoryScripts/skin_art/dialogue_box_red.png" id="8_b1dca"]
+[ext_resource type="Texture2D" path="res://scripts/StoryScripts/skin_art/name_plate_red.png" id="9_a6byv"]
+[ext_resource type="Texture2D" path="res://scripts/StoryScripts/skin_art/portrait_operator.png" id="10_dv0la"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_gtqmx"]
+content_margin_left = 18.0
+content_margin_top = 10.0
+content_margin_right = 30.0
+content_margin_bottom = 14.0
+texture = ExtResource("1_phifn")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_et7do"]
+content_margin_left = 25.0
+content_margin_top = 43.0
+content_margin_right = 25.0
+content_margin_bottom = 14.0
+texture = ExtResource("1_phifn")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g4rwf"]
+content_margin_left = 10.0
+content_margin_top = 2.0
+content_margin_right = 10.0
+content_margin_bottom = 2.0
+texture = ExtResource("2_6hdyp")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 4.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wbyvl"]
+content_margin_left = 24.0
+content_margin_top = 20.0
+content_margin_right = 24.0
+content_margin_bottom = 24.0
+texture = ExtResource("1_phifn")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+
+[sub_resource type="Resource" id="Resource_aiq6x"]
+script = ExtResource("6_c5y6y")
+speaker_name = "VOW"
+portrait = ExtResource("7_dn31a")
+name_color = Color(1, 0.94, 0, 1)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_ap1u0"]
+content_margin_left = 25.0
+content_margin_top = 43.0
+content_margin_right = 25.0
+content_margin_bottom = 14.0
+texture = ExtResource("8_b1dca")
+texture_margin_left = 8.0
+texture_margin_top = 8.0
+texture_margin_right = 30.0
+texture_margin_bottom = 30.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_f6cvv"]
+content_margin_left = 14.0
+content_margin_top = 2.0
+content_margin_right = 24.0
+content_margin_bottom = 2.0
+texture = ExtResource("9_a6byv")
+texture_margin_left = 4.0
+texture_margin_top = 4.0
+texture_margin_right = 18.0
+texture_margin_bottom = 4.0
+
+[sub_resource type="Resource" id="Resource_ue3e0"]
+script = ExtResource("6_c5y6y")
+speaker_name = "OPERATOR"
+portrait = ExtResource("10_dv0la")
+side = 1
+box_style = SubResource("StyleBoxTexture_ap1u0")
+name_plate_style = SubResource("StyleBoxTexture_f6cvv")
+use_own_plate_text_color = true
+
+[resource]
+script = ExtResource("4_x34ue")
+dialogue_box = SubResource("StyleBoxTexture_et7do")
+dialogue_height = 193.0
+dialogue_side_margin = 0.0512
+dialogue_bottom_margin = 33.0
+text_font_size = 32
+name_plate = SubResource("StyleBoxTexture_g4rwf")
+name_plate_offset = Vector2(-25, -9)
+name_plate_min_size = Vector2(279, 37)
+portrait_style = 1
+button_font_size = 20
+buttons_below_box = true
+next_key_icons = Array[Texture2D]([ExtResource("3_gk723")])
+skip_key_icons = Array[Texture2D]([ExtResource("5_0by4x"), ExtResource("3_gk723")])
+key_icon_size = Vector2(26, 15)
+prompt_box = SubResource("StyleBoxTexture_wbyvl")
+prompt_title_color = Color(1, 0.94, 0, 1)
+banner_box = SubResource("StyleBoxTexture_gtqmx")
+speakers = Array[ExtResource("6_c5y6y")]([SubResource("Resource_aiq6x"), SubResource("Resource_ue3e0")])
