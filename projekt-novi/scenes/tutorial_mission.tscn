@@ -4,7 +4,6 @@
 [ext_resource type="PackedScene" uid="uid://fotc0fmi5yq" path="res://scenes/MainMenuScenes/main_menu.tscn" id="2_4h14o"]
 [ext_resource type="Texture2D" uid="uid://by6b4g5e74y26" path="res://assets/Background/ProjektNoVI_Logo.png" id="2_i1tqh"]
 [ext_resource type="Script" uid="uid://nvmfry0iqlen" path="res://scripts/StoryScripts/story_encounter.gd" id="3_6j7xg"]
-[ext_resource type="Texture2D" path="res://assets/Characters/Vow/Vow_Illustration_backup.png" id="3_g0ra6"]
 [ext_resource type="Script" uid="uid://d0kdaple4nudy" path="res://scripts/StoryScripts/ui_skin.gd" id="3_o1bmy"]
 [ext_resource type="Script" uid="uid://cdxvt3kpki35h" path="res://scripts/StoryScripts/dialogue_speaker.gd" id="4_403yp"]
 [ext_resource type="Texture2D" uid="uid://c0olmenjux0fv" path="res://art/dialogue_box_yellow.png" id="4_usbav"]
@@ -16,6 +15,9 @@
 [ext_resource type="Texture2D" uid="uid://dku3i2o7t40qm" path="res://art/name_plate_red.png" id="10_eee5h"]
 [ext_resource type="Texture2D" uid="uid://cfvmj43vxfkjr" path="res://art/WallTile.png" id="11_eee5h"]
 [ext_resource type="AudioStream" uid="uid://b128uw30h4wdm" path="res://assets/Music/Wushu Dolls (Cyberpunk 2077 Soundtrack).mp3" id="15_7uoqk"]
+
+[sub_resource type="Resource" id="Resource_7uoqk"]
+metadata/__load_path__ = "res://assets/Characters/Vow/Vow_Illustration_backup.png"
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_o1bmy"]
 content_margin_left = 12.0
@@ -219,7 +221,7 @@ reset_xp_at_start = true
 reset_xp_at_end = true
 include_level_up_screen = true
 slow_mo_audio_speed = 0.3
-hero_portrait = ExtResource("3_g0ra6")
+hero_portrait = SubResource("Resource_7uoqk")
 ui_skin = SubResource("Resource_i4nb4")
 
 [node name="Art_PlaceholderBoxes" type="Node2D" parent="." unique_id=49580605]
