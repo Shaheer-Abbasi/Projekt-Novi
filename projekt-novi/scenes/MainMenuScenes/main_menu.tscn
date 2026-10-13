@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d4ge4g72xfbjg" path="res://scripts/MainMenu_Scrips/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="AudioStream" uid="uid://beeck8r4ihpga" path="res://assets/Music/MenuMusic.mp3" id="2_8ln24"]
 [ext_resource type="Script" uid="uid://cgudegxae1078" path="res://scripts/MainMenu_Scrips/audio_control.gd" id="2_ekxnf"]
-[ext_resource type="VideoStream" uid="uid://tosjbvmhnsf3" path="res://assets/Background/BGMenu_p2.ogv" id="3_460oo"]
+[ext_resource type="Texture2D" path="res://assets/Background/IMG_0077.jpg" id="3_460oo"]
 [ext_resource type="Script" uid="uid://cxn34lqrfs0" path="res://scripts/MainMenu_Scrips/fullscreen_control.gd" id="3_bqqt6"]
 [ext_resource type="Texture2D" uid="uid://bv8kgl5lkq0w" path="res://assets/Buttons/MM_Buttons/Start_N.png" id="4_fwirt"]
 [ext_resource type="Script" uid="uid://cb1umgn16gjj4" path="res://scripts/MainMenu_Scrips/scale_control.gd" id="4_wu84c"]
@@ -45,17 +45,18 @@ stream = ExtResource("2_8ln24")
 autoplay = true
 bus = &"Music"
 
-[node name="VideoStreamPlayer" type="VideoStreamPlayer" parent="." unique_id=1901013342]
+[node name="Background" type="TextureRect" parent="."]
 z_index = -2
-layout_mode = 0
-offset_left = -3.5385742
-offset_top = -5.1694336
-offset_right = 1916.4614
-offset_bottom = 1074.8306
-scale = Vector2(0.60133916, 0.6059527)
-stream = ExtResource("3_460oo")
-autoplay = true
-loop = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("3_460oo")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="NewLogo" type="TextureRect" parent="."]
 layout_mode = 0
