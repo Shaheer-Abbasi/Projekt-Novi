@@ -59,15 +59,11 @@ expand_mode = 1
 stretch_mode = 6
 
 [node name="NewLogo" type="TextureRect" parent="."]
-layout_mode = 1
-anchors_preset = 10
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -275.0
+layout_mode = 0
+offset_left = 408.0
 offset_top = 42.0
-offset_right = 275.0
+offset_right = 958.0
 offset_bottom = 190.0
-grow_horizontal = 2
 mouse_filter = 2
 texture = ExtResource("16_newlogo")
 expand_mode = 1
