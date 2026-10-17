@@ -204,12 +204,14 @@ func _on_player_died() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("options") and ResourceLoader.exists("res://scenes/MainMenuScenes/main_menu.tscn"):
+		get_tree().paused = false
+		get_tree().change_scene_to_file("res://scenes/MainMenuScenes/main_menu.tscn")
+		return
+
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_F2 and state == RoundState.PLAYING and OS.is_debug_build():
 			# Debug build only: instantly earn exactly enough XP to test the selection popup.
 			XpManager.add_xp(XpManager.xp_to_next - XpManager.current_xp)
 		elif event.keycode == KEY_F1 and state == RoundState.PLAYING and boss_phase_enabled:
 			time_left = 0.0
-		elif event.keycode == KEY_ESCAPE and ResourceLoader.exists("res://scenes/MainMenuScenes/main_menu.tscn"):
-			get_tree().paused = false
-			get_tree().change_scene_to_file("res://scenes/MainMenuScenes/main_menu.tscn")

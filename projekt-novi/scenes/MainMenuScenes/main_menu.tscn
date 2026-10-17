@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d4ge4g72xfbjg" path="res://scripts/MainMenu_Scrips/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="AudioStream" uid="uid://beeck8r4ihpga" path="res://assets/Music/MenuMusic.mp3" id="2_8ln24"]
 [ext_resource type="Script" uid="uid://cgudegxae1078" path="res://scripts/MainMenu_Scrips/audio_control.gd" id="2_ekxnf"]
-[ext_resource type="Texture2D" path="res://assets/Background/IMG_0077.jpg" id="3_460oo"]
+[ext_resource type="Texture2D" uid="uid://ble366peqjxow" path="res://assets/Background/IMG_0077.jpg" id="3_460oo"]
 [ext_resource type="Script" uid="uid://cxn34lqrfs0" path="res://scripts/MainMenu_Scrips/fullscreen_control.gd" id="3_bqqt6"]
 [ext_resource type="Texture2D" uid="uid://bv8kgl5lkq0w" path="res://assets/Buttons/MM_Buttons/Start_N.png" id="4_fwirt"]
 [ext_resource type="Script" uid="uid://cb1umgn16gjj4" path="res://scripts/MainMenu_Scrips/scale_control.gd" id="4_wu84c"]
@@ -18,7 +18,8 @@
 [ext_resource type="Texture2D" uid="uid://deube1dhvwcxi" path="res://assets/Buttons/Level_Select/LevelSelect_N.png" id="13_kyccw"]
 [ext_resource type="Texture2D" uid="uid://c2txaypqc5wqe" path="res://assets/Buttons/Level_Select/LevelSelect_P.png" id="14_jj6og"]
 [ext_resource type="Texture2D" uid="uid://cce6fsv8bfjtc" path="res://assets/Buttons/Level_Select/LevelSelect_H.png" id="15_rer4v"]
-[ext_resource type="Texture2D" path="res://assets/Background/ProjektNoVI_Logo_New.png" id="16_newlogo"]
+[ext_resource type="Texture2D" uid="uid://baveydbox55q5" path="res://assets/Background/ProjektNoVI_Logo_New.png" id="16_newlogo"]
+[ext_resource type="Script" uid="uid://cbquu28kqio4d" path="res://scripts/MainMenu_Scrips/menu_controller.gd" id="20_rer4v"]
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_py7os"]
 color = Color(1, 1, 1, 1)
@@ -45,7 +46,7 @@ stream = ExtResource("2_8ln24")
 autoplay = true
 bus = &"Music"
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=569940631]
 z_index = -2
 layout_mode = 1
 anchors_preset = 15
@@ -58,7 +59,7 @@ texture = ExtResource("3_460oo")
 expand_mode = 1
 stretch_mode = 6
 
-[node name="NewLogo" type="TextureRect" parent="."]
+[node name="NewLogo" type="TextureRect" parent="." unique_id=1377084507]
 layout_mode = 0
 offset_left = 408.0
 offset_top = 42.0
@@ -70,7 +71,6 @@ expand_mode = 1
 stretch_mode = 5
 
 [node name="MainButtons" type="VBoxContainer" parent="." unique_id=1759019988]
-visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.29419625
@@ -101,6 +101,7 @@ texture_pressed = ExtResource("11_vbil6")
 texture_hover = ExtResource("12_u25lc")
 
 [node name="LevelSelect" type="Panel" parent="." unique_id=1586653694]
+visible = false
 layout_mode = 0
 offset_left = 486.7307
 offset_top = 352.83057
@@ -287,6 +288,9 @@ offset_right = 646.4614
 offset_bottom = 648.83057
 scale = Vector2(0.69086176, 0.69086176)
 text = "CyTac Studios"
+
+[node name="MenuController" type="Node" parent="." unique_id=1245641211]
+script = ExtResource("20_rer4v")
 
 [connection signal="pressed" from="MainButtons/Start_button" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MainButtons/Option_button" to="." method="_on_option_button_pressed"]
