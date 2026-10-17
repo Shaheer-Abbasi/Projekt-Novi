@@ -407,12 +407,15 @@ func _process(_delta: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event.is_echo():
 		return
+	var pressed: bool = (event is InputEventKey and event.pressed) \
+			or (event is InputEventMouseButton and event.pressed) \
+			or (event is InputEventJoypadButton and event.pressed)
+	if not pressed:
+		return
 	if is_playing_video:
-		if (event is InputEventKey and event.pressed) or (event is InputEventMouseButton and event.pressed):
-			stop_video()
-			get_viewport().set_input_as_handled()
+		stop_video()
+		get_viewport().set_input_as_handled()
 	elif is_waiting_at_logo:
-		if (event is InputEventKey and event.pressed) or (event is InputEventMouseButton and event.pressed):
-			is_waiting_at_logo = false
-			_logo_hint.visible = false
-			logo_dismissed.emit()
+		is_waiting_at_logo = false
+		_logo_hint.visible = false
+		logo_dismissed.emit()
