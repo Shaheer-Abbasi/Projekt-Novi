@@ -40,10 +40,24 @@ func _ready() -> void:
 	spin_button.text = "Spin (%d)" % spin_cost
 	spin_button.pressed.connect(_on_spin_pressed)
 	leave_button.pressed.connect(_on_leave_pressed)
-	spin_button.grab_focus()
+	spin_button.grab_focus.call_deferred()
 
 	await _say("Welcome to my clinic. Feeling lucky?")
 
+func _input(event: InputEvent) -> void:
+	var is_pad := event is InputEventJoypadButton or event is InputEventJoypadMotion
+	var focused := get_viewport().gui_get_focus_owner()
+	# Nothing selected: pick the right button for the current screen.
+	if is_pad and focused == null:
+		if popup.visible:
+			popup_ok.grab_focus()
+		elif not spin_button.disabled:
+			spin_button.grab_focus()
+		return
+	# X / E presses the selected button.
+	if event.is_action_pressed("interact") and focused is Button and not (focused as Button).disabled:
+		get_viewport().set_input_as_handled()
+		(focused as Button).pressed.emit()
 
 func _on_spin_pressed() -> void:
 	if busy:
@@ -132,7 +146,7 @@ func _show_reward(reward: Dictionary) -> void:
 	var tween := create_tween()
 	tween.tween_property(popup, "scale", Vector2.ONE, 0.25) \
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	popup_ok.grab_focus()
+	popup_ok.grab_focus.call_deferred()
 	await popup_ok.pressed
 	popup.hide()
 

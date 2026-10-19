@@ -63,7 +63,7 @@ func _ready() -> void:
 func _exit_tree() -> void:
 	if is_open and pause_game and get_tree() != null:
 		get_tree().paused = _was_paused          # never leave the next scene frozen
-
+		
 
 # --- public ------------------------------------------------------------------
 
@@ -548,17 +548,32 @@ func _place_attachments() -> void:
 func _input(event: InputEvent) -> void:
 	if not is_open or event.is_echo():
 		return
-	if event is InputEventKey and event.pressed:
-		var enter: bool = event.keycode == KEY_ENTER or event.keycode == KEY_KP_ENTER
-		if enter and event.shift_pressed and _eff.skip_with_shift_enter and _eff.show_skip_button:
+
+	# return (Circle): skip the conversation. The short delay stops the same
+	# press from also triggering a dodge when the game unpauses.
+	if event.is_action_pressed("return") and _btn_skip.visible:
+		get_viewport().set_input_as_handled()
+		await get_tree().create_timer(0.1).timeout
+		if is_open:
 			skip()
-			get_viewport().set_input_as_handled()
-		elif enter or event.keycode == KEY_SPACE:
-			_next()
-			get_viewport().set_input_as_handled()
-	elif event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
+		return
+
+	# Skip (Shift + Enter). Checked BEFORE next, because plain Enter also matches Shift+Enter.
+	if event.is_action_pressed("dialogue_skip") and _eff.skip_with_shift_enter and _eff.show_skip_button:
+		get_viewport().set_input_as_handled()
+		skip()
+		return
+
+	# Next (Space / Enter / E / Cross).
+	if event.is_action_pressed("dialogue_next") or event.is_action_pressed("interact"):
+		get_viewport().set_input_as_handled()
+		_next()
+		return
+
+	# Mouse click anywhere = next, unless a button was clicked (it handles itself).
+	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		for b in [_btn_next, _btn_skip, _btn_end]:
 			if b.visible and b.get_global_rect().has_point(event.position):
-				return                      # the button handles its own click
-		_next()
+				return
 		get_viewport().set_input_as_handled()
+		_next()
