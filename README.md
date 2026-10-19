@@ -35,13 +35,13 @@ We will be using the [GoDot](https://godotengine.org/) engine due to its easy le
 
 - Left Analog Stick - Move forward, left, right, and backwards
 - Right Analog Stick - Aim in a direction
+- R2 - Basic Attack
 - L1 - Ability 1
 - R1 - Ability 2
-- R3 - Ability 3
+- L2 - Ability 3
 - R3 + L3 - Ultimate Ability
 - X - Interact
-- O - N/A
-- L3 - Dodge
+- O - Dodge
 
 <img width="604" height="361" alt="Controller" src="https://github.com/user-attachments/assets/b6b8687d-d642-4407-8d19-d0c8bf80ba03" />
 
