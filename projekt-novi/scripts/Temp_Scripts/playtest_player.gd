@@ -359,4 +359,3 @@ func _shake_step(t: float, strength: float) -> void:
 
 func _shake_end() -> void:
 	camera.offset = Vector2.ZERO
-
