@@ -61,6 +61,7 @@ var abilities: Array[Ability] = []
 var arena_rect: Rect2 = Rect2(-100000, -100000, 200000, 200000)
 
 var _aim_dir: Vector2 = Vector2.RIGHT
+var _using_stick: bool = false
 var _facing_right: bool = true
 var _fire_left: float = 0.0
 var _input_locked: bool = false
@@ -78,7 +79,6 @@ var _flash_tween: Tween
 
 func _ready() -> void:
 	add_to_group("player")
-	_ensure_input_actions()
 	if character_data == null and ResourceLoader.exists(CHARACTER_DATA_PATH):
 		character_data = load(CHARACTER_DATA_PATH) as CharacterData
 	if character_data == null:
@@ -96,17 +96,6 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-
-
-func _ensure_input_actions() -> void:
-	var keys := {"ability_1": KEY_1, "ability_2": KEY_2, "ability_3": KEY_SHIFT, "ability_4": KEY_4}
-	for action in keys:
-		if InputMap.has_action(action):
-			continue
-		InputMap.add_action(action)
-		var ev := InputEventKey.new()
-		ev.physical_keycode = keys[action]
-		InputMap.action_add_event(action, ev)
 
 
 ## Builds the 8-direction walk animations from your Vow art. Same layout as
@@ -180,17 +169,26 @@ func _physics_process(delta: float) -> void:
 	_clamp_to_arena()
 	_update_animation(dir)
 
-	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT) and _fire_left <= 0.0:
+	if Input.is_action_pressed("basic attack") and _fire_left <= 0.0:
 		_fire_left = maxf(0.10, character_data.fire_cooldown * basic_attack_cooldown_multiplier)
 		fire_bullet(_aim_dir, character_data.basic_damage + XpManager.attack_damage - 1)
 
 
 # --- Aim cursor ---------------------------------------------------------
 
+func _input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion:
+		_using_stick = false
+
 func _update_aim() -> void:
-	var to_mouse := get_global_mouse_position() - global_position
-	if to_mouse.length() > 1.0:
-		_aim_dir = to_mouse.normalized()
+	var stick := Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
+	if stick.length() > 0.25:
+		_aim_dir = stick.normalized()
+		_using_stick = true
+	elif not _using_stick:	
+		var to_mouse := get_global_mouse_position() - global_position
+		if to_mouse.length() > 1.0:
+			_aim_dir = to_mouse.normalized()
 	aim_cursor.position = _aim_dir * aim_radius
 	aim_cursor.rotation = _aim_dir.angle() + deg_to_rad(cursor_rotation_offset_degrees)
 
@@ -315,6 +313,14 @@ func _unhandled_input(event: InputEvent) -> void:
 		if event.is_action_pressed("ability_%d" % (i + 1)):
 			abilities[i].try_activate()
 			return
+
+	# Controller ultimate: click both sticks (L3 + R3).
+	if event is InputEventJoypadButton and event.pressed \
+			and (event.button_index == JOY_BUTTON_LEFT_STICK or event.button_index == JOY_BUTTON_RIGHT_STICK):
+		if Input.is_joy_button_pressed(event.device, JOY_BUTTON_LEFT_STICK) \
+				and Input.is_joy_button_pressed(event.device, JOY_BUTTON_RIGHT_STICK):
+			if abilities.size() >= 4:
+				abilities[3].try_activate()
 
 
 func take_damage(amount: float) -> void:

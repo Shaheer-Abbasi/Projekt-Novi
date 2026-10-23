@@ -13,3 +13,7 @@ func _process(delta: float) -> void:
 
 func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
 	get_tree().change_scene_to_file("res://scenes/tutorial_mission.tscn")
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_pressed() and (event is InputEventKey or event is InputEventMouseButton or event is InputEventJoypadButton):
+		get_tree().change_scene_to_file("res://scenes/tutorial_mission.tscn")
