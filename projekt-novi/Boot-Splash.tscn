@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cv71we4cwyh3m" path="res://assets/Background/black.png" id="2_cpyu8"]
 [ext_resource type="Texture2D" uid="uid://ylb2ts4gopa7" path="res://assets/Background/logo_large_color_dark.png" id="3_l4bph"]
 [ext_resource type="Texture2D" uid="uid://gpv0ptcxs4ii" path="res://assets/Background/CyTacStudiosLogo-frame0.png" id="4_cpyu8"]
+[ext_resource type="Texture2D" uid="uid://cq75bye7y1v5k" path="res://assets/comparison.png" id="5_l4bph"]
 
 [sub_resource type="Animation" id="Animation_xxsu6"]
 length = 0.001
@@ -31,6 +32,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0)]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Cytac-Logo2/Sprite2D:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_cpyu8"]
 resource_name = "fade_out"
@@ -57,6 +70,30 @@ tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(3.6, 5, 6.1, 7),
 "transitions": PackedFloat32Array(2, 0.5, 0.5, 2),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Cytac-Logo2:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Cytac-Logo2/Sprite2D:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(7.8, 8.799999, 10, 10.9),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
 }
@@ -94,6 +131,17 @@ scale = Vector2(0.6192708, 0.66851854)
 position = Vector2(-4.8445, 5.983432)
 scale = Vector2(4.7119427, 3.99)
 texture = ExtResource("4_cpyu8")
+
+[node name="Cytac-Logo2" type="Node2D" parent="." unique_id=1221088752]
+modulate = Color(1, 1, 1, 0)
+position = Vector2(593.5, 327.99997)
+scale = Vector2(0.6192708, 0.66851854)
+
+[node name="Sprite2D" type="Sprite2D" parent="Cytac-Logo2" unique_id=1942241714]
+z_index = 2
+position = Vector2(-14.53318, -22.43762)
+scale = Vector2(0.9831792, 0.93767303)
+texture = ExtResource("5_l4bph")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=840139119]
 libraries/ = SubResource("AnimationLibrary_l4bph")
