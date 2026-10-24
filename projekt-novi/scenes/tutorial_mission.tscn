@@ -221,6 +221,7 @@ reset_xp_at_start = true
 reset_xp_at_end = true
 include_level_up_screen = true
 slow_mo_audio_speed = 0.3
+enemy_death_effect = false
 hero_portrait = SubResource("Resource_7uoqk")
 ui_skin = SubResource("Resource_i4nb4")
 
