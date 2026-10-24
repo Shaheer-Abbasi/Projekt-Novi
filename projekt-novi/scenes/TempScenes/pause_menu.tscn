@@ -1,6 +1,20 @@
 [gd_scene format=3 uid="uid://chrq4wersv0vs"]
 
 [ext_resource type="Script" uid="uid://csfwf84dmhl4" path="res://scripts/Temp_Scripts/pause_menu.gd" id="1_ujbpm"]
+[ext_resource type="PackedScene" uid="uid://cf2kueq4pmwi0" path="res://scenes/MainMenuScenes/input_settings.tscn" id="2_t67kt"]
+[ext_resource type="Script" uid="uid://cgudegxae1078" path="res://scripts/MainMenu_Scrips/audio_control.gd" id="2_tsj61"]
+[ext_resource type="Script" uid="uid://cxn34lqrfs0" path="res://scripts/MainMenu_Scrips/fullscreen_control.gd" id="3_26qqo"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_53ox3"]
+bg_color = Color(0, 0, 0, 0.78431374)
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_3cq32"]
+color = Color(1, 1, 1, 1)
+thickness = 6
+
+[sub_resource type="StyleBoxLine" id="StyleBoxLine_gyprq"]
+color = Color(0.15294118, 0.5411765, 0.9411765, 1)
+thickness = 6
 
 [node name="PauseMenu" type="CanvasLayer" unique_id=2116919453]
 process_mode = 3
@@ -17,7 +31,8 @@ color = Color(0, 0, 0, 0.60784316)
 [node name="Label" type="Label" parent="." unique_id=1670916910]
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 374.0
+offset_top = -125.0
+offset_bottom = 249.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 50
 text = "PAUSED"
@@ -26,6 +41,7 @@ vertical_alignment = 1
 uppercase = true
 
 [node name="BoxContainer" type="BoxContainer" parent="." unique_id=1158444914]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
@@ -59,7 +75,168 @@ layout_mode = 2
 text = "Exit Game
 "
 
+[node name="Options Panel" type="Panel" parent="." unique_id=898777827]
+self_modulate = Color(0, 0, 0, 1)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -374.7693
+offset_top = -215.1694
+offset_right = 370.2307
+offset_bottom = 219.83069
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_53ox3")
+
+[node name="Label" type="Label" parent="Options Panel" unique_id=1555594659]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 65.55202
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 32
+text = "Options"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Back_button" type="Button" parent="Options Panel" unique_id=1507414969]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -50.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 30
+toggle_mode = true
+text = "Back"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Options Panel" unique_id=629523591]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -205.76929
+offset_top = -108.1694
+offset_right = 241.23071
+offset_bottom = 101.8306
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 25
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Options Panel/VBoxContainer" unique_id=614941441]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="Options Panel/VBoxContainer/HBoxContainer2" unique_id=1855096089]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="AudioControl" type="HSlider" parent="Options Panel/VBoxContainer/HBoxContainer2" unique_id=529129863]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/slider = SubResource("StyleBoxLine_3cq32")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_gyprq")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_gyprq")
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = ExtResource("2_tsj61")
+audio_bus_name = "Master"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Options Panel/VBoxContainer" unique_id=36141063]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="Options Panel/VBoxContainer/HBoxContainer" unique_id=148468920]
+layout_mode = 2
+text = "Music Volume"
+
+[node name="AudioControl" type="HSlider" parent="Options Panel/VBoxContainer/HBoxContainer" unique_id=2032284696]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/slider = SubResource("StyleBoxLine_3cq32")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_gyprq")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_gyprq")
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = ExtResource("2_tsj61")
+audio_bus_name = "Music"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="Options Panel/VBoxContainer" unique_id=402858418]
+layout_mode = 2
+theme_override_constants/separation = 37
+
+[node name="Label" type="Label" parent="Options Panel/VBoxContainer/HBoxContainer4" unique_id=1105351555]
+layout_mode = 2
+text = "SFX Volume"
+
+[node name="AudioControl" type="HSlider" parent="Options Panel/VBoxContainer/HBoxContainer4" unique_id=677418492]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/slider = SubResource("StyleBoxLine_3cq32")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_gyprq")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_gyprq")
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = ExtResource("2_tsj61")
+audio_bus_name = "SFX"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="Options Panel/VBoxContainer" unique_id=432486297]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Options Panel/VBoxContainer/HBoxContainer3" unique_id=1802099743]
+layout_mode = 2
+text = "Fullscreen"
+
+[node name="FullscreenControl" type="CheckButton" parent="Options Panel/VBoxContainer/HBoxContainer3" unique_id=1278865548]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("3_26qqo")
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="Options Panel/VBoxContainer" unique_id=1102630358]
+layout_mode = 2
+size_flags_vertical = 3
+accessibility_region = true
+alignment = 1
+
+[node name="Controls" type="Button" parent="Options Panel/VBoxContainer/HBoxContainer5" unique_id=416221122]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Controls"
+
+[node name="Controls" type="CanvasLayer" parent="." unique_id=1600097151]
+process_mode = 3
+layer = 2
+
+[node name="InputSettings" parent="Controls" unique_id=1379340192 instance=ExtResource("2_t67kt")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -15.5
+offset_bottom = 15.5
+
 [connection signal="pressed" from="BoxContainer/Resume" to="." method="_on_button_pressed"]
 [connection signal="pressed" from="BoxContainer/Options" to="." method="_on_options_pressed"]
 [connection signal="pressed" from="BoxContainer/Quit" to="." method="_on_quit_pressed"]
 [connection signal="pressed" from="BoxContainer/Exit_Game" to="." method="_on_exit_game_pressed"]
+[connection signal="pressed" from="Options Panel/Back_button" to="." method="_on_back_button_pressed"]
+[connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer2/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer2/AudioControl" method="_on_value_changed"]
+[connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer/AudioControl" method="_on_value_changed"]
+[connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer4/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer4/AudioControl" method="_on_value_changed"]
+[connection signal="toggled" from="Options Panel/VBoxContainer/HBoxContainer3/FullscreenControl" to="Options Panel/VBoxContainer/HBoxContainer3/FullscreenControl" method="_on_toggled"]
+[connection signal="pressed" from="Options Panel/VBoxContainer/HBoxContainer5/Controls" to="." method="_on_controls_pressed"]
