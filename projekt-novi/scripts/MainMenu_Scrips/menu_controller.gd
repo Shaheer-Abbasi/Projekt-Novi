@@ -77,6 +77,9 @@ func focus_first() -> void:
 
 
 func _input(event: InputEvent) -> void:
+	if get_tree().get_node_count_in_group("remapping") > 0:
+		return
+	
 	var focused := get_viewport().gui_get_focus_owner()
 
 	# Mouse moved: drop controller selection so two buttons aren't highlighted.

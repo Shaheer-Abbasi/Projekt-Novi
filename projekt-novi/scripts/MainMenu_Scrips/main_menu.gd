@@ -3,16 +3,15 @@ extends Control
 @onready var main_buttons: VBoxContainer = $MainButtons
 @onready var levelselect: Panel = $"LevelSelect"
 @onready var options_panel: Panel = $"Options Panel"
+@onready var controls_menu = $Controls/InputSettings
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	main_buttons.visible = true
 	levelselect.visible = false
 	options_panel.visible = false
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+	controls_menu.visible = false
+	controls_menu.back_requested.connect(_on_controls_back)
 
 
 func _on_start_button_pressed() -> void:
@@ -36,3 +35,13 @@ func _on_back_button_pressed() -> void:
 	main_buttons.visible = true
 	levelselect.visible = false
 	options_panel.visible = false
+	controls_menu.visible = false
+
+
+func _on_controls_pressed() -> void:
+	options_panel.visible = false
+	controls_menu.visible = true
+	
+func _on_controls_back() -> void:
+	controls_menu.visible = false
+	options_panel.visible = true
