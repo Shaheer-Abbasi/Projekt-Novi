@@ -1,0 +1,68 @@
+[gd_scene format=3 uid="uid://dbk2awap2c11f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_py7os"]
+bg_color = Color(0, 0, 0, 0.39215687)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t1jsv"]
+bg_color = Color(1, 1, 1, 0.39215687)
+
+[node name="InputButton" type="Button" unique_id=2048396077]
+custom_minimum_size = Vector2(0, 18)
+anchors_preset = 10
+anchor_right = 1.0
+grow_horizontal = 2
+focus_mode = 0
+theme_override_styles/normal = SubResource("StyleBoxFlat_py7os")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_t1jsv")
+theme_override_styles/hover = SubResource("StyleBoxFlat_t1jsv")
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=1110049654]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 3
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer" unique_id=53080300]
+layout_mode = 2
+
+[node name="LabelAction" type="Label" parent="MarginContainer/HBoxContainer" unique_id=148663627]
+custom_minimum_size = Vector2(220, 0)
+layout_mode = 2
+mouse_filter = 1
+text = "Action Name"
+vertical_alignment = 1
+clip_text = true
+
+[node name="Spacer" type="Control" parent="MarginContainer/HBoxContainer" unique_id=379031242]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="LabelInput" type="Label" parent="MarginContainer/HBoxContainer" unique_id=424028543]
+custom_minimum_size = Vector2(160, 0)
+layout_mode = 2
+mouse_filter = 1
+text = "Keyboard"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true
+
+[node name="Spacer2" type="Control" parent="MarginContainer/HBoxContainer" unique_id=785327257]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 1
+
+[node name="LabelInput2" type="Label" parent="MarginContainer/HBoxContainer" unique_id=213351353]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+mouse_filter = 1
+text = "Controller"
+horizontal_alignment = 1
+vertical_alignment = 1
+clip_text = true

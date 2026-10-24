@@ -6,7 +6,6 @@
 [ext_resource type="Texture2D" uid="uid://ble366peqjxow" path="res://assets/Background/IMG_0077.jpg" id="3_460oo"]
 [ext_resource type="Script" uid="uid://cxn34lqrfs0" path="res://scripts/MainMenu_Scrips/fullscreen_control.gd" id="3_bqqt6"]
 [ext_resource type="Texture2D" uid="uid://bv8kgl5lkq0w" path="res://assets/Buttons/MM_Buttons/Start_N.png" id="4_fwirt"]
-[ext_resource type="Script" uid="uid://cb1umgn16gjj4" path="res://scripts/MainMenu_Scrips/scale_control.gd" id="4_wu84c"]
 [ext_resource type="Texture2D" uid="uid://c46c2ligwnrca" path="res://assets/Buttons/MM_Buttons/Start_P.png" id="5_yck0h"]
 [ext_resource type="Texture2D" uid="uid://ot2ophg66vgk" path="res://assets/Buttons/MM_Buttons/Start_H.png" id="6_g72vb"]
 [ext_resource type="Texture2D" uid="uid://rfldqepu0544" path="res://assets/Buttons/MM_Buttons/Options_N.png" id="7_kyccw"]
@@ -19,7 +18,11 @@
 [ext_resource type="Texture2D" uid="uid://c2txaypqc5wqe" path="res://assets/Buttons/Level_Select/LevelSelect_P.png" id="14_jj6og"]
 [ext_resource type="Texture2D" uid="uid://cce6fsv8bfjtc" path="res://assets/Buttons/Level_Select/LevelSelect_H.png" id="15_rer4v"]
 [ext_resource type="Texture2D" uid="uid://baveydbox55q5" path="res://assets/Background/ProjektNoVI_Logo_New.png" id="16_newlogo"]
+[ext_resource type="PackedScene" uid="uid://cf2kueq4pmwi0" path="res://scenes/MainMenuScenes/input_settings.tscn" id="19_rer4v"]
 [ext_resource type="Script" uid="uid://cbquu28kqio4d" path="res://scripts/MainMenu_Scrips/menu_controller.gd" id="20_rer4v"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ckk48"]
+bg_color = Color(0, 0, 0, 0.78431374)
 
 [sub_resource type="StyleBoxLine" id="StyleBoxLine_py7os"]
 color = Color(1, 1, 1, 1)
@@ -148,6 +151,7 @@ text = "Back"
 
 [node name="Options Panel" type="Panel" parent="." unique_id=826016586]
 visible = false
+self_modulate = Color(0, 0, 0, 1)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -160,6 +164,7 @@ offset_right = 370.2307
 offset_bottom = 219.83066
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_ckk48")
 
 [node name="Label" type="Label" parent="Options Panel" unique_id=1219434084]
 layout_mode = 1
@@ -199,6 +204,27 @@ offset_bottom = 101.8306
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 25
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="Options Panel/VBoxContainer" unique_id=1398505847]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Label" type="Label" parent="Options Panel/VBoxContainer/HBoxContainer2" unique_id=302085320]
+layout_mode = 2
+text = "Master Volume"
+
+[node name="AudioControl" type="HSlider" parent="Options Panel/VBoxContainer/HBoxContainer2" unique_id=1717167146]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+theme_override_styles/slider = SubResource("StyleBoxLine_py7os")
+theme_override_styles/grabber_area = SubResource("StyleBoxLine_t1jsv")
+theme_override_styles/grabber_area_highlight = SubResource("StyleBoxLine_t1jsv")
+max_value = 1.0
+step = 0.05
+value = 1.0
+script = ExtResource("2_ekxnf")
+audio_bus_name = "Master"
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Options Panel/VBoxContainer" unique_id=536248930]
 layout_mode = 2
@@ -255,29 +281,16 @@ size_flags_horizontal = 3
 size_flags_vertical = 4
 script = ExtResource("3_bqqt6")
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="Options Panel/VBoxContainer" unique_id=998739269]
+[node name="HBoxContainer5" type="HBoxContainer" parent="Options Panel/VBoxContainer" unique_id=329236794]
 layout_mode = 2
+size_flags_vertical = 3
+accessibility_region = true
+alignment = 1
 
-[node name="Label" type="Label" parent="Options Panel/VBoxContainer/HBoxContainer2" unique_id=1053881425]
+[node name="Controls" type="Button" parent="Options Panel/VBoxContainer/HBoxContainer5" unique_id=1889669152]
 layout_mode = 2
 size_flags_horizontal = 3
-size_flags_stretch_ratio = 0.8
-text = "3D Scale"
-
-[node name="ScaleControl" type="OptionButton" parent="Options Panel/VBoxContainer/HBoxContainer2" unique_id=1341983448]
-layout_mode = 2
-size_flags_vertical = 4
-selected = 0
-item_count = 4
-popup/item_0/text = "Ultra"
-popup/item_0/id = 0
-popup/item_1/text = "High"
-popup/item_1/id = 1
-popup/item_2/text = "Medium"
-popup/item_2/id = 2
-popup/item_3/text = "Low"
-popup/item_3/id = 3
-script = ExtResource("4_wu84c")
+text = "Controls"
 
 [node name="Label" type="Label" parent="." unique_id=1737569831]
 modulate = Color(1, 1, 1, 0.19607843)
@@ -289,6 +302,18 @@ offset_bottom = 648.83057
 scale = Vector2(0.69086176, 0.69086176)
 text = "CyTac Studios"
 
+[node name="Controls" type="CanvasLayer" parent="." unique_id=1484651919]
+
+[node name="InputSettings" parent="Controls" unique_id=1379340192 instance=ExtResource("19_rer4v")]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_top = -15.5
+offset_bottom = 15.5
+
 [node name="MenuController" type="Node" parent="." unique_id=1245641211]
 script = ExtResource("20_rer4v")
 
@@ -298,7 +323,8 @@ script = ExtResource("20_rer4v")
 [connection signal="pressed" from="LevelSelect/Level-Select_button" to="." method="_on_level_select_button_pressed"]
 [connection signal="pressed" from="LevelSelect/Back_button" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="Options Panel/Back_button" to="." method="_on_back_button_pressed"]
+[connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer2/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer2/AudioControl" method="_on_value_changed"]
 [connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer/AudioControl" method="_on_value_changed"]
 [connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer4/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer4/AudioControl" method="_on_value_changed"]
 [connection signal="toggled" from="Options Panel/VBoxContainer/HBoxContainer3/FullscreenControl" to="Options Panel/VBoxContainer/HBoxContainer3/FullscreenControl" method="_on_toggled"]
-[connection signal="item_selected" from="Options Panel/VBoxContainer/HBoxContainer2/ScaleControl" to="Options Panel/VBoxContainer/HBoxContainer2/ScaleControl" method="_on_item_selected"]
+[connection signal="pressed" from="Options Panel/VBoxContainer/HBoxContainer5/Controls" to="." method="_on_controls_pressed"]

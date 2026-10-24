@@ -1031,17 +1031,8 @@ func _on_player_died() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if not (event is InputEventKey and event.pressed and not event.echo):
-		return
-	if event.keycode == KEY_ESCAPE:
-		if not escape_to_menu:
-			return
-		get_tree().paused = false
-		if menu_scene != null:
-			get_tree().change_scene_to_packed(menu_scene)
-		elif ResourceLoader.exists(MENU_PATH):
-			get_tree().change_scene_to_file(MENU_PATH)
-	elif event.keycode == KEY_F1 and debug_keys:
+	if event is InputEventKey and event.pressed and not event.echo \
+			and event.keycode == KEY_F1 and debug_keys:
 		for e in get_tree().get_nodes_in_group("enemies"):
 			if is_instance_valid(e):
 				e.take_damage(99999.0)

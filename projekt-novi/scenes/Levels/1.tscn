@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://c3p7iskri0cd5" path="res://assets/Characters/Vow/Vow_Illustration.png" id="15_tjmnq"]
 [ext_resource type="AudioStream" uid="uid://bgx4qr51i6eb4" path="res://assets/Music/Vow_Ult_quote.mp3" id="16_mnpca"]
 [ext_resource type="PackedScene" uid="uid://bsaownee2xwo" path="res://CyberDoc/scenes/cyberdoc.tscn" id="18_1g8ht"]
+[ext_resource type="PackedScene" uid="uid://chrq4wersv0vs" path="res://scenes/TempScenes/pause_menu.tscn" id="20_jpdoe"]
 [ext_resource type="PackedScene" path="res://scenes/level_up_ui.tscn" id="level_up_ui"]
 
 [sub_resource type="Resource" id="Resource_3ob4o"]
@@ -172,3 +173,5 @@ position = Vector2(-842.88257, -81.47009)
 
 [node name="Marker2D6" type="Marker2D" parent="." unique_id=1602383286 groups=["cyberdoc_spawn"]]
 position = Vector2(-1014.7346, 292.5609)
+
+[node name="PauseMenu" parent="." unique_id=2116919453 instance=ExtResource("20_jpdoe")]
