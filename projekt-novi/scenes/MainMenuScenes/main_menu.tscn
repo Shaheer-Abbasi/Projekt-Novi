@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://d4ge4g72xfbjg" path="res://scripts/MainMenu_Scrips/main_menu.gd" id="1_l6cm7"]
 [ext_resource type="AudioStream" uid="uid://beeck8r4ihpga" path="res://assets/Music/MenuMusic.mp3" id="2_8ln24"]
 [ext_resource type="Script" uid="uid://cgudegxae1078" path="res://scripts/MainMenu_Scrips/audio_control.gd" id="2_ekxnf"]
-[ext_resource type="Texture2D" uid="uid://ble366peqjxow" path="res://assets/Background/IMG_0077.jpg" id="3_460oo"]
+[ext_resource type="Texture2D" uid="uid://bav8jw0doxme6" path="res://assets/Background/IMG_0077.jpg" id="3_460oo"]
 [ext_resource type="Script" uid="uid://cxn34lqrfs0" path="res://scripts/MainMenu_Scrips/fullscreen_control.gd" id="3_bqqt6"]
 [ext_resource type="Texture2D" uid="uid://bv8kgl5lkq0w" path="res://assets/Buttons/MM_Buttons/Start_N.png" id="4_fwirt"]
 [ext_resource type="Texture2D" uid="uid://c46c2ligwnrca" path="res://assets/Buttons/MM_Buttons/Start_P.png" id="5_yck0h"]
@@ -17,7 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://deube1dhvwcxi" path="res://assets/Buttons/Level_Select/LevelSelect_N.png" id="13_kyccw"]
 [ext_resource type="Texture2D" uid="uid://c2txaypqc5wqe" path="res://assets/Buttons/Level_Select/LevelSelect_P.png" id="14_jj6og"]
 [ext_resource type="Texture2D" uid="uid://cce6fsv8bfjtc" path="res://assets/Buttons/Level_Select/LevelSelect_H.png" id="15_rer4v"]
-[ext_resource type="Texture2D" uid="uid://baveydbox55q5" path="res://assets/Background/ProjektNoVI_Logo_New.png" id="16_newlogo"]
+[ext_resource type="Texture2D" uid="uid://c6qaykjveosqt" path="res://assets/Background/ProjektNoVI_Logo_New.png" id="16_newlogo"]
 [ext_resource type="PackedScene" uid="uid://cf2kueq4pmwi0" path="res://scenes/MainMenuScenes/input_settings.tscn" id="19_rer4v"]
 [ext_resource type="Script" uid="uid://cbquu28kqio4d" path="res://scripts/MainMenu_Scrips/menu_controller.gd" id="20_rer4v"]
 

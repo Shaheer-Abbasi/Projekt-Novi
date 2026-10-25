@@ -218,10 +218,9 @@ text = "Controls"
 
 [node name="Controls" type="CanvasLayer" parent="." unique_id=1600097151]
 process_mode = 3
-layer = 2
+layer = 101
 
 [node name="InputSettings" parent="Controls" unique_id=1379340192 instance=ExtResource("2_t67kt")]
-visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
