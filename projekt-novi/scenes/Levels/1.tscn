@@ -133,6 +133,7 @@ stream = ExtResource("5_othej")
 volume_db = -20.07
 pitch_scale = 0.65
 autoplay = true
+bus = &"Music"
 parameters/looping = true
 
 [node name="Cyberdoc" parent="." unique_id=1404802358 instance=ExtResource("18_1g8ht")]

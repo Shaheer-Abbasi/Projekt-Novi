@@ -117,9 +117,6 @@ func _on_controls_pressed() -> void:
 	options_panel.visible = false
 	controls_menu.visible = true
 	main_buttons.visible = false
-	print("Controls pressed | InputSettings in tree: ", controls_menu.is_visible_in_tree(),
-		" | size: ", controls_menu.size,
-		" | parent: ", controls_menu.get_parent().name, " visible: ", controls_menu.get_parent().visible)
 	_focus_first(controls_menu)
 
 
