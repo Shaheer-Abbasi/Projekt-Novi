@@ -263,6 +263,9 @@ func _build() -> void:
 	_skip_label.offset_bottom = -8.0
 	_skip_label.visible = false
 	_root.add_child(_skip_label)
+	_root.add_child(_logo_hint)
+	_update_logo_hint()
+	InputHints.device_changed.connect(_on_device_changed)
 
 
 # --- screen effects -------------------------------------------------------
@@ -345,6 +348,13 @@ func show_logo(tex: Texture2D, fallback_text: String) -> void:
 	tw.tween_property(node, "scale", Vector2.ONE, 2.4).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tw.chain().tween_callback(_logo_ready)
 
+func _update_logo_hint() -> void:
+	_logo_hint.text = "PRESS ANY BUTTON" if InputHints.using_pad else "PRESS ANY KEY"
+
+
+func _on_device_changed(_using_pad: bool) -> void:
+	_update_logo_hint()
+
 
 func _logo_ready() -> void:
 	is_waiting_at_logo = true
@@ -357,6 +367,7 @@ func show_hint(bbcode: String) -> void:
 	_hint_label.text = bbcode
 	_hint_panel.modulate = Color.WHITE
 	_hint_panel.visible = true
+
 
 
 func complete_hint(message: String = "DONE") -> void:

@@ -1,4 +1,4 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cqukgmd06yy4p"]
 
 [ext_resource type="Script" uid="uid://bxcaorkai7w7h" path="res://scripts/Temp_Scripts/playtest.gd" id="1"]
 [ext_resource type="PackedScene" uid="uid://bd740f8hrlroe" path="res://scenes/TempScenes/playtest_player.tscn" id="2"]
@@ -18,6 +18,7 @@
 [ext_resource type="Texture2D" uid="uid://c3p7iskri0cd5" path="res://assets/Characters/Vow/Vow_Illustration.png" id="15_tjmnq"]
 [ext_resource type="AudioStream" uid="uid://bgx4qr51i6eb4" path="res://assets/Music/Vow_Ult_quote.mp3" id="16_mnpca"]
 [ext_resource type="PackedScene" path="res://scenes/TempScenes/acarion_repo_unit.tscn" id="17_acarion"]
+[ext_resource type="PackedScene" uid="uid://chrq4wersv0vs" path="res://scenes/TempScenes/pause_menu.tscn" id="19_1mrrq"]
 
 [sub_resource type="Resource" id="Resource_3ob4o"]
 script = ExtResource("10_5uwqt")
@@ -113,8 +114,7 @@ texture = ExtResource("4_xjs12")
 character_data = SubResource("Resource_3ob4o")
 slash_sound = ExtResource("6_3ob4o")
 
-[node name="AcarionRepoUnit" parent="." instance=ExtResource("17_acarion")]
-position = Vector2(0, 0)
+[node name="AcarionRepoUnit" parent="." unique_id=2068119965 instance=ExtResource("17_acarion")]
 
 [node name="HUD" parent="." unique_id=337117531 instance=ExtResource("3_othej")]
 script = ExtResource("3")
@@ -137,3 +137,5 @@ volume_db = -20.07
 pitch_scale = 0.65
 autoplay = true
 parameters/looping = true
+
+[node name="PauseMenu" parent="." unique_id=2116919453 instance=ExtResource("19_1mrrq")]

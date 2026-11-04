@@ -203,7 +203,7 @@ func _run() -> void:
 		await _say(start_seq)
 	_set_group(lock_during_fight, true, door_fade_seconds)
 	if start_message.strip_edges() != "":
-		_notice().show_message(start_message, message_seconds)
+		_notice().show_message(InputHints.format(start_message), message_seconds)
 	_publish_progress()
 	if prompt_ability != "(by key below)" and _level != null:
 		_prompt_ab = _level.get_or_grant_ability(prompt_ability, grant_ability_if_missing)     # this section's ability
@@ -352,7 +352,7 @@ func _on_cleared() -> void:
 	else:
 		_open_all_doors()
 	if clear_message.strip_edges() != "":
-		_notice().show_message(clear_message, 3.0)
+		_notice().show_message(InputHints.format(clear_message), 3.0)
 	else:
 		_notice().hide_message()
 	var clear_seq := _sequence(clear_dialogue_text, clear_dialogue)
@@ -444,7 +444,7 @@ func _notice() -> StoryNotice:
 func _sequence(text: String, file: DialogueSequence) -> DialogueSequence:
 	if text.strip_edges() != "":
 		var d := DialogueSequence.new()
-		d.text = text
+		d.text = InputHints.format(text)
 		return d
 	if file != null and not file.is_empty():
 		return file

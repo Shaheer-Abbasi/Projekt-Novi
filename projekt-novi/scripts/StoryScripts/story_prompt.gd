@@ -32,6 +32,8 @@ var _key: Label
 static func default_body(action: String) -> String:
 	return INFO.get(action, "")
 
+func _key_line() -> String:
+	return "%s  [ %s ]" % [_eff.press_text, InputHints.text(_action).to_upper()]
 
 func _ready() -> void:
 	layer = 66
@@ -87,6 +89,9 @@ func _ready() -> void:
 	_key = _label(_eff.prompt_key_size, Color.WHITE)
 	_key.custom_minimum_size = Vector2(580, 70)
 	col.add_child(_key)
+	InputHints.device_changed.connect(func(_using_pad):
+		if is_open:
+			_key.text = _key_line())
 
 
 func _label(size: int, color: Color) -> Label:
@@ -115,7 +120,7 @@ func ask(action: String, title: String, body: String) -> void:
 	_action = action
 	_title.text = title
 	_body.text = body
-	_key.text = "%s  [ %s ]" % [_eff.press_text, TutorialUI.key_text(action)]
+	_key.text = _key_line()
 	_dim.visible = true
 	_panel.visible = true
 	_was_paused = get_tree().paused
@@ -135,6 +140,15 @@ func _process(_delta: float) -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if is_open and not event.is_echo() and event.is_action_pressed(_action):
+	if not is_open or event.is_echo():
+		return
+	var done := event.is_action_pressed(_action)
+	# The Ultimate on a controller is L3 + R3, which the Input Map can't store.
+	if not done and _action == "ability_4" and event is InputEventJoypadButton and event.pressed \
+			and (event.button_index == JOY_BUTTON_LEFT_STICK or event.button_index == JOY_BUTTON_RIGHT_STICK) \
+			and Input.is_joy_button_pressed(event.device, JOY_BUTTON_LEFT_STICK) \
+			and Input.is_joy_button_pressed(event.device, JOY_BUTTON_RIGHT_STICK):
+		done = true
+	if done:
 		get_viewport().set_input_as_handled()
 		key_pressed.emit()

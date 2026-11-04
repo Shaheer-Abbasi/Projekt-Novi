@@ -55,7 +55,7 @@ func _ready() -> void:
 		e.physical_keycode = interact_key
 		InputMap.action_add_event(interact_action, e)
 	_prompt = Label.new()
-	_prompt.text = "[%s] %s" % [TutorialUI.key_text(interact_action), prompt_text]
+	InputHints.bind(_prompt, "[{%s}] %s" % [interact_action, prompt_text])
 	_prompt.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_prompt.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_prompt.add_theme_font_size_override("font_size", 22)
