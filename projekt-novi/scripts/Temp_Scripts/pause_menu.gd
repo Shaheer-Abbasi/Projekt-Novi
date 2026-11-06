@@ -22,10 +22,11 @@ func _input(event: InputEvent) -> void:
 	# Open / close. "visible" is the menu's own state, so the shop, level-up screen and
 	# dialogue (which also pause the game) can never be unpaused by this menu.
 	if event.is_action_pressed("pause_menu"):
-		get_viewport().set_input_as_handled()
 		if visible:
+			get_viewport().set_input_as_handled()
 			_close_menu()
 		elif not get_tree().paused:
+			get_viewport().set_input_as_handled()
 			_open_menu()
 		return
 

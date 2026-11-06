@@ -100,6 +100,7 @@ func _ready() -> void:
 
 ## Shows a message at the top. seconds = 0 keeps it until you call hide_message().
 func show_message(text: String, seconds: float = 0.0) -> void:
+	text = InputHints.format(text)
 	_message.text = text
 	_has_message = not text.strip_edges().is_empty()
 	_message.visible = _has_message

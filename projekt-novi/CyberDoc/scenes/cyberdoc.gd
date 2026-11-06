@@ -2,25 +2,38 @@ extends Area2D
 ## Cyberdoc in the level. Collision layer = npc (3), mask = player (2) only,
 ## so the only body that can ever enter his range is the player.
 
-@export var shop_scene: PackedScene = preload("res://CyberDoc/scenes/cyberdoc_shop.tscn")
+const SHOP_PATH := "res://CyberDoc/scenes/cyberdoc_shop.tscn"
+const PROMPT_TEXT := "[{interact}] to interact"
+
+@export var shop_scene: PackedScene
 
 var player_in_range := false
 var shop_open := false
 
-@onready var prompt: Label = $Prompt
+@onready var prompt: Control = $Prompt      # a Label or a RichTextLabel
 
 
 func _ready() -> void:
 	_move_to_random_spawn()
+	_setup_prompt()
 	prompt.hide()
 	body_entered.connect(_on_body_entered)
 	body_exited.connect(_on_body_exited)
+
+
+## Label: plain text. RichTextLabel: button pictures on a controller (see InputHints).
+func _setup_prompt() -> void:
+	var rich := prompt is RichTextLabel
+	var template := "[center]" + PROMPT_TEXT + "[/center]" if rich else PROMPT_TEXT
+	InputHints.bind(prompt, template, "text", rich)
+
 
 func _move_to_random_spawn() -> void:
 	var spots := get_tree().get_nodes_in_group("cyberdoc_spawn")
 	if spots.is_empty():
 		return
 	global_position = spots.pick_random().global_position
+
 
 func _on_body_entered(_body: Node2D) -> void:
 	player_in_range = true
@@ -32,13 +45,18 @@ func _on_body_exited(_body: Node2D) -> void:
 	prompt.hide()
 
 
-func _unhandled_input(event: InputEvent) -> void:
+func _input(event: InputEvent) -> void:
 	if player_in_range and not shop_open and event.is_action_pressed("interact"):
 		get_viewport().set_input_as_handled()
 		_open_shop()
 
 
 func _open_shop() -> void:
+	if shop_scene == null:
+		shop_scene = load(SHOP_PATH)          # the Inspector slot was saved empty
+	if shop_scene == null:
+		push_error("Cyberdoc: the shop scene was not found at " + SHOP_PATH)
+		return
 	shop_open = true
 	prompt.hide()
 	var shop := shop_scene.instantiate()

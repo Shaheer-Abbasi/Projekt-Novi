@@ -885,6 +885,7 @@ func complete_level() -> void:
 	if show_logo_at_end:
 		await _play_ending_logo()
 	_go_next()
+	
 
 
 func _play_ending_logo() -> void:

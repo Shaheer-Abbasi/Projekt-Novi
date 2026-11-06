@@ -23,6 +23,7 @@ const MENU_PATH := "res://scenes/MainMenuScenes/main_menu.tscn"
 @onready var boss_bar := get_node_or_null("%BossBar") as ProgressBar
 @onready var boss_phase := get_node_or_null("%BossPhase") as Label
 @onready var end_panel := get_node_or_null("%EndPanel") as Control
+@onready var end_hint := get_node_or_null("%EndHint") as Label
 @onready var end_title := get_node_or_null("%EndTitle") as Label
 
 var _player: PlaytestPlayer
@@ -30,6 +31,7 @@ var _slots: Array[Control] = []
 var _slot_names: Array[Label] = []
 var _slot_status: Array[Label] = []
 var _slot_enabled: Array[bool] = []  # false = you hid this box in the editor, so it stays hidden
+var _end_shown_ms: int = 0
 
 
 func _ready() -> void:
@@ -48,6 +50,8 @@ func _ready() -> void:
 		boss_panel.visible = false
 	if is_instance_valid(end_panel):
 		end_panel.visible = false
+	if is_instance_valid(end_hint):
+		InputHints.bind(end_hint, "{Restart} - Restart        {pause_menu} - Main Menu")
 	if is_instance_valid(ability_bar):
 		# Match each box to its ability by the NUMBER in its name (Ability1..Ability4), not by position.
 		# So you can hide or delete any box without the others getting mixed up.
@@ -186,17 +190,26 @@ func show_end(title: String) -> void:
 	_set_text(end_title, title)
 	if is_instance_valid(end_panel):
 		end_panel.visible = true
+	_end_shown_ms = Time.get_ticks_msec()
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if not is_instance_valid(end_panel) or not end_panel.visible:
 		return
-	if event is InputEventKey and event.pressed and not event.echo:
-		if event.keycode == KEY_R:
-			get_tree().paused = false
-			XpManager.reset()
-			get_tree().reload_current_scene() 
-		elif event.keycode == KEY_ESCAPE:
-			get_tree().paused = false
-			if ResourceLoader.exists(MENU_PATH):
-				get_tree().change_scene_to_file(MENU_PATH)
+	if event.is_echo():
+		return
+	# Ignore input for a moment, so button-mashing in the fight can't skip the game over screen.
+	if Time.get_ticks_msec() - _end_shown_ms < 700:
+		return
+
+	if event.is_action_pressed("Restart"):
+		get_viewport().set_input_as_handled()
+		get_tree().paused = false
+		XpManager.reset()
+		get_tree().reload_current_scene()
+	elif event.is_action_pressed("pause_menu") or event.is_action_pressed("back"):
+		get_viewport().set_input_as_handled()
+		get_tree().paused = false
+		Engine.time_scale = 1.0
+		if ResourceLoader.exists(MENU_PATH):
+			get_tree().change_scene_to_file(MENU_PATH)

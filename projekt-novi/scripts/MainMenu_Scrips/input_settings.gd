@@ -35,6 +35,11 @@ func _create_action_list() -> void:
 
 	for action in input_actions:
 		var button = input_button_scene.instantiate()
+		var focus_style := StyleBoxFlat.new()
+		focus_style.bg_color = Color(1.0, 1.0, 1.0, 0.18)
+		focus_style.set_border_width_all(2)
+		focus_style.border_color = Color(1.0, 1.0, 1.0, 0.9)
+		button.add_theme_stylebox_override("focus", focus_style)
 		button.find_child("LabelAction").text = input_actions[action]
 		action_list.add_child(button)
 		_fill_row(button, action)
