@@ -58,12 +58,34 @@ func _ready() -> void:
 	_build()
 	apply_skin()
 	_panel.visible = false
+	InputHints.device_changed.connect(_on_device_changed)
 
 
 func _exit_tree() -> void:
 	if is_open and pause_game and get_tree() != null:
 		get_tree().paused = _was_paused          # never leave the next scene frozen
 		
+
+func _device_label(word: String, action: String) -> String:
+	if InputHints.using_pad:
+		return "%s  [%s]" % [word, InputHints.text(action)]
+	return word
+
+
+## Next / End / Skip button text: shows the controller button while a controller is in use.
+## (Skipped when the skin uses key pictures, which handle their own look.)
+func _refresh_hint_texts() -> void:
+	if _eff == null:
+		return
+	if _eff.next_key_icons.is_empty():
+		_btn_next.text = _device_label(_eff.next_text, "interact")
+		_btn_end.text = _device_label(_eff.end_text, "interact")
+	if _eff.skip_key_icons.is_empty():
+		_btn_skip.text = _device_label(_eff.skip_text, "back")
+
+
+func _on_device_changed(_using_pad: bool) -> void:
+	_refresh_hint_texts()
 
 # --- public ------------------------------------------------------------------
 
@@ -75,6 +97,7 @@ func play(lines: Array) -> void:
 	if not _built:
 		_build()
 		apply_skin()
+	_refresh_hint_texts()
 	if is_open:
 		_close()          # finish the previous conversation first, so anything waiting on it can continue
 	_lines = lines
@@ -559,7 +582,7 @@ func _input(event: InputEvent) -> void:
 		return
 
 	# Skip (Shift + Enter). Checked BEFORE next, because plain Enter also matches Shift+Enter.
-	if event.is_action_pressed("dialogue_skip") and _eff.skip_with_shift_enter and _eff.show_skip_button:
+	if event.is_action_pressed("back") and _eff.skip_with_shift_enter and _eff.show_skip_button:
 		get_viewport().set_input_as_handled()
 		skip()
 		return
