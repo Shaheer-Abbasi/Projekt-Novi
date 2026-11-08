@@ -1,6 +1,6 @@
 extends Node2D
 ## Playtest arena: runs the round.
-##   - 10-minute timer (round_duration)
+##   - 5-minute timer (round_duration)
 ##   - spawns chaser enemies that get tougher over the round
 ##   - at 0:00 every normal enemy despawns and the boss appears
 ##   - boss HP bar shows bottom-center (HUD)
@@ -10,11 +10,11 @@ extends Node2D
 enum RoundState { PLAYING, BOSS, ENDED }
 
 const ENEMY_SCENE := preload("res://scenes/TempScenes/enemy_npc.tscn")
-const BOSS_SCENE := preload("res://scenes/TempScenes/boss_npc.tscn")
+const BOSS_SCENE := preload("res://scenes/TempScenes/acarion_repo_unit.tscn")
 const GRUNT_PATH := "res://tempresources/grunt_stats.tres"
 const FAST_PATH := "res://tempresources/fast_stats.tres"
 const TANK_PATH := "res://tempresources/tank_stats.tres"
-const BOSS_PATH := "res://tempresources/boss_stats.tres"
+const BOSS_PATH := "res://tempresources/acarion_repo_stats.tres"
 
 ## Round length in seconds (600 = 10 minutes). Lower it while testing.
 @export var round_duration: float = 600.0

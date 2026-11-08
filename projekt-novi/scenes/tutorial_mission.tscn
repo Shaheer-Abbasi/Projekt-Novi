@@ -967,7 +967,7 @@ shape = SubResource("RectangleShape2D_myp7c")
 position = Vector2(0, -21.618912)
 scale = Vector2(0.99938184, 3.2654905)
 color = Color(0.08, 0.09, 0.12, 1)
-polygon = PackedVector2Array(-20, -80, -0.06838989, -80.00001, 1.670929, -80.00001, 20, -80, 20, 80, 0.08427048, 80, -1.9972534, 79.99999, -20, 80)
+polygon = PackedVector2Array(-20, -80, -0.06838989, -80.00001, 1.670929, -80.00001, 20, -80, 20, 80, 0.08427048, 80, -1.9972534, 79.99999, -20, 80, -20, 6.44648)
 
 [node name="Room2_wall_2500_a26" type="StaticBody2D" parent="Art_PlaceholderBoxes/Walls" unique_id=2071683790]
 position = Vector2(5905.0005, -667.99994)

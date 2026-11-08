@@ -77,9 +77,9 @@ stretch_mode = 5
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.29419625
-anchor_top = 0.52751637
+anchor_top = 0.44109663
 anchor_right = 0.9895694
-anchor_bottom = 1.465788
+anchor_bottom = 1.3793683
 offset_right = 6.1035156e-05
 scale = Vector2(0.61, 0.61)
 theme_override_constants/separation = -86
@@ -90,6 +90,12 @@ layout_mode = 2
 texture_normal = ExtResource("4_fwirt")
 texture_pressed = ExtResource("5_yck0h")
 texture_hover = ExtResource("6_g72vb")
+
+[node name="Level-Select_button" type="TextureButton" parent="MainButtons" unique_id=148709334]
+layout_mode = 2
+texture_normal = ExtResource("13_kyccw")
+texture_pressed = ExtResource("14_jj6og")
+texture_hover = ExtResource("15_rer4v")
 
 [node name="Option_button" type="TextureButton" parent="MainButtons" unique_id=443465813]
 layout_mode = 2
@@ -102,52 +108,6 @@ layout_mode = 2
 texture_normal = ExtResource("10_dfrt3")
 texture_pressed = ExtResource("11_vbil6")
 texture_hover = ExtResource("12_u25lc")
-
-[node name="LevelSelect" type="Panel" parent="." unique_id=1586653694]
-visible = false
-layout_mode = 0
-offset_left = 486.7307
-offset_top = 352.83057
-offset_right = 663.7307
-offset_bottom = 352.83057
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="LevelSelect" unique_id=1356529086]
-visible = false
-layout_mode = 1
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 65.55202
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 32
-text = "Options"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Level-Select_button" type="TextureButton" parent="LevelSelect" unique_id=148709334]
-layout_mode = 0
-offset_left = -167.26929
-offset_right = 632.7307
-offset_bottom = 200.0
-scale = Vector2(0.6438726, 0.6438726)
-texture_normal = ExtResource("13_kyccw")
-texture_pressed = ExtResource("14_jj6og")
-texture_hover = ExtResource("15_rer4v")
-
-[node name="Back_button" type="Button" parent="LevelSelect" unique_id=935750994]
-layout_mode = 1
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = 112.0
-offset_bottom = 162.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_font_sizes/font_size = 30
-toggle_mode = true
-text = "Back"
 
 [node name="Options Panel" type="Panel" parent="." unique_id=826016586]
 visible = false
@@ -318,10 +278,9 @@ offset_bottom = 15.5
 script = ExtResource("20_rer4v")
 
 [connection signal="pressed" from="MainButtons/Start_button" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="MainButtons/Level-Select_button" to="." method="_on_level_select_button_pressed"]
 [connection signal="pressed" from="MainButtons/Option_button" to="." method="_on_option_button_pressed"]
 [connection signal="pressed" from="MainButtons/Exit_button" to="." method="_on_exit_button_pressed"]
-[connection signal="pressed" from="LevelSelect/Level-Select_button" to="." method="_on_level_select_button_pressed"]
-[connection signal="pressed" from="LevelSelect/Back_button" to="." method="_on_back_button_pressed"]
 [connection signal="pressed" from="Options Panel/Back_button" to="." method="_on_back_button_pressed"]
 [connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer2/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer2/AudioControl" method="_on_value_changed"]
 [connection signal="value_changed" from="Options Panel/VBoxContainer/HBoxContainer/AudioControl" to="Options Panel/VBoxContainer/HBoxContainer/AudioControl" method="_on_value_changed"]
