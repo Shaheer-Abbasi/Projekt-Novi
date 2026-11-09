@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://d2s6f7bynanqf"]
+
+[ext_resource type="Script" uid="uid://d0168il77yx0e" path="res://scripts/Temp_Scripts/AbilityFanBurst.gd" id="1_uvxgd"]
+[ext_resource type="Script" uid="uid://c1f4e37o2sy4n" path="res://scripts/Temp_Scripts/AbilityShockwave.gd" id="2_g7a6r"]
+[ext_resource type="Script" uid="uid://bvlbg5t2grliw" path="res://scripts/Temp_Scripts/AbilityDash.gd" id="3_78n7f"]
+[ext_resource type="Script" uid="uid://1xtmfxmy7vct" path="res://scripts/Temp_Scripts/AbilityUltimate.gd" id="4_0luf1"]
+[ext_resource type="Script" uid="uid://dad7ood8pbv8u" path="res://scripts/Temp_Scripts/CharacterData.gd" id="5_y8463"]
+
+[resource]
+script = ExtResource("5_y8463")
+character_name = "Reaper"
+basic_damage = 10.0
+fire_cooldown = 5.0
+ability_1_script = ExtResource("1_uvxgd")
+ability_2_script = ExtResource("2_g7a6r")
+ability_3_script = ExtResource("3_78n7f")
+ability_4_script = ExtResource("4_0luf1")
+metadata/_custom_type_script = "uid://dad7ood8pbv8u"
