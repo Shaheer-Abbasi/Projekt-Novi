@@ -65,6 +65,7 @@ func _ready() -> void:
 	var placed_boss := get_tree().get_first_node_in_group("boss") as BossNPC
 	if placed_boss != null:
 		hud.show_boss(placed_boss)
+		placed_boss.died.connect(_on_boss_died)   # a boss placed in the level also ends the run in victory
 	queue_redraw()
 
 
@@ -186,21 +187,37 @@ func _start_boss_phase() -> void:
 	hud.show_boss(boss)
 
 
+const VICTORY_SCREEN := "res://scenes/EndScreens/victory_screen.tscn"
+const DEFEAT_SCREEN := "res://scenes/EndScreens/defeat_screen.tscn"
+
+
 func _on_boss_died(_b: EnemyNPC) -> void:
-	state = RoundState.ENDED
-	await get_tree().create_timer(1.0).timeout
-	if not is_inside_tree():
+	if state == RoundState.ENDED:
 		return
-	hud.show_end("VICTORY")
-	get_tree().paused = true
+	state = RoundState.ENDED
+	_end_run(true)
 
 
 func _on_player_died() -> void:
 	if state == RoundState.ENDED:
 		return
 	state = RoundState.ENDED
-	hud.show_end("GAME OVER")
-	get_tree().paused = true
+	_end_run(false)
+
+
+## Saves the run's results, waits a moment so the player sees the final hit,
+## then opens the Victory or Defeat screen.
+func _end_run(won: bool) -> void:
+	RoundStats.finish_run(won, scene_file_path)
+	if not won:
+		get_tree().paused = true   # freeze the action on the killing blow
+	# A real-time timer: keeps ticking while paused and ignores slow-motion.
+	await get_tree().create_timer(1.2, true, false, true).timeout
+	if not is_inside_tree():
+		return
+	get_tree().paused = false
+	Engine.time_scale = 1.0
+	get_tree().change_scene_to_file(VICTORY_SCREEN if won else DEFEAT_SCREEN)
 
 
 func _unhandled_input(event: InputEvent) -> void:

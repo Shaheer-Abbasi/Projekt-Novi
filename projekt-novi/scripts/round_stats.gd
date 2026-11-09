@@ -24,6 +24,16 @@ var survival_time: float = 0.0
 
 var _rewarded: Dictionary = {}  # enemy instance id -> true
 
+# --- How the last run ended (read by the Victory / Defeat screens) ---
+## True if the last run was won (boss beaten), false if the player died.
+var last_run_won: bool = false
+## The XP level the player had reached when the run ended.
+var last_run_level: int = 1
+## The level scene the run was played in, so "Retry" can reload it.
+var last_run_scene: String = ""
+## True once a boss has been killed this round.
+var boss_defeated: bool = false
+
 
 func _ready() -> void:
 	get_tree().node_added.connect(_on_node_added)
@@ -51,6 +61,8 @@ func register_kill(enemy: Node) -> void:
 	_rewarded[id] = true
 
 	kills += 1
+	if enemy.is_in_group("boss"):
+		boss_defeated = true
 	add_currency(BOSS_REWARD if enemy.is_in_group("boss") else ENEMY_REWARD)
 	kills_changed.emit(kills)
 
@@ -73,11 +85,21 @@ func spend_currency(amount: int) -> bool:
 	currency_changed.emit(currency)
 	return true	
 
+## Call when a run ends, right before switching to the Victory / Defeat screen.
+## Saves everything the result screen needs. (Credits, kills and survival time
+## are already stored above and stay as they are until the next reset().)
+func finish_run(won: bool, scene_path: String) -> void:
+	last_run_won = won
+	last_run_scene = scene_path
+	last_run_level = XpManager.level
+
+
 ## Call when a new round starts.
 func reset() -> void:
 	currency = 0
 	kills = 0
 	survival_time = 0.0
+	boss_defeated = false
 	_rewarded.clear()
 	currency_changed.emit(currency)
 	kills_changed.emit(kills)
