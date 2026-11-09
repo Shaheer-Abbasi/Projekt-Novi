@@ -10,6 +10,8 @@ extends CharacterBody2D
 signal health_changed(current_hp: float, max_hp: float)
 signal died
 
+signal damage_avoided(amount: float)
+
 const CHARACTER_DATA_PATH := "res://playtest/resources/vow_data.tres"
 const MUZZLE_OFFSET := 24.0
 const HIT_INVULN_TIME := 0.35
@@ -324,7 +326,10 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func take_damage(amount: float) -> void:
-	if _dead or _invuln_left > 0.0:
+	if _dead:
+		return
+	if _invuln_left > 0.0:
+		damage_avoided.emit(amount)
 		return
 	current_hp = maxf(current_hp - amount, 0.0)
 	health_changed.emit(current_hp, max_hp)

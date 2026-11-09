@@ -34,6 +34,21 @@ const LEVEL_SELECT_PATH := "res://scenes/MainMenuScenes/level_select.tscn"
 ## ON: pressing Esc leaves the level for the menu. OFF: Esc does nothing in this level.
 @export var escape_to_menu: bool = true
 
+@export_group("Notification box (the 'Use WASD to move' banner)")
+## CYBER (the default): a dark angled bar with a colored icon block, like a Cyberpunk 2077 notification (drawn in code, no art needed).
+## PLAIN: the original dark box with a lime border. SPRITES: your own picture (Notice Box Texture below).
+@export var notice_style: StoryNotice.Style = StoryNotice.Style.CYBER
+## CYBER: the accent color (icon block, outline, highlights). Red like a warning; try lime, cyan or yellow.
+@export var notice_accent: Color = Color(1.0, 0.2, 0.25)
+## Optional small picture at the left (a warning sign, a key...). CYBER without one draws a warning triangle.
+@export var notice_icon: Texture2D
+## CYBER: write the message in CAPITALS (color tags like [color=#ff5a4a] still work).
+@export var notice_uppercase: bool = true
+## SPRITES: your box picture (a PNG). It is stretched like a 9-slice: the corners stay sharp, the middle stretches.
+@export var notice_box_texture: Texture2D
+## SPRITES: how many pixels in from each edge of your picture are the corner that must NOT stretch.
+@export var notice_box_margin: int = 16
+
 @export_group("Fade in")
 ## The level starts on a plain color and fades up to the picture, instead of snapping on. 0 = no fade.
 @export var fade_in_seconds: float = 1.2
@@ -152,6 +167,9 @@ const LEVEL_SELECT_PATH := "res://scenes/MainMenuScenes/level_select.tscn"
 ## OPTIONAL. Only if you want a custom look (your own box / name tab / key pictures). Empty = the plain built-in look:
 ## name and text are drawn as text, no pictures needed. The characters above work with or without it.
 @export var ui_skin: UISkin
+## The font for every message, conversation, button and key prompt in this level. Drag a .ttf or .otf file here.
+## Empty = Godot's default font. (The SIZE of the text is set separately, in the skin's font size fields.)
+@export var ui_font: Font
 ## F1 defeats every enemy on screen (handy for testing doors and messages).
 @export var debug_keys: bool = true
 
@@ -177,6 +195,7 @@ var is_cinematic: bool = false
 var _settings_root: Node             # your playtest scene, opened once to copy settings from (freed at the end of _ready)
 var _settings_name: String = ""
 var _audio_tween: Tween
+var _warned_notice_style: bool = false
 var _skin_cache: UISkin             # the skin everything uses: your Ui Skin (if any) + the characters above
 var _player_source: String = ""     # where the Player came from (for the startup message)
 var _hud_source: String = ""
@@ -885,7 +904,6 @@ func complete_level() -> void:
 	if show_logo_at_end:
 		await _play_ending_logo()
 	_go_next()
-	
 
 
 func _play_ending_logo() -> void:
@@ -988,6 +1006,8 @@ func _build_skin() -> void:
 		sp.side = entry[2]
 		list.append(sp)
 	s.speakers = list
+	if ui_font != null:
+		s.font = ui_font                               # one font for all the level's text (messages, dialogue, buttons, prompt)
 	s.portrait_style = UISkin.PortraitStyle.STAGE if big_portraits else UISkin.PortraitStyle.IN_BOX
 	_skin_cache = s
 
@@ -998,7 +1018,17 @@ func get_notice() -> StoryNotice:
 	if n == null:
 		n = StoryNotice.new()
 		n.skin = _skin()
+		n.style = notice_style
+		n.accent = notice_accent
+		n.icon = notice_icon
+		n.uppercase = notice_uppercase
+		n.box_texture = notice_box_texture
+		n.box_margin = notice_box_margin
 		add_child(n)
+		print("StoryLevel: notification box style = %s." % ["PLAIN", "CYBER", "SPRITES"][notice_style])
+	elif not _warned_notice_style and n.style != notice_style:
+		_warned_notice_style = true
+		push_warning("StoryLevel: this scene already contains its own StoryNotice node (style %s), so the level's Notice Style (%s) is not used. Delete that node to use the level's setting." % [["PLAIN", "CYBER", "SPRITES"][n.style], ["PLAIN", "CYBER", "SPRITES"][notice_style]])
 	return n
 
 
@@ -1032,8 +1062,17 @@ func _on_player_died() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed and not event.echo \
-			and event.keycode == KEY_F1 and debug_keys:
+	if not (event is InputEventKey and event.pressed and not event.echo):
+		return
+	if event.keycode == KEY_ESCAPE:
+		if not escape_to_menu:
+			return
+		get_tree().paused = false
+		if menu_scene != null:
+			get_tree().change_scene_to_packed(menu_scene)
+		elif ResourceLoader.exists(MENU_PATH):
+			get_tree().change_scene_to_file(MENU_PATH)
+	elif event.keycode == KEY_F1 and debug_keys:
 		for e in get_tree().get_nodes_in_group("enemies"):
 			if is_instance_valid(e):
 				e.take_damage(99999.0)
