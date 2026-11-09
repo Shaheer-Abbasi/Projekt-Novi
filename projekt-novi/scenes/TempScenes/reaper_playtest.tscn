@@ -1,0 +1,119 @@
+[gd_scene format=3 uid="uid://dg72gvi4eovdm"]
+
+[ext_resource type="Script" uid="uid://bxcaorkai7w7h" path="res://scripts/Temp_Scripts/playtest.gd" id="1_jhabc"]
+[ext_resource type="Texture2D" uid="uid://bg1dmaj8d2ujh" path="res://assets/Maps/CorpoHQ/Arasaka_1.png" id="2_5vdv3"]
+[ext_resource type="Texture2D" uid="uid://bup4tyloit23b" path="res://assets/Maps/CorpoHQ/Arasaka2.png" id="3_ogsub"]
+[ext_resource type="Texture2D" uid="uid://ccoanp0et3omm" path="res://assets/Maps/CorpoHQ/Arasaka_2.png" id="4_bnd3x"]
+[ext_resource type="PackedScene" uid="uid://dd2ujpgqjexxb" path="res://scenes/TempScenes/playtest_hud.tscn" id="12_7yacb"]
+[ext_resource type="PackedScene" uid="uid://croelrne48iuj" path="res://scenes/TempScenes/reaper_player.tscn" id="12_76lki"]
+[ext_resource type="Script" uid="uid://i7grus02o11p" path="res://scripts/Temp_Scripts/playtest_hud.gd" id="13_53tka"]
+[ext_resource type="PackedScene" path="res://scenes/level_up_ui.tscn" id="14_murfp"]
+[ext_resource type="Script" uid="uid://djjyfgq6txhds" path="res://scripts/Temp_Scripts/ultimate_cutscene.gd" id="15_6uw3v"]
+[ext_resource type="Texture2D" uid="uid://c3p7iskri0cd5" path="res://assets/Characters/Vow/Vow_Illustration.png" id="16_5ego7"]
+[ext_resource type="AudioStream" uid="uid://bgx4qr51i6eb4" path="res://assets/Music/Vow_Ult_quote.mp3" id="17_qvsc0"]
+[ext_resource type="AudioStream" uid="uid://pk1uiu3e6tjq" path="res://assets/Music/The Rebel Path.mp3" id="18_qei8u"]
+
+[sub_resource type="Animation" id="Animation_tjmnq"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:portrait_x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.03]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:portrait_y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.03]
+}
+
+[sub_resource type="Animation" id="Animation_mnpca"]
+resource_name = "vow_ult"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:portrait_x")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.03]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:portrait_y")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.03]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6v0qe"]
+_data = {
+&"RESET": SubResource("Animation_tjmnq"),
+&"vow_ult": SubResource("Animation_mnpca")
+}
+
+[node name="Playtest" type="Node2D" unique_id=436201814]
+script = ExtResource("1_jhabc")
+arena_size = Vector2(4100, 1448)
+
+[node name="Stage" type="Sprite2D" parent="." unique_id=244336456]
+scale = Vector2(2, 2)
+texture = ExtResource("2_5vdv3")
+
+[node name="Sprite2D" type="Sprite2D" parent="Stage" unique_id=1745483938]
+position = Vector2(0, -467.5)
+texture = ExtResource("3_ogsub")
+
+[node name="Sprite2D2" type="Sprite2D" parent="Stage" unique_id=774730785]
+z_index = 2
+position = Vector2(0, 409.5)
+texture = ExtResource("4_bnd3x")
+
+[node name="HUD" parent="." unique_id=337117531 instance=ExtResource("12_7yacb")]
+script = ExtResource("13_53tka")
+
+[node name="LevelUpUI" parent="." unique_id=2028047670 instance=ExtResource("14_murfp")]
+
+[node name="UltimateCutscene" type="CanvasLayer" parent="." unique_id=1864899912]
+script = ExtResource("15_6uw3v")
+portrait = ExtResource("16_5ego7")
+banner_text = "Bridal Cries"
+banner_font_size = 115
+banner_color = Color(0.75686276, 0, 0.20392157, 1)
+voice_line = ExtResource("17_qvsc0")
+voice_volume_db = -5.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="UltimateCutscene" unique_id=1860973153]
+libraries/ = SubResource("AnimationLibrary_6v0qe")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=904793622]
+process_mode = 3
+stream = ExtResource("18_qei8u")
+volume_db = -20.07
+pitch_scale = 0.65
+autoplay = true
+parameters/looping = true
+
+[node name="Player" parent="." unique_id=590826995 instance=ExtResource("12_76lki")]
