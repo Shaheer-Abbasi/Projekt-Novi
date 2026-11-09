@@ -18,6 +18,9 @@ func _on_start_button_pressed() -> void:
 func _on_level_select_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/MainMenuScenes/level_select.tscn")
 
+func _on_premium_shop_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/MainMenuScenes/premium_shop.tscn")
+
 func _on_option_button_pressed() -> void:
 	main_buttons.visible = false
 	options_panel.visible = true
