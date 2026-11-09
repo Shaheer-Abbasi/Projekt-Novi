@@ -109,6 +109,16 @@ texture_normal = ExtResource("10_dfrt3")
 texture_pressed = ExtResource("11_vbil6")
 texture_hover = ExtResource("12_u25lc")
 
+[node name="PremiumShop_button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1040.0
+offset_top = 250.0
+offset_right = 1110.0
+offset_bottom = 320.0
+theme_override_font_sizes/font_size = 30
+text = "★"
+tooltip_text = "Premium Shop"
+
 [node name="Options Panel" type="Panel" parent="." unique_id=826016586]
 visible = false
 self_modulate = Color(0, 0, 0, 1)
@@ -279,6 +289,7 @@ script = ExtResource("20_rer4v")
 
 [connection signal="pressed" from="MainButtons/Start_button" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MainButtons/Level-Select_button" to="." method="_on_level_select_button_pressed"]
+[connection signal="pressed" from="PremiumShop_button" to="." method="_on_premium_shop_button_pressed"]
 [connection signal="pressed" from="MainButtons/Option_button" to="." method="_on_option_button_pressed"]
 [connection signal="pressed" from="MainButtons/Exit_button" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="Options Panel/Back_button" to="." method="_on_back_button_pressed"]

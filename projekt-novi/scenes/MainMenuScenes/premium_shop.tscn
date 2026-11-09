@@ -1,0 +1,234 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://scripts/MainMenu_Scrips/premium_shop.gd" id="1_shop"]
+[ext_resource type="Texture2D" path="res://assets/Gacha/GashaponMachine.png" id="2_machine"]
+[ext_resource type="Texture2D" path="res://icon.svg" id="3_coin"]
+[ext_resource type="Texture2D" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_idle.png" id="4_vow"]
+[ext_resource type="Texture2D" path="res://assets/Gacha/GreenCapsule.png" id="5_capsule"]
+[ext_resource type="Texture2D" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_idle.png" id="6_reaper"]
+
+[sub_resource type="StyleBoxFlat" id="StylePanel"]
+bg_color = Color(0.035, 0.045, 0.07, 0.94)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.25, 0.32, 0.48, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+
+[sub_resource type="StyleBoxFlat" id="StyleReward"]
+bg_color = Color(0.08, 0.09, 0.13, 0.96)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.55, 0.65, 0.95, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleCapsuleFallback"]
+bg_color = Color(0.42, 0.82, 0.34, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.85, 0.95, 0.85, 1)
+corner_radius_top_left = 46
+corner_radius_top_right = 46
+corner_radius_bottom_right = 46
+corner_radius_bottom_left = 46
+
+[node name="PremiumShop" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_shop")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.008, 0.012, 0.025, 1)
+
+[node name="Margin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 36
+theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 36
+theme_override_constants/margin_bottom = 28
+
+[node name="Layout" type="VBoxContainer" parent="Margin"]
+layout_mode = 2
+theme_override_constants/separation = 14
+
+[node name="TopBar" type="HBoxContainer" parent="Margin/Layout"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="BackButton" type="Button" parent="Margin/Layout/TopBar"]
+custom_minimum_size = Vector2(110, 44)
+layout_mode = 2
+theme_override_font_sizes/font_size = 20
+text = "Back"
+
+[node name="Title" type="Label" parent="Margin/Layout/TopBar"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+text = "PREMIUM SHOP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CoinIcon" type="TextureRect" parent="Margin/Layout/TopBar"]
+custom_minimum_size = Vector2(40, 40)
+layout_mode = 2
+texture = ExtResource("3_coin")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CoinCount" type="Label" parent="Margin/Layout/TopBar"]
+custom_minimum_size = Vector2(75, 40)
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "10"
+vertical_alignment = 1
+
+[node name="MainPanel" type="PanelContainer" parent="Margin/Layout"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("StylePanel")
+
+[node name="PanelPadding" type="MarginContainer" parent="Margin/Layout/MainPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
+
+[node name="Content" type="HBoxContainer" parent="Margin/Layout/MainPanel/PanelPadding"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="MachineArea" type="Control" parent="Margin/Layout/MainPanel/PanelPadding/Content"]
+custom_minimum_size = Vector2(460, 440)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Machine" type="TextureRect" parent="Margin/Layout/MainPanel/PanelPadding/Content/MachineArea"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -210.0
+offset_right = 190.0
+offset_bottom = 170.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_machine")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="CapsuleTexture" type="TextureRect" parent="Margin/Layout/MainPanel/PanelPadding/Content/MachineArea"]
+visible = false
+layout_mode = 0
+offset_left = 246.0
+offset_top = 390.0
+offset_right = 366.0
+offset_bottom = 510.0
+texture = ExtResource("5_capsule")
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="CharacterPop" type="TextureRect" parent="Margin/Layout/MainPanel/PanelPadding/Content/MachineArea"]
+visible = false
+layout_mode = 0
+offset_left = 225.0
+offset_top = 330.0
+offset_right = 383.0
+offset_bottom = 541.0
+texture = ExtResource("4_vow")
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
+
+[node name="ShopSide" type="VBoxContainer" parent="Margin/Layout/MainPanel/PanelPadding/Content"]
+custom_minimum_size = Vector2(360, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 14
+alignment = 1
+
+[node name="Instructions" type="Label" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 26
+text = "Unlock New Characters Here!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Status" type="Label" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 22
+text = "Ready"
+horizontal_alignment = 1
+
+[node name="RewardPanel" type="PanelContainer" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide"]
+visible = false
+custom_minimum_size = Vector2(300, 250)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleReward")
+
+[node name="RewardLayout" type="VBoxContainer" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/RewardPanel"]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="RewardTitle" type="Label" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/RewardPanel/RewardLayout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "CHARACTER UNLOCKED"
+horizontal_alignment = 1
+
+[node name="RewardSprite" type="TextureRect" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/RewardPanel/RewardLayout"]
+custom_minimum_size = Vector2(158, 211)
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("4_vow")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="RewardName" type="Label" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/RewardPanel/RewardLayout"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 34
+text = "VOW"
+horizontal_alignment = 1
+
+[node name="RollButton" type="Button" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide"]
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "SPEND 1 COIN"
+
+[connection signal="pressed" from="Margin/Layout/TopBar/BackButton" to="." method="_on_back_button_pressed"]
+[connection signal="pressed" from="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/RollButton" to="." method="_on_roll_button_pressed"]
