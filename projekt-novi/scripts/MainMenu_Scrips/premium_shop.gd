@@ -3,11 +3,11 @@ extends Control
 const STARTING_COINS := 10
 
 @onready var coin_count_label: Label = $Margin/Layout/TopBar/CoinCount
-@onready var roll_button: Button = $Margin/Layout/MainPanel/Content/ShopSide/RollButton
-@onready var status_label: Label = $Margin/Layout/MainPanel/Content/ShopSide/Status
-@onready var reward_panel: PanelContainer = $Margin/Layout/MainPanel/Content/ShopSide/RewardPanel
-@onready var capsule: TextureRect = $Margin/Layout/MainPanel/Content/MachineArea/CapsuleTexture
-@onready var vow_pop: TextureRect = $Margin/Layout/MainPanel/Content/MachineArea/VowPop
+@onready var roll_button: Button = $Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/RollButton
+@onready var status_label: Label = $Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/Status
+@onready var reward_panel: PanelContainer = $Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/RewardPanel
+@onready var capsule: TextureRect = $Margin/Layout/MainPanel/PanelPadding/Content/MachineArea/CapsuleTexture
+@onready var vow_pop: TextureRect = $Margin/Layout/MainPanel/PanelPadding/Content/MachineArea/VowPop
 
 var coins := STARTING_COINS
 var rolling := false
