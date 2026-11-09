@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cecqri46gt7v" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_idle.png" id="7_q81lb"]
 [ext_resource type="Texture2D" uid="uid://dlic4h5vyoj00" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_run1.png" id="8_vrbek"]
 [ext_resource type="Texture2D" uid="uid://bukugdik06ebo" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_run2.png" id="9_f2fu6"]
-[ext_resource type="Texture2D" uid="uid://crwyrct57o8mi" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_run3.png" id="10_32n1d"]
+[ext_resource type="Texture2D" uid="uid://gw57qer7fkbv" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_run3.png" id="10_32n1d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
 radius = 18.0
@@ -47,7 +47,7 @@ animations = [{
 }],
 "loop": 1,
 "name": &"run",
-"speed": 5.0
+"speed": 6.0
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=590826995]
@@ -76,9 +76,20 @@ texture = ExtResource("4_8yoa7")
 [node name="CharacterSprite" type="Node2D" parent="." unique_id=523623720]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterSprite" unique_id=2143519473]
+visible = false
 texture_filter = 1
 position = Vector2(0, 2)
 scale = Vector2(0.38100004, 0.38100004)
 sprite_frames = SubResource("SpriteFrames_ryyu3")
 animation = &"attack"
 autoplay = "idle"
+frame_progress = 0.509465
+
+[node name="AnimatedSprite2D2" type="AnimatedSprite2D" parent="CharacterSprite" unique_id=2014253039]
+texture_filter = 1
+position = Vector2(0, 2)
+scale = Vector2(0.38100004, 0.38100004)
+sprite_frames = SubResource("SpriteFrames_ryyu3")
+animation = &"attack"
+autoplay = "idle"
+frame_progress = 0.6009902
