@@ -10,8 +10,8 @@ size = Vector2(132.95198, 131.33434)
 radius = 56.0
 
 [node name="Cyberdoc" type="Area2D" unique_id=1390288159]
-collision_layer = 4
-collision_mask = 2
+collision_layer = 8
+collision_mask = 6
 script = ExtResource("1_cgnfb")
 
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=508533205]

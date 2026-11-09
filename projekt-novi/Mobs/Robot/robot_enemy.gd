@@ -29,25 +29,20 @@ func _physics_process(delta: float) -> void:
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
-
 	var to_player: Vector2 = player.global_position - global_position
 	var distance: float = to_player.length()
-
 	if distance <= 0.001:
 		velocity = Vector2.ZERO
 	else:
 		var direction: Vector2 = to_player.normalized()
 		var desired_direction: Vector2
-
 		if distance > preferred_distance:
 			desired_direction = direction
 		elif distance < too_close_distance:
 			desired_direction = -direction
 		else:
 			desired_direction = direction.orthogonal() * strafe_sign
-
 		velocity = desired_direction.normalized() * move_speed
-
 	move_and_slide()
 
 	if is_instance_valid(player):
