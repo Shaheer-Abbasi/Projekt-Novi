@@ -1,19 +1,16 @@
 [gd_scene format=3 uid="uid://croelrne48iuj"]
 
 [ext_resource type="Script" uid="uid://dkqtoolrmalwc" path="res://scripts/Temp_Scripts/playtest_player.gd" id="1_xlwbh"]
-[ext_resource type="Texture2D" uid="uid://c15f6dsmhhi2x" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_slash_1_right.png" id="2_4tixu"]
 [ext_resource type="Script" uid="uid://dad7ood8pbv8u" path="res://scripts/Temp_Scripts/CharacterData.gd" id="2_y1t0h"]
-[ext_resource type="Texture2D" uid="uid://wawbv5cbh5at" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_slash_2_right.png" id="3_y1t0h"]
+[ext_resource type="Texture2D" uid="uid://brr4fitud7jin" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_slash1.png" id="3_px3l6"]
+[ext_resource type="Texture2D" uid="uid://buopv076uct5m" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_slash2.png" id="4_brb8h"]
 [ext_resource type="Texture2D" uid="uid://wf0ya7rroe3n" path="res://art/aim_cursor.png" id="4_kpka0"]
-[ext_resource type="Texture2D" uid="uid://6bhxqmon511b" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_attack_1_right.png" id="5_jstkl"]
-[ext_resource type="Texture2D" uid="uid://cvd7ixxyaebax" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_attack_2_right.png" id="6_0rlgl"]
-[ext_resource type="Texture2D" uid="uid://ckv1ijd8joc6k" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_idle.png" id="7_iqp4t"]
-[ext_resource type="Texture2D" uid="uid://0ol7yjtcmids" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_run_1_right.png" id="8_o07nm"]
-[ext_resource type="Texture2D" uid="uid://peq4jhr1itw4" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_run_2_right.png" id="9_664dm"]
-[ext_resource type="Texture2D" uid="uid://cuf7a1f8hfqns" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_run_3_right.png" id="10_yneqy"]
-[ext_resource type="Texture2D" uid="uid://b325507uvjjkd" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_run_3_left.png" id="11_u315p"]
-[ext_resource type="Texture2D" uid="uid://d10nv04n8cy1x" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_run_2_left.png" id="12_rx048"]
-[ext_resource type="Texture2D" uid="uid://c0q8yw7ki3thc" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_run_1_left.png" id="13_58ysp"]
+[ext_resource type="Texture2D" uid="uid://du4abe7p6pstq" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_attack1.png" id="6_px3l6"]
+[ext_resource type="Texture2D" uid="uid://bjx7gtdf6x7x1" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_attack2.png" id="7_brb8h"]
+[ext_resource type="Texture2D" uid="uid://cecqri46gt7v" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_idle.png" id="8_xlwbh"]
+[ext_resource type="Texture2D" uid="uid://dlic4h5vyoj00" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_run1.png" id="9_4tixu"]
+[ext_resource type="Texture2D" uid="uid://bukugdik06ebo" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_run2.png" id="10_y1t0h"]
+[ext_resource type="Texture2D" uid="uid://crwyrct57o8mi" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_run3.png" id="11_kpka0"]
 
 [sub_resource type="Resource" id="Resource_7tsp1"]
 script = ExtResource("2_y1t0h")
@@ -29,14 +26,14 @@ metadata/_custom_type_script = "uid://dad7ood8pbv8u"
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
 radius = 18.0
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_ryyu3"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_jstkl"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("5_jstkl")
+"texture": ExtResource("6_px3l6")
 }, {
 "duration": 1.0,
-"texture": ExtResource("6_0rlgl")
+"texture": ExtResource("7_brb8h")
 }],
 "loop": 2,
 "name": &"attack",
@@ -44,7 +41,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("7_iqp4t")
+"texture": ExtResource("8_xlwbh")
 }],
 "loop": 1,
 "name": &"idle",
@@ -52,39 +49,26 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("8_o07nm")
+"texture": ExtResource("9_4tixu")
 }, {
 "duration": 1.0,
-"texture": ExtResource("9_664dm")
+"texture": ExtResource("10_y1t0h")
 }, {
 "duration": 1.0,
-"texture": ExtResource("10_yneqy")
+"texture": ExtResource("11_kpka0")
 }],
 "loop": 1,
 "name": &"run",
-"speed": 5.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("11_u315p")
-}, {
-"duration": 1.0,
-"texture": ExtResource("12_rx048")
-}, {
-"duration": 1.0,
-"texture": ExtResource("13_58ysp")
-}],
-"loop": 1,
-"name": &"run_left",
-"speed": 4.0
+"speed": 6.0
 }]
 
-[node name="Player" type="CharacterBody2D" unique_id=590826995]
+[node name="Player2" type="CharacterBody2D" unique_id=590826995]
 collision_layer = 2
 motion_mode = 1
 script = ExtResource("1_xlwbh")
 character_data = SubResource("Resource_7tsp1")
-slash_frames = Array[Texture2D]([ExtResource("2_4tixu"), ExtResource("3_y1t0h")])
+slash_frames = Array[Texture2D]([ExtResource("3_px3l6"), ExtResource("4_brb8h")])
+slash_width = 230.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2068757560]
 visible = false
@@ -107,8 +91,7 @@ texture = ExtResource("4_kpka0")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="CharacterSprite" unique_id=2143519473]
 texture_filter = 1
 position = Vector2(0, 2)
-scale = Vector2(0.38100004, 0.38100004)
-sprite_frames = SubResource("SpriteFrames_ryyu3")
-animation = &"attack"
+scale = Vector2(0.5, 0.5)
+sprite_frames = SubResource("SpriteFrames_jstkl")
+animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.7029539
