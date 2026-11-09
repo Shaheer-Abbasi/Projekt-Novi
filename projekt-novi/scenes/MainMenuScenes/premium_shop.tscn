@@ -67,10 +67,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 34
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 34
+theme_override_constants/margin_left = 72
+theme_override_constants/margin_top = 42
+theme_override_constants/margin_right = 72
+theme_override_constants/margin_bottom = 54
 
 [node name="Layout" type="VBoxContainer" parent="Margin"]
 layout_mode = 2
@@ -113,17 +113,24 @@ layout_mode = 2
 size_flags_vertical = 3
 theme_override_styles/panel = SubResource("StylePanel")
 
-[node name="Content" type="HBoxContainer" parent="Margin/Layout/MainPanel"]
+[node name="PanelPadding" type="MarginContainer" parent="Margin/Layout/MainPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="Content" type="HBoxContainer" parent="Margin/Layout/MainPanel/PanelPadding"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="MachineArea" type="Control" parent="Margin/Layout/MainPanel/Content"]
+[node name="MachineArea" type="Control" parent="Margin/Layout/MainPanel/PanelPadding/Content"]
 custom_minimum_size = Vector2(580, 580)
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
 
-[node name="Machine" type="TextureRect" parent="Margin/Layout/MainPanel/Content/MachineArea"]
+[node name="Machine" type="TextureRect" parent="Margin/Layout/MainPanel/PanelPadding/Content/MachineArea"]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -140,7 +147,7 @@ texture = ExtResource("2_machine")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="CapsuleTexture" type="TextureRect" parent="Margin/Layout/MainPanel/Content/MachineArea"]
+[node name="CapsuleTexture" type="TextureRect" parent="Margin/Layout/MainPanel/PanelPadding/Content/MachineArea"]
 visible = false
 layout_mode = 0
 offset_left = 246.0
@@ -152,7 +159,7 @@ expand_mode = 1
 stretch_mode = 5
 mouse_filter = 2
 
-[node name="VowPop" type="TextureRect" parent="Margin/Layout/MainPanel/Content/MachineArea"]
+[node name="VowPop" type="TextureRect" parent="Margin/Layout/MainPanel/PanelPadding/Content/MachineArea"]
 visible = false
 layout_mode = 0
 offset_left = 225.0
@@ -164,44 +171,45 @@ expand_mode = 1
 stretch_mode = 5
 mouse_filter = 2
 
-[node name="ShopSide" type="VBoxContainer" parent="Margin/Layout/MainPanel/Content"]
+[node name="ShopSide" type="VBoxContainer" parent="Margin/Layout/MainPanel/PanelPadding/Content"]
 custom_minimum_size = Vector2(430, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 22
 alignment = 1
 
-[node name="Instructions" type="Label" parent="Margin/Layout/MainPanel/Content/ShopSide"]
+[node name="Instructions" type="Label" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = "Spend 1 coin to dispense a capsule.\nFor this prototype, every capsule unlocks Vow."
+theme_override_font_sizes/font_size = 32
+text = "Unlock New Characters Here!"
 horizontal_alignment = 1
+vertical_alignment = 1
 autowrap_mode = 2
 
-[node name="Status" type="Label" parent="Margin/Layout/MainPanel/Content/ShopSide"]
+[node name="Status" type="Label" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 26
 text = "Ready"
 horizontal_alignment = 1
 
-[node name="RewardPanel" type="PanelContainer" parent="Margin/Layout/MainPanel/Content/ShopSide"]
+[node name="RewardPanel" type="PanelContainer" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide"]
 visible = false
 custom_minimum_size = Vector2(340, 300)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleReward")
 
-[node name="RewardLayout" type="VBoxContainer" parent="Margin/Layout/MainPanel/Content/ShopSide/RewardPanel"]
+[node name="RewardLayout" type="VBoxContainer" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/RewardPanel"]
 layout_mode = 2
 theme_override_constants/separation = 12
 alignment = 1
 
-[node name="RewardTitle" type="Label" parent="Margin/Layout/MainPanel/Content/ShopSide/RewardPanel/RewardLayout"]
+[node name="RewardTitle" type="Label" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/RewardPanel/RewardLayout"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = "CHARACTER UNLOCKED"
 horizontal_alignment = 1
 
-[node name="VowPortrait" type="TextureRect" parent="Margin/Layout/MainPanel/Content/ShopSide/RewardPanel/RewardLayout"]
+[node name="VowPortrait" type="TextureRect" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/RewardPanel/RewardLayout"]
 custom_minimum_size = Vector2(158, 211)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -209,17 +217,17 @@ texture = ExtResource("4_vow")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="RewardName" type="Label" parent="Margin/Layout/MainPanel/Content/ShopSide/RewardPanel/RewardLayout"]
+[node name="RewardName" type="Label" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/RewardPanel/RewardLayout"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 34
 text = "VOW"
 horizontal_alignment = 1
 
-[node name="RollButton" type="Button" parent="Margin/Layout/MainPanel/Content/ShopSide"]
+[node name="RollButton" type="Button" parent="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide"]
 custom_minimum_size = Vector2(0, 70)
 layout_mode = 2
 theme_override_font_sizes/font_size = 28
 text = "SPEND 1 COIN"
 
 [connection signal="pressed" from="Margin/Layout/TopBar/BackButton" to="." method="_on_back_button_pressed"]
-[connection signal="pressed" from="Margin/Layout/MainPanel/Content/ShopSide/RollButton" to="." method="_on_roll_button_pressed"]
+[connection signal="pressed" from="Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/RollButton" to="." method="_on_roll_button_pressed"]
