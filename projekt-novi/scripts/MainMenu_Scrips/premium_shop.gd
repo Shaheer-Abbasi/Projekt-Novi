@@ -46,12 +46,12 @@ func _dispense_capsule() -> void:
     capsule.modulate = Color.WHITE
     capsule.scale = Vector2(0.65, 0.65)
     capsule.pivot_offset = capsule.size / 2.0
-    capsule.position = Vector2(255.0, 330.0)
+    capsule.position = Vector2(188.0, 245.0)
     capsule.rotation = -0.18
 
     var drop := create_tween()
     drop.set_parallel(true)
-    drop.tween_property(capsule, "position", Vector2(255.0, 435.0), 0.65).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+    drop.tween_property(capsule, "position", Vector2(188.0, 335.0), 0.65).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
     drop.tween_property(capsule, "scale", Vector2.ONE, 0.65).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
     drop.tween_property(capsule, "rotation", 0.12, 0.28).set_trans(Tween.TRANS_SINE)
     await drop.finished
@@ -68,14 +68,14 @@ func _pop_vow_from_capsule() -> void:
     vow_pop.modulate = Color(1, 1, 1, 0)
     vow_pop.scale = Vector2(0.15, 0.15)
     vow_pop.pivot_offset = vow_pop.size / 2.0
-    vow_pop.position = Vector2(236.0, 425.0)
+    vow_pop.position = Vector2(173.0, 325.0)
 
     var pop := create_tween()
     pop.set_parallel(true)
     pop.tween_property(capsule, "scale", Vector2(1.3, 0.35), 0.22).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
     pop.tween_property(capsule, "modulate:a", 0.0, 0.22)
     pop.tween_property(vow_pop, "modulate:a", 1.0, 0.12)
-    pop.tween_property(vow_pop, "position", Vector2(220.0, 250.0), 0.55).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+    pop.tween_property(vow_pop, "position", Vector2(160.0, 155.0), 0.55).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
     pop.tween_property(vow_pop, "scale", Vector2(1.15, 1.15), 0.55).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
     await pop.finished
 
