@@ -17,6 +17,11 @@
 [ext_resource type="Script" uid="uid://dad7ood8pbv8u" path="res://scripts/Temp_Scripts/CharacterData.gd" id="10_5uwqt"]
 [ext_resource type="Texture2D" uid="uid://c3p7iskri0cd5" path="res://assets/Characters/Vow/Vow_Illustration.png" id="15_tjmnq"]
 [ext_resource type="AudioStream" uid="uid://bgx4qr51i6eb4" path="res://assets/Music/Vow_Ult_quote.mp3" id="16_mnpca"]
+[ext_resource type="Script" uid="uid://onvnf788vnld" path="res://scripts/StoryScripts/perfect_dodge.gd" id="19_7svwx"]
+[ext_resource type="AudioStream" uid="uid://chop5426xds7l" path="res://assets/Music/dodge_sfx.wav" id="20_i4ypq"]
+[ext_resource type="Script" uid="uid://ce7l08pu0qrwg" path="res://scripts/StoryScripts/round_intro.gd" id="21_wd8gj"]
+[ext_resource type="Texture2D" uid="uid://bdmt620lu8iwo" path="res://art/Talia_1.png" id="22_o3thx"]
+[ext_resource type="Texture2D" uid="uid://c7yrcobvc1sy8" path="res://art/Talia_2.png" id="23_x8kwq"]
 [ext_resource type="PackedScene" path="res://scenes/level_up_ui.tscn" id="level_up_ui"]
 
 [sub_resource type="Resource" id="Resource_3ob4o"]
@@ -136,3 +141,12 @@ volume_db = -20.07
 pitch_scale = 0.65
 autoplay = true
 parameters/looping = true
+
+[node name="PerfectDodge" type="Node" parent="." unique_id=903388530]
+script = ExtResource("19_7svwx")
+sound = ExtResource("20_i4ypq")
+
+[node name="RoundIntro" type="Node" parent="." unique_id=1255788076]
+script = ExtResource("21_wd8gj")
+banner = ExtResource("22_o3thx")
+portrait = ExtResource("23_x8kwq")
