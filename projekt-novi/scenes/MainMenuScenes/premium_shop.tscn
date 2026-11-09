@@ -3,7 +3,8 @@
 [ext_resource type="Script" path="res://scripts/MainMenu_Scrips/premium_shop.gd" id="1_shop"]
 [ext_resource type="Texture2D" path="res://assets/Gacha/GashaponMachine.png" id="2_machine"]
 [ext_resource type="Texture2D" path="res://icon.svg" id="3_coin"]
-[ext_resource type="Texture2D" path="res://assets/Characters/Vow/VowPortrait.png" id="4_vow"]
+[ext_resource type="Texture2D" path="res://assets/Characters/Vow/Vow_New_Sprites/vow_idle.png" id="4_vow"]
+[ext_resource type="Texture2D" path="res://assets/Gacha/GreenCapsule.png" id="5_capsule"]
 
 [sub_resource type="StyleBoxFlat" id="StylePanel"]
 bg_color = Color(0.035, 0.045, 0.07, 0.94)
@@ -144,19 +145,24 @@ visible = false
 layout_mode = 0
 offset_left = 246.0
 offset_top = 390.0
-offset_right = 342.0
-offset_bottom = 486.0
+offset_right = 366.0
+offset_bottom = 510.0
+texture = ExtResource("5_capsule")
 expand_mode = 1
 stretch_mode = 5
+mouse_filter = 2
 
-[node name="CapsuleFallback" type="Panel" parent="Margin/Layout/MainPanel/Content/MachineArea"]
+[node name="VowPop" type="TextureRect" parent="Margin/Layout/MainPanel/Content/MachineArea"]
 visible = false
 layout_mode = 0
-offset_left = 246.0
-offset_top = 390.0
-offset_right = 342.0
-offset_bottom = 486.0
-theme_override_styles/panel = SubResource("StyleCapsuleFallback")
+offset_left = 225.0
+offset_top = 330.0
+offset_right = 383.0
+offset_bottom = 541.0
+texture = ExtResource("4_vow")
+expand_mode = 1
+stretch_mode = 5
+mouse_filter = 2
 
 [node name="ShopSide" type="VBoxContainer" parent="Margin/Layout/MainPanel/Content"]
 custom_minimum_size = Vector2(430, 0)
@@ -196,7 +202,7 @@ text = "CHARACTER UNLOCKED"
 horizontal_alignment = 1
 
 [node name="VowPortrait" type="TextureRect" parent="Margin/Layout/MainPanel/Content/ShopSide/RewardPanel/RewardLayout"]
-custom_minimum_size = Vector2(190, 190)
+custom_minimum_size = Vector2(158, 211)
 layout_mode = 2
 size_flags_horizontal = 4
 texture = ExtResource("4_vow")
