@@ -285,6 +285,7 @@ script = ExtResource("20_rer4v")
 
 [connection signal="pressed" from="MainButtons/Start_button" to="." method="_on_start_button_pressed"]
 [connection signal="pressed" from="MainButtons/Level-Select_button" to="." method="_on_level_select_button_pressed"]
+[connection signal="pressed" from="MainButtons/PremiumShop_button" to="." method="_on_premium_shop_button_pressed"]
 [connection signal="pressed" from="MainButtons/Option_button" to="." method="_on_option_button_pressed"]
 [connection signal="pressed" from="MainButtons/Exit_button" to="." method="_on_exit_button_pressed"]
 [connection signal="pressed" from="Options Panel/Back_button" to="." method="_on_back_button_pressed"]
