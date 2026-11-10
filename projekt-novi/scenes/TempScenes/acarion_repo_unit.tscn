@@ -1,8 +1,13 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://by8sqndni32se"]
 
-[ext_resource type="Script" path="res://scripts/Temp_Scripts/acarion_repo_unit.gd" id="1"]
-[ext_resource type="Texture2D" path="res://assets/Enemies/acarion_repo_unit_cracked.svg" id="2"]
+[ext_resource type="Script" uid="uid://deb01u1llaqe0" path="res://scripts/Temp_Scripts/acarion_repo_unit.gd" id="1"]
 [ext_resource type="Resource" path="res://tempresources/acarion_repo_stats.tres" id="3"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7joyb"]
+load_path = "res://.godot/imported/acarion_repo_unit_cracked.svg-24928c3c104bb8e740c9c1eb4eec30fc.ctex"
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_py7os"]
+size = Vector2(97.85715, 115.00001)
 
 [sub_resource type="CircleShape2D" id="BodyShape"]
 radius = 34.0
@@ -10,30 +15,40 @@ radius = 34.0
 [sub_resource type="CircleShape2D" id="ContactShape"]
 radius = 60.0
 
-[node name="AcarionRepoUnit" type="CharacterBody2D"]
+[node name="AcarionRepoUnit" type="CharacterBody2D" unique_id=1975034836]
 z_index = 5
 collision_layer = 4
-collision_mask = 1
 motion_mode = 1
 script = ExtResource("1")
 stats = ExtResource("3")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1132322768]
 position = Vector2(0, -12)
 scale = Vector2(0.7, 0.7)
-texture = ExtResource("2")
+texture = SubResource("CompressedTexture2D_7joyb")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 10)
+[node name="Blocker" type="StaticBody2D" parent="." unique_id=1148192669]
+position = Vector2(0, -12)
+scale = Vector2(0.7, 0.7)
+
+[node name="Blocking" type="CollisionShape2D" parent="Blocker" unique_id=1905976751]
+light_mask = 0
+position = Vector2(0, 5.7142863)
+scale = Vector2(0.9999998, 0.9999998)
+shape = SubResource("RectangleShape2D_py7os")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1205707591]
+position = Vector2(0, -6)
+scale = Vector2(1.2, 1.2)
 shape = SubResource("BodyShape")
 
-[node name="ContactArea" type="Area2D" parent="."]
+[node name="ContactArea" type="Area2D" parent="." unique_id=1258725744]
 collision_layer = 0
 collision_mask = 2
 monitorable = false
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactArea"]
-position = Vector2(0, 10)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ContactArea" unique_id=993028946]
+position = Vector2(0, -6)
 shape = SubResource("ContactShape")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=377946483]

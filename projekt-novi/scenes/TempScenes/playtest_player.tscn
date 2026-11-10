@@ -69,6 +69,7 @@ animations = [{
 
 [node name="Player" type="CharacterBody2D" unique_id=590826995]
 collision_layer = 2
+collision_mask = 3
 motion_mode = 1
 script = ExtResource("1")
 slash_frames = Array[Texture2D]([ExtResource("2_c7cyg"), ExtResource("3_q022q")])

@@ -97,7 +97,7 @@ const LEVEL_SELECT_PATH := "res://scenes/MainMenuScenes/level_select.tscn"
 @export var reset_xp_at_end: bool = false
 ## Show "LEVEL UP!" in the middle of the screen when the player levels up.
 ## (Not shown when your level-up screen opens, because that screen already says it.)
-@export var announce_level_up: bool = true
+@export var announce_level_up: bool = false
 ## Add your level-up screen ("choose an upgrade", level_up_ui.tscn, found by file name) to this level.
 ## Skipped if the level already has one. Needs a node called Player in the level.
 @export var include_level_up_screen: bool = false
