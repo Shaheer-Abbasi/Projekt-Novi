@@ -34,6 +34,11 @@ func _ready() -> void:
 
 	if "wedge_count" in wheel:                 # placeholder wheel matches the table
 		wheel.wedge_count = wedges.size()
+		if "labels" in wheel:
+			var names := PackedStringArray()
+			for w in wedges:
+				names.append(w.name)
+			wheel.labels = names
 		wheel.queue_redraw()
 
 	popup.hide()

@@ -334,7 +334,7 @@ func _on_video_finished() -> void:
 func show_logo(tex: Texture2D, fallback_text: String) -> void:
 	var node: Control
 	if tex != null:
-		_logo.texture = tex
+		_logo.texture = _trimmed(tex)
 		_logo.visible = true
 		node = _logo
 	else:
@@ -347,6 +347,40 @@ func show_logo(tex: Texture2D, fallback_text: String) -> void:
 	tw.tween_property(node, "modulate:a", 1.0, 1.4)
 	tw.tween_property(node, "scale", Vector2.ONE, 2.4).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_OUT)
 	tw.chain().tween_callback(_logo_ready)
+
+## Only the artwork of the picture, without empty space or a lone stray pixel at its edges
+## (the logo file has both on the right, which pushed the logo off-centre).
+func _trimmed(tex: Texture2D) -> Texture2D:
+	var img := tex.get_image()
+	if img == null:
+		return tex
+	if img.is_compressed():
+		img.decompress()
+	var w := img.get_width()
+	var h := img.get_height()
+	var lo := Vector2i(w, h)
+	var hi := Vector2i(-1, -1)
+	for y in range(h):
+		for x in range(w):
+			if img.get_pixel(x, y).a <= 0.0:
+				continue
+			var lonely := true
+			for dy in range(-1, 2):
+				for dx in range(-1, 2):
+					var nx := x + dx
+					var ny := y + dy
+					if (dx != 0 or dy != 0) and nx >= 0 and ny >= 0 and nx < w and ny < h and img.get_pixel(nx, ny).a > 0.0:
+						lonely = false
+			if not lonely:
+				lo = Vector2i(mini(lo.x, x), mini(lo.y, y))
+				hi = Vector2i(maxi(hi.x, x), maxi(hi.y, y))
+	if hi.x < 0 or (lo == Vector2i.ZERO and hi == Vector2i(w - 1, h - 1)):
+		return tex
+	var at := AtlasTexture.new()
+	at.atlas = tex
+	at.region = Rect2(lo, hi - lo + Vector2i.ONE)
+	return at
+
 
 func _update_logo_hint() -> void:
 	_logo_hint.text = "PRESS ANY BUTTON" if InputHints.using_pad else "PRESS ANY KEY"
