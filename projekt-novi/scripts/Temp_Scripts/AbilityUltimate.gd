@@ -28,7 +28,8 @@ func _run() -> void:
 	var cs := caster.get_tree().get_first_node_in_group("ultimate_cutscene") as UltimateCutscene
 	if cs != null:
 		caster.set_input_locked(true)
-		cs.play(ability_name, caster.character_name)
+		var data = caster.character_data
+		cs.play(ability_name, caster.character_name, data.ultimate_portrait, data.ultimate_title)
 		await cs.finished
 		caster.set_input_locked(false)
 	activate()

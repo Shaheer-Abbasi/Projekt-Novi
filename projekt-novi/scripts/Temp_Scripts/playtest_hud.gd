@@ -101,6 +101,10 @@ func bind_player(p: PlaytestPlayer) -> void:
 	p.health_changed.connect(_on_player_hp)
 	_on_player_hp(p.current_hp, p.max_hp)
 	_set_text(name_label, p.character_name.to_upper())
+	var skin := find_child("HudSkin", true, false)
+	if skin != null and p.character_data != null and p.character_data.hud_portrait != null:
+		skin.portrait = p.character_data.hud_portrait        # this character's face in the corner
+		skin._layout()
 	for i in range(_slots.size()):
 		if not is_instance_valid(_slots[i]):
 			continue

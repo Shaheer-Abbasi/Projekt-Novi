@@ -72,7 +72,7 @@ const KIND_LABELS := ["Grunts", "Runners", "Tanks", "Shooters", "Bosses"]
 @export var grant_ability_if_missing: bool = true
 ## Shows a pop-up like "FAN BURST ... PRESS [ 1 ]" and freezes the game until that key is pressed, then fires the ability.
 ## (Only used when the setting above is "(by key below)".)
-@export_enum("(none)", "ability_1", "ability_2", "ability_3", "ability_4", "ability_5") var prompt_action: String = "(none)"
+@export_enum("(none)", "ability_1", "ability_2", "ability_3", "ability_4", "dash") var prompt_action: String = "(none)"
 ## The pop-up's title. Empty = the ability's name.
 @export var prompt_title: String = ""
 ## The pop-up's text. Empty = a built-in description of the ability.
@@ -535,6 +535,8 @@ func _ability_blurb(ab: Ability, fallback_action: String) -> String:
 func _ability_for(action: String) -> Ability:
 	if _level == null or _level.player == null:
 		return null
+	if action == "dash":
+		return _level.player.dash_ability
 	var i := action.get_slice("_", 1).to_int() - 1
 	if i >= 0 and i < _level.player.abilities.size():
 		return _level.player.abilities[i]

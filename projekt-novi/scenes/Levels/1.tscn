@@ -11,7 +11,7 @@
 [ext_resource type="AudioStream" uid="uid://kvyayo73a2w0" path="res://assets/Music/swordslash.mp3" id="6_3ob4o"]
 [ext_resource type="Script" uid="uid://d0168il77yx0e" path="res://scripts/Temp_Scripts/AbilityFanBurst.gd" id="6_k5umx"]
 [ext_resource type="Script" uid="uid://c1f4e37o2sy4n" path="res://scripts/Temp_Scripts/AbilityShockwave.gd" id="7_tjmnq"]
-[ext_resource type="Script" uid="uid://bvlbg5t2grliw" path="res://scripts/Temp_Scripts/AbilityDash.gd" id="8_mnpca"]
+[ext_resource type="Script" uid="uid://cyots4pavwpa5" path="res://scripts/Temp_Scripts/AbilityBouquet.gd" id="8_mnpca"]
 [ext_resource type="Script" uid="uid://1xtmfxmy7vct" path="res://scripts/Temp_Scripts/AbilityUltimate.gd" id="9_6v0qe"]
 [ext_resource type="Script" uid="uid://dad7ood8pbv8u" path="res://scripts/Temp_Scripts/CharacterData.gd" id="10_5uwqt"]
 [ext_resource type="Texture2D" uid="uid://c3p7iskri0cd5" path="res://assets/Characters/Vow/Vow_Illustration.png" id="15_tjmnq"]

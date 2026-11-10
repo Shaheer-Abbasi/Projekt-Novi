@@ -162,15 +162,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		play("ULTIMATE", "VOW")
 
 
-func play(ability_name: String, character_name: String) -> void:
+## `portrait_override` / `title_override`: a character's own art and title (Reaper's ultimate), instead of the level's settings.
+func play(ability_name: String, character_name: String, portrait_override: Texture2D = null, title_override: String = "") -> void:
 	if _playing:
 		return
 	_playing = true
 	get_tree().paused = true
 
-	_banner.text = banner_text if banner_text != "" else ability_name.to_upper()
-	_sub.text = subtitle_text if subtitle_text != "" else character_name.to_upper()
-	if portrait != null:
+	_banner.text = title_override if title_override != "" else (banner_text if banner_text != "" else ability_name.to_upper())
+	_sub.text = character_name.to_upper() if title_override != "" else (subtitle_text if subtitle_text != "" else character_name.to_upper())
+	if portrait_override != null:
+		_portrait_rect.texture = portrait_override
+	elif portrait != null:
 		_portrait_rect.texture = portrait
 	else:
 		_portrait_rect.texture = load("res://player/vow/idle/idle_01.png") as Texture2D

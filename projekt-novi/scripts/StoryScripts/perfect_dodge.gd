@@ -173,7 +173,10 @@ func _bind_player(p: Node) -> void:
 
 ## Connects to the player's Dash ability (also one the tutorial gives later).
 func _hook_dash() -> void:
-	for a in _player.abilities:
+	var list: Array = _player.abilities.duplicate()
+	if "dash_ability" in _player and _player.dash_ability != null:
+		list.append(_player.dash_ability)
+	for a in list:
 		if a == null or _hooked.has(a.get_instance_id()):
 			continue
 		var sc: Script = a.get_script()

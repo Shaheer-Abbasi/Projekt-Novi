@@ -34,6 +34,11 @@ var state: RoundState = RoundState.PLAYING
 var arena_rect: Rect2
 
 var _spawn_cd: float = 1.0
+## Premium Shop coins: every minute survived pays a few.
+const COINS_EVERY_SECONDS := 60.0
+const COINS_MIN := 2
+const COINS_MAX := 5
+var _coin_clock: float = 0.0
 var _grunt: EnemyStats
 var _fast: EnemyStats
 var _tank: EnemyStats
@@ -90,6 +95,8 @@ func _draw() -> void:
 
 
 func _process(delta: float) -> void:
+	if state != RoundState.ENDED:
+		_tick_coins(delta)
 	if state == RoundState.BOSS:
 		# Countdown is stuck at 0 during the boss, but the player is still surviving.
 		RoundStats.set_survival_time(RoundStats.survival_time + delta)
@@ -110,6 +117,39 @@ func _process(delta: float) -> void:
 
 	if round_timer_enabled and boss_phase_enabled and time_left <= 0.0:
 		_start_boss_phase()
+
+
+# --- Premium coins ----------------------------------------------------------
+
+func _tick_coins(delta: float) -> void:
+	_coin_clock += delta
+	if _coin_clock < COINS_EVERY_SECONDS:
+		return
+	_coin_clock -= COINS_EVERY_SECONDS
+	var n := randi_range(COINS_MIN, COINS_MAX)
+	RoundStats.earn_coins(n)
+	_coin_popup(n)
+
+
+## "+3 COINS" under the timer, rising and fading.
+func _coin_popup(n: int) -> void:
+	var l := Label.new()
+	l.text = "+%d COINS" % n
+	l.add_theme_font_size_override("font_size", 34)
+	l.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
+	l.add_theme_color_override("font_outline_color", Color.BLACK)
+	l.add_theme_constant_override("outline_size", 8)
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	l.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+	l.offset_left = -200.0
+	l.offset_right = 200.0
+	l.offset_top = 90.0
+	hud.add_child(l)
+	var tw := l.create_tween()
+	tw.set_parallel(true)
+	tw.tween_property(l, "offset_top", 50.0, 1.6).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	tw.tween_property(l, "modulate:a", 0.0, 0.6).set_delay(1.0)
+	tw.chain().tween_callback(l.queue_free)
 
 
 # --- Spawning -------------------------------------------------------------

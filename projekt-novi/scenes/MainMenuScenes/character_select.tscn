@@ -5,6 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://b2v67d7ibca84" path="res://assets/CharacterSelect/character_select_atlas.png" id="3_oeiul"]
 [ext_resource type="Texture2D" uid="uid://cy5eq11jdvh0w" path="res://assets/CharacterSelect/character_select_bg.png" id="4_g6t1m"]
 [ext_resource type="AudioStream" uid="uid://bwe6a417dm5gk" path="res://assets/Music/vow.mp3" id="5_ngn8s"]
+[ext_resource type="Resource" uid="uid://d2s6f7bynanqf" path="res://assets/Characters/Reaper/reaper_data.tres" id="10_reaper"]
+[ext_resource type="Texture2D" uid="uid://dcnlutr7i63g3" path="res://assets/Characters/Reaper/reaper_tile.png" id="11_reaper"]
+[ext_resource type="Texture2D" uid="uid://bw7r74mncfn0f" path="res://assets/Characters/Reaper/reaper_illustration.png" id="12_reaper"]
+[ext_resource type="Texture2D" uid="uid://dpbjnqxn82o46" path="res://assets/Characters/Reaper/reaper_board_sprite.png" id="13_reaper"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w6u4x"]
 atlas = ExtResource("3_oeiul")
@@ -71,6 +75,30 @@ ability3_icon = SubResource("AtlasTexture_vvly5")
 ability3_name = "Bouquet Throw"
 ability3_text = "Vow throws a Bouquet damaging enemies from
 a distance."
+
+[sub_resource type="Resource" id="Resource_reaper"]
+script = ExtResource("2_ngn8s")
+display_name = "Reaper"
+story = "A test subject built for one job: assassination.
+She slipped out of Projekt Novi with the scythe they
+gave her, and now she hunts the ones who made it."
+character_data = ExtResource("10_reaper")
+tile = ExtResource("11_reaper")
+illustration = ExtResource("12_reaper")
+illustration_position = Vector2(140, 200)
+sprite = ExtResource("13_reaper")
+ultimate_name = "Grim Harvest"
+ultimate_text = "A huge scythe spin around her. Enemies left
+under 25% HP are finished off instantly."
+ability1_name = "Reap"
+ability1_text = "A wide scythe sweep. Every enemy caught
+in it heals her a little."
+ability2_name = "Shadow Step"
+ability2_text = "Blinks to the cursor, cutting every enemy
+along the way. She can't be hit mid-step."
+ability3_name = "Death Mark"
+ability3_text = "Marks an enemy: it takes +50% damage. If it
+dies marked, it bursts and hurts those nearby."
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bxey5"]
 atlas = ExtResource("3_oeiul")
@@ -160,7 +188,7 @@ anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource("1_0sv6v")
-entries = Array[ExtResource("2_ngn8s")]([SubResource("Resource_8wdgy"), SubResource("Resource_yk33l"), SubResource("Resource_ffn82")])
+entries = Array[ExtResource("2_ngn8s")]([SubResource("Resource_8wdgy"), SubResource("Resource_reaper"), SubResource("Resource_yk33l"), SubResource("Resource_ffn82")])
 background = ExtResource("4_g6t1m")
 title_triangle = SubResource("AtlasTexture_gqfkt")
 heading = SubResource("AtlasTexture_ukfwk")

@@ -28,6 +28,24 @@ func _on_option_button_pressed() -> void:
 	options_panel.visible = true
 
 
+## F9 (debug builds only): showcase reset. Coins, gacha pulls and unlocked characters go back to a new save.
+func _unhandled_input(event: InputEvent) -> void:
+	if OS.is_debug_build() and event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F9:
+		SaveData.reset_gacha()
+		CharacterSelectScreen.selected_character = null
+		CharacterSelectScreen.selected_name = ""
+		var note := Label.new()
+		note.text = "SAVE RESET"
+		note.add_theme_font_size_override("font_size", 36)
+		note.set_anchors_and_offsets_preset(Control.PRESET_CENTER_TOP)
+		note.position.y += 40.0
+		add_child(note)
+		var tw := note.create_tween()
+		tw.tween_interval(1.0)
+		tw.tween_property(note, "modulate:a", 0.0, 0.6)
+		tw.tween_callback(note.queue_free)
+
+
 func _on_exit_button_pressed() -> void:
 	get_tree().quit()
 

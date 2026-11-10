@@ -16,6 +16,8 @@ var _cooldown_left: float = 0.0
 
 func setup(owner_caster) -> void:
 	caster = owner_caster
+	if "damage_multiplier" in caster:
+		damage *= caster.damage_multiplier      # gacha stars: +5% per star above the first
 
 
 func _process(delta: float) -> void:
