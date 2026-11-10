@@ -35,6 +35,7 @@ InputHints="*uid://c3ejhpkigr70e"
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+mouse_cursor/custom_image="uid://cdqpn4ki5xf8l"
 
 [global_group]
 

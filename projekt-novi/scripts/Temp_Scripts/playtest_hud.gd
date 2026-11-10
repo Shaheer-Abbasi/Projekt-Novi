@@ -57,7 +57,7 @@ func _ready() -> void:
 		# So you can hide or delete any box without the others getting mixed up.
 		var found := {}
 		var order := 0
-		for box in ability_bar.get_children():
+		for box in ability_bar.find_children("Ability?", "Control", true, false):
 			if box is Control:
 				found[_slot_number(box, order)] = box
 				order += 1
@@ -124,7 +124,7 @@ func _on_player_hp(cur: float, mx: float) -> void:
 	
 func _on_xp_changed(current_xp: int, xp_to_next: int) -> void:
 	_set_bar(xp_bar, current_xp, xp_to_next)
-	_set_text(level_label, "Level " + str(XpManager.level))
+	_set_text(level_label, str(XpManager.level))
 	
 func _on_leveled_up(new_level: int) -> void:
 	_set_text(level_label, "Level " + str(new_level)) 
