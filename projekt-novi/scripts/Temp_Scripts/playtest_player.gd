@@ -338,6 +338,13 @@ func take_damage(amount: float) -> void:
 		_die()
 
 
+func heal(amount: float) -> void:
+	if _dead or amount <= 0.0 or current_hp >= max_hp:
+		return
+	current_hp = minf(current_hp + amount, max_hp)
+	health_changed.emit(current_hp, max_hp)
+
+
 func force_kill() -> void:
 	if _dead:
 		return

@@ -11,6 +11,8 @@
 [ext_resource type="Texture2D" uid="uid://dlic4h5vyoj00" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_run1.png" id="9_4tixu"]
 [ext_resource type="Texture2D" uid="uid://bukugdik06ebo" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_run2.png" id="10_y1t0h"]
 [ext_resource type="Texture2D" uid="uid://crwyrct57o8mi" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_run3.png" id="11_kpka0"]
+[ext_resource type="Script" path="res://scripts/Temp_Scripts/AbilityLifeDrain.gd" id="12_life_drain"]
+[ext_resource type="Script" path="res://scripts/Temp_Scripts/AbilityReapingWave.gd" id="13_reaping_wave"]
 
 [sub_resource type="Resource" id="Resource_7tsp1"]
 script = ExtResource("2_y1t0h")
@@ -21,6 +23,8 @@ basic_damage = 18.0
 fire_cooldown = 0.6
 attack_range = 220.0
 bullet_speed = 450.0
+ability_1_script = ExtResource("12_life_drain")
+ability_2_script = ExtResource("13_reaping_wave")
 metadata/_custom_type_script = "uid://dad7ood8pbv8u"
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_body"]
