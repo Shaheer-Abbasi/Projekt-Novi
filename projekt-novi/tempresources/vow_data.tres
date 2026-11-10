@@ -3,12 +3,12 @@
 [ext_resource type="Script" uid="uid://dad7ood8pbv8u" path="res://scripts/Temp_Scripts/CharacterData.gd" id="1"]
 [ext_resource type="Script" uid="uid://d0168il77yx0e" path="res://scripts/Temp_Scripts/AbilityFanBurst.gd" id="2"]
 [ext_resource type="Script" uid="uid://c1f4e37o2sy4n" path="res://scripts/Temp_Scripts/AbilityShockwave.gd" id="3"]
-[ext_resource type="Script" uid="uid://bvlbg5t2grliw" path="res://scripts/Temp_Scripts/AbilityDash.gd" id="4"]
+[ext_resource type="Script" uid="uid://cyots4pavwpa5" path="res://scripts/Temp_Scripts/AbilityBouquet.gd" id="3_kc7pd"]
 [ext_resource type="Script" uid="uid://1xtmfxmy7vct" path="res://scripts/Temp_Scripts/AbilityUltimate.gd" id="5"]
 
 [resource]
 script = ExtResource("1")
 ability_1_script = ExtResource("2")
 ability_2_script = ExtResource("3")
-ability_3_script = ExtResource("4")
+ability_3_script = ExtResource("3_kc7pd")
 ability_4_script = ExtResource("5")

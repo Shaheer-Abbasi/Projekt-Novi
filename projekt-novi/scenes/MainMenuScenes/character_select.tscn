@@ -1,0 +1,182 @@
+[gd_scene format=3 uid="uid://dexlhdgrprd1v"]
+
+[ext_resource type="Script" uid="uid://bu48u0grykvrf" path="res://scripts/CharacterSelect/character_select_screen.gd" id="1_0sv6v"]
+[ext_resource type="Script" uid="uid://0cxsgvgkrk05" path="res://scripts/CharacterSelect/character_select_entry.gd" id="2_ngn8s"]
+[ext_resource type="Texture2D" uid="uid://b2v67d7ibca84" path="res://assets/CharacterSelect/character_select_atlas.png" id="3_oeiul"]
+[ext_resource type="Texture2D" uid="uid://cy5eq11jdvh0w" path="res://assets/CharacterSelect/character_select_bg.png" id="4_g6t1m"]
+[ext_resource type="AudioStream" uid="uid://bwe6a417dm5gk" path="res://assets/Music/vow.mp3" id="5_ngn8s"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w6u4x"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(396, 1175, 148, 148)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ra8v2"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(548, 1175, 148, 148)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vvly5"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(700, 1175, 148, 148)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_56noq"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(2, 2, 990, 885)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_la7ph"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(1285, 2, 224, 282)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d2suj"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(1513, 2, 224, 282)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ui3u"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(1707, 891, 193, 193)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6jep6"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(1225, 891, 478, 198)
+filter_clip = true
+
+[sub_resource type="Resource" id="Resource_8wdgy"]
+script = ExtResource("2_ngn8s")
+story = "Living happily ever after with the love of her life 
+under the city lights, that was stripped away from 
+her due to corrupt Corporations."
+tile = SubResource("AtlasTexture_2ui3u")
+illustration = SubResource("AtlasTexture_56noq")
+sprite = SubResource("AtlasTexture_la7ph")
+sprite_shadow = SubResource("AtlasTexture_d2suj")
+ultimate_bar = SubResource("AtlasTexture_6jep6")
+ultimate_name = "Bridal Cries"
+ultimate_text = "Vow lets out her inner sorrow causing a
+massive EMP wave to emit from her."
+ability1_icon = SubResource("AtlasTexture_w6u4x")
+ability1_name = "Fan Burst"
+ability1_text = "Vow swings her sword making multiple slashes
+at once, resulting to a wide slash."
+ability2_icon = SubResource("AtlasTexture_ra8v2")
+ability2_name = "EMP Wave"
+ability2_text = "Vow uses her Robotic arm to cause a small
+EMP Wave that causes Damage."
+ability3_icon = SubResource("AtlasTexture_vvly5")
+ability3_name = "Bouquet Throw"
+ability3_text = "Vow throws a Bouquet damaging enemies from
+a distance."
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bxey5"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(2, 1175, 193, 193)
+filter_clip = true
+
+[sub_resource type="Resource" id="Resource_yk33l"]
+script = ExtResource("2_ngn8s")
+display_name = "Gunslinger"
+locked = true
+tile = SubResource("AtlasTexture_bxey5")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sx5pc"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(199, 1175, 193, 193)
+filter_clip = true
+
+[sub_resource type="Resource" id="Resource_ffn82"]
+script = ExtResource("2_ngn8s")
+display_name = "Talia"
+locked = true
+tile = SubResource("AtlasTexture_sx5pc")
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_gqfkt"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(1700, 1482, 45, 51)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ukfwk"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(852, 1175, 341, 134)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rs2sr"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(1197, 1175, 341, 134)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i160j"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(1276, 1372, 727, 86)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1558p"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(2, 1482, 727, 86)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qtxkk"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(2, 891, 1010, 280)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7psrd"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(733, 1482, 890, 70)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cih51"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(1016, 891, 205, 205)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mninw"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(996, 2, 285, 285)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_itgd5"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(2, 1372, 618, 106)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0usdh"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(624, 1372, 648, 106)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6s5or"]
+atlas = ExtResource("3_oeiul")
+region = Rect2(1627, 1482, 69, 62)
+filter_clip = true
+
+[node name="CharacterSelect" type="Control" unique_id=388990904]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_0sv6v")
+entries = Array[ExtResource("2_ngn8s")]([SubResource("Resource_8wdgy"), SubResource("Resource_yk33l"), SubResource("Resource_ffn82")])
+background = ExtResource("4_g6t1m")
+title_triangle = SubResource("AtlasTexture_gqfkt")
+heading = SubResource("AtlasTexture_ukfwk")
+heading_glow = SubResource("AtlasTexture_rs2sr")
+divider = SubResource("AtlasTexture_i160j")
+divider_glow = SubResource("AtlasTexture_1558p")
+desc_panel = SubResource("AtlasTexture_qtxkk")
+desc_glow = SubResource("AtlasTexture_7psrd")
+tile_glow_normal = SubResource("AtlasTexture_cih51")
+tile_glow_selected = SubResource("AtlasTexture_mninw")
+continue_text = SubResource("AtlasTexture_itgd5")
+continue_glow = SubResource("AtlasTexture_0usdh")
+continue_arrow = SubResource("AtlasTexture_6s5or")
+ability_icon_positions = PackedVector2Array(1220, 427, 1220, 588, 1220, 747)
+ability_text_positions = PackedVector2Array(1372, 471, 1372, 631, 1372, 789)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=431280542]
+stream = ExtResource("5_ngn8s")
+autoplay = true

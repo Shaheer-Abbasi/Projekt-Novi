@@ -82,8 +82,13 @@ position = Vector2(0, 10)
 shape = SubResource("CircleShape2D_body")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1930099647]
+limit_smoothed = true
 position_smoothing_enabled = true
-position_smoothing_speed = 8.0
+rotation_smoothing_enabled = true
+drag_left_margin = 0.0
+drag_top_margin = 0.0
+drag_right_margin = 0.0
+drag_bottom_margin = 0.0
 
 [node name="AimCursor" type="Sprite2D" parent="." unique_id=1221848731]
 z_index = 10

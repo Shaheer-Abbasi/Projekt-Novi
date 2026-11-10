@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://co3tgvax3gaay" path="res://scripts/Levels/level_select_button.gd" id="1_fp3ne"]
 [ext_resource type="Script" uid="uid://ceym6h7ajkuv" path="res://scripts/Levels/back_button.gd" id="2_f0th2"]
-[ext_resource type="Texture2D" uid="uid://bqvkrrsrbahdy" path="res://assets/Background/LevelSelect_BG.png" id="3_f0th2"]
+[ext_resource type="Texture2D" uid="uid://50o1i1p47igp" path="res://art/Generic_BG.png" id="3_3aan4"]
 [ext_resource type="Script" uid="uid://cbquu28kqio4d" path="res://scripts/MainMenu_Scrips/menu_controller.gd" id="4_3aan4"]
 
 [node name="Level-Select" type="Control" unique_id=1250742765]
@@ -47,7 +47,13 @@ theme_override_constants/h_separation = 12
 theme_override_constants/v_separation = 12
 columns = 3
 
-[node name="LevelSelectButton" type="Button" parent="CenterContainer/GridContainer" unique_id=1999448988]
+[node name="LevelSelectButton0" type="Button" parent="CenterContainer/GridContainer" unique_id=1958115687]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "0"
+script = ExtResource("1_fp3ne")
+
+[node name="LevelSelectButton1" type="Button" parent="CenterContainer/GridContainer" unique_id=1999448988]
 layout_mode = 2
 theme_override_font_sizes/font_size = 60
 text = "1"
@@ -94,7 +100,7 @@ script = ExtResource("2_f0th2")
 z_index = -2
 position = Vector2(574.78986, 323.5693)
 scale = Vector2(0.60820514, 0.6082051)
-texture = ExtResource("3_f0th2")
+texture = ExtResource("3_3aan4")
 
 [node name="MenuController" type="Node" parent="." unique_id=1753971614]
 script = ExtResource("4_3aan4")

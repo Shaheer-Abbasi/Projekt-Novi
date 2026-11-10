@@ -13,7 +13,9 @@
 [ext_resource type="Texture2D" uid="uid://c3p7iskri0cd5" path="res://assets/Characters/Vow/Vow_Illustration.png" id="6_egxhy"]
 [ext_resource type="Texture2D" uid="uid://dn0xf5nod0473" path="res://art/dialogue_box_red.png" id="9_iumvn"]
 [ext_resource type="Texture2D" uid="uid://dku3i2o7t40qm" path="res://art/name_plate_red.png" id="10_eee5h"]
+[ext_resource type="Script" uid="uid://onvnf788vnld" path="res://scripts/StoryScripts/perfect_dodge.gd" id="11_2p6y3"]
 [ext_resource type="Texture2D" uid="uid://cfvmj43vxfkjr" path="res://art/WallTile.png" id="11_eee5h"]
+[ext_resource type="AudioStream" uid="uid://chop5426xds7l" path="res://assets/Music/dodge_sfx.wav" id="12_8qoeh"]
 [ext_resource type="AudioStream" uid="uid://b128uw30h4wdm" path="res://assets/Music/Wushu Dolls (Cyberpunk 2077 Soundtrack).mp3" id="15_7uoqk"]
 [ext_resource type="PackedScene" uid="uid://chrq4wersv0vs" path="res://scenes/TempScenes/pause_menu.tscn" id="16_4h14o"]
 
@@ -225,6 +227,10 @@ slow_mo_audio_speed = 0.3
 enemy_death_effect = false
 hero_portrait = SubResource("Resource_7uoqk")
 ui_skin = SubResource("Resource_i4nb4")
+
+[node name="PerfectDodge" type="Node" parent="." unique_id=1447255838]
+script = ExtResource("11_2p6y3")
+sound = ExtResource("12_8qoeh")
 
 [node name="Art_PlaceholderBoxes" type="Node2D" parent="." unique_id=49580605]
 
