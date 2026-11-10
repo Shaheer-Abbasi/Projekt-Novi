@@ -90,12 +90,12 @@ sprite = ExtResource("13_reaper")
 ultimate_name = "Grim Harvest"
 ultimate_text = "A huge scythe spin around her. Enemies left
 under 25% HP are finished off instantly."
-ability1_name = "Reap"
-ability1_text = "A wide scythe sweep. Every enemy caught
-in it heals her a little."
-ability2_name = "Shadow Step"
-ability2_text = "Blinks to the cursor, cutting every enemy
-along the way. She can't be hit mid-step."
+ability1_name = "Life Drain"
+ability1_text = "Drains the nearest enemy, then heals her
+for the HP she stole over a few seconds."
+ability2_name = "Reaping Wave"
+ability2_text = "A ring of scythe slashes spreads out from her,
+healing her for every enemy it cuts."
 ability3_name = "Death Mark"
 ability3_text = "Marks an enemy: it takes +50% damage. If it
 dies marked, it bursts and hurts those nearby."
