@@ -187,8 +187,12 @@ func _input(event: InputEvent) -> void:
 	if not overlay.visible:
 		return
 	var is_pad := event is InputEventJoypadButton or event is InputEventJoypadMotion
+	# No card is highlighted until the player starts choosing with a pad or the arrow keys.
+	var is_nav := event.is_action_pressed("ui_left") or event.is_action_pressed("ui_right") \
+		or event.is_action_pressed("ui_up") or event.is_action_pressed("ui_down")
 	var focused := get_viewport().gui_get_focus_owner()
-	if is_pad and (focused == null or not overlay.is_ancestor_of(focused)):
+	if (is_pad or is_nav) and (focused == null or not overlay.is_ancestor_of(focused)):
+		get_viewport().set_input_as_handled()
 		(options_row.get_child(0) as Button).grab_focus()
 		return
 	if _accepting and event.is_action_pressed("interact") and focused is Button and not (focused as Button).disabled:
@@ -229,7 +233,10 @@ func _show_next() -> void:
 	get_tree().paused = true
 	_play(open_sound)
 	_animate_in()
-	(options_row.get_child(0) as Button).grab_focus.call_deferred()
+	if InputHints.using_pad:
+		(options_row.get_child(0) as Button).grab_focus.call_deferred()
+	else:
+		get_viewport().gui_release_focus()
 	_fade_in(already_showing)
 
 

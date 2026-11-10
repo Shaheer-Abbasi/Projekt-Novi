@@ -59,7 +59,11 @@ var current_hp: float = 120.0
 var speed: float = 220.0
 var aim_radius: float = 170.0
 var basic_attack_cooldown_multiplier: float = 1.0
+## From the character's gacha stars: +5% per star above the first.
+var damage_multiplier: float = 1.0
 var abilities: Array[Ability] = []
+## The dash (Shift / Circle). Separate from the numbered abilities above.
+var dash_ability: Ability = null
 var arena_rect: Rect2 = Rect2(-100000, -100000, 200000, 200000)
 
 var _aim_dir: Vector2 = Vector2.RIGHT
@@ -83,6 +87,10 @@ func _ready() -> void:
 	add_to_group("player")
 	if character_data == null and ResourceLoader.exists(CHARACTER_DATA_PATH):
 		character_data = load(CHARACTER_DATA_PATH) as CharacterData
+	# The character picked on the Hiring Board. Story levels are Vow's story, so they keep their own.
+	var picked := CharacterSelectScreen.selected_character as CharacterData
+	if picked != null and not _in_story_level():
+		character_data = picked
 	if character_data == null:
 		character_data = CharacterData.new()
 	character_name = character_data.character_name
@@ -90,6 +98,8 @@ func _ready() -> void:
 	current_hp = max_hp
 	speed = character_data.move_speed
 	aim_radius = character_data.attack_range
+	damage_multiplier = SaveData.damage_multiplier(character_name)
+	_apply_look()
 	_setup_abilities()
 	if hide_system_cursor:
 		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
@@ -98,6 +108,28 @@ func _ready() -> void:
 
 func _exit_tree() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+
+
+func _in_story_level() -> bool:
+	var n := get_parent()
+	while n != null:
+		if n is StoryLevel:
+			return true
+		n = n.get_parent()
+	return false
+
+
+## Swaps in the character's sprites and slash art, if its CharacterData has them.
+func _apply_look() -> void:
+	var body := get_node_or_null("CharacterSprite/AnimatedSprite2D") as AnimatedSprite2D
+	if character_data.sprite_frames != null and body != null:
+		body.sprite_frames = character_data.sprite_frames
+		body.scale = Vector2.ONE * character_data.sprite_scale
+		body.play(idle_animation)
+	if not character_data.slash_frames.is_empty():
+		slash_frames = character_data.slash_frames
+	if character_data.slash_width > 0.0:
+		slash_width = character_data.slash_width
 
 
 ## Builds the 8-direction walk animations from your Vow art. Same layout as
@@ -120,19 +152,36 @@ func _build_sprite_frames() -> void:
 
 
 func _setup_abilities() -> void:
-	var scripts: Array = [
-		character_data.ability_1_script,
-		character_data.ability_2_script,
-		character_data.ability_3_script,
-		character_data.ability_4_script,
-	]
-	for s in scripts:
-		if s == null:
+	for s in _slot_scripts():
+		if s == null or s == AbilityDash:
 			continue
 		var ability := s.new() as Ability  # Script.new() so each ability's _init() runs
 		add_child(ability)
 		ability.setup(self)
 		abilities.append(ability)
+	# Every character can dash (Shift / Circle). It is not one of the 4 numbered slots.
+	dash_ability = AbilityDash.new()
+	add_child(dash_ability)
+	dash_ability.setup(self)
+
+
+func _slot_scripts() -> Array:
+	return [
+		character_data.ability_1_script,
+		character_data.ability_2_script,
+		character_data.ability_3_script,
+		character_data.ability_4_script,
+	]
+
+
+## Keeps `abilities` in the order of the character's slots (1, 2, 3, Ultimate), however they were added.
+## The tutorial hands them out one room at a time; without this they would land on the wrong keys.
+func sort_abilities() -> void:
+	var order := _slot_scripts()
+	abilities.sort_custom(func(a: Ability, b: Ability) -> bool:
+		var ia := order.find(a.get_script())
+		var ib := order.find(b.get_script())
+		return (ia if ia >= 0 else 99) < (ib if ib >= 0 else 99))
 
 
 func set_arena(rect: Rect2) -> void:
@@ -173,7 +222,7 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_pressed("basic attack") and _fire_left <= 0.0:
 		_fire_left = maxf(0.10, character_data.fire_cooldown * basic_attack_cooldown_multiplier)
-		fire_bullet(_aim_dir, character_data.basic_damage + XpManager.attack_damage - 1)
+		fire_bullet(_aim_dir, (character_data.basic_damage + XpManager.attack_damage - 1) * damage_multiplier)
 
 
 # --- Aim cursor ---------------------------------------------------------
@@ -311,6 +360,9 @@ func fire_bullet(dir: Vector2, damage: float, bullet_range: float = -1.0) -> voi
 func _unhandled_input(event: InputEvent) -> void:
 	if _dead or _input_locked:
 		return
+	if dash_ability != null and event.is_action_pressed("dash"):
+		dash_ability.try_activate()
+		return
 	for i in range(abilities.size()):
 		if event.is_action_pressed("ability_%d" % (i + 1)):
 			abilities[i].try_activate()
@@ -341,6 +393,13 @@ func take_damage(amount: float) -> void:
 	_flash_tween.tween_property(sprite, "modulate", Color.WHITE, 0.25)
 	if current_hp <= 0.0:
 		_die()
+
+
+func heal(amount: float) -> void:
+	if _dead or amount <= 0.0:
+		return
+	current_hp = minf(current_hp + amount, max_hp)
+	health_changed.emit(current_hp, max_hp)
 
 
 func force_kill() -> void:

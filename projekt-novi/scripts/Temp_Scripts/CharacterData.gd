@@ -24,3 +24,17 @@ extends Resource
 @export var ability_3_script: GDScript
 ## Key 4 - the Ultimate (plays a short scene first)
 @export var ability_4_script: GDScript
+
+@export_group("Look (empty = keep what the Player scene already has)")
+## idle / run / attack animations.
+@export var sprite_frames: SpriteFrames
+@export var sprite_scale: float = 0.381
+## The basic attack's slash pictures, in order.
+@export var slash_frames: Array[Texture2D] = []
+## How wide the slash is drawn. 0 = keep the Player scene's value.
+@export var slash_width: float = 0.0
+## Top-left HUD portrait (with its frame drawn in).
+@export var hud_portrait: Texture2D
+## Big picture in the Ultimate's cutscene, and its title. Empty = the level's own settings.
+@export var ultimate_portrait: Texture2D
+@export var ultimate_title: String = ""

@@ -12,6 +12,7 @@ const INFO := {
 	"ability_3": "Throws a bouquet toward your cursor. It bursts into petals where it lands!",
 	"ability_4": "Your ultimate. A cinematic power move that hits everything nearby.",
 	"ability_5": "A quick dash. You cannot be hit while you dash.",
+	"dash": "A quick dash. You cannot be hit while you dash.",
 }
 
 ## Set before adding to the scene to restyle it.

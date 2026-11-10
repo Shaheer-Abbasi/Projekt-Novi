@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="BossStats" format=3 uid="uid://dxkvh7ixr2cym"]
+
+[ext_resource type="Script" uid="uid://hxmjmeivhtsj" path="res://scripts/Temp_Scripts/BossStats.gd" id="1_2fv15"]
+
+[resource]
+script = ExtResource("1_2fv15")
+boss_display_name = "Enforcer"
+enemy_name = "Enforcer"
+max_hp = 1200.0
+damage = 18.0
+speed = 70.0
+durability = 2.0
+contact_cooldown = 0.6
+body_scale = 2.0
+tint = Color(1, 1, 1, 1)

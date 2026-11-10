@@ -62,6 +62,8 @@ static var selected_name: String = ""
 @export var tile_origin: Vector2 = Vector2(89.0, 301.0)
 @export var tile_size: float = 145.0
 @export var tile_step: Vector2 = Vector2(0.0, 166.0)
+## How many tiles fit in the column; with more characters the column scrolls (mouse wheel, or up / down).
+@export var tiles_visible: int = 3
 @export var desc_panel_position: Vector2 = Vector2(0.0, 800.0)
 @export var name_position: Vector2 = Vector2(27.0, 820.0)
 @export var story_position: Vector2 = Vector2(42.0, 878.0)
@@ -145,6 +147,12 @@ var _bg: TextureRect
 var _stage: Control
 var _art_group: Control
 var _tiles_group: Control
+var _tiles_clip: Control                 # the window the tile column scrolls inside
+var _scroll: float = 0.0                 # first visible tile (animated)
+var _scroll_target: int = 0
+var _scroll_tw: Tween
+var _arrow_up: Label
+var _arrow_down: Label
 var _desc_group: Control
 var _title_group: Control
 var _heading_group: Control
@@ -194,11 +202,17 @@ func _ready() -> void:
 	_shader_normal.code = SHADER_NORMAL
 	_shader_add = Shader.new()
 	_shader_add.code = SHADER_ADD
+	# Who is unlocked comes from the save (the Premium Shop's gacha unlocks characters).
+	for e in entries:
+		if e != null:
+			e.locked = not SaveData.is_unlocked(e.display_name)
 	_build()
 	if entries.is_empty():
 		push_warning("CharacterSelectScreen: there are no entries, so nothing can be chosen.")
 	else:
 		_selected = _initial_index()
+		_scroll_target = clampi(_selected - tiles_visible + 1, 0, _max_scroll())     # start with the chosen character in view
+		_scroll = float(_scroll_target)
 		selected_character = entries[_selected].character_data
 		selected_name = entries[_selected].display_name
 		_fill_entry(entries[_selected])
@@ -257,14 +271,25 @@ func _build() -> void:
 	_art_group.add_child(_sh)
 	_art_group.add_child(_sp)
 	_tiles_group = _group(_stage, "Tiles")
+	_tiles_clip = Control.new()
+	_tiles_clip.name = "ScrollWindow"
+	_tiles_clip.mouse_filter = Control.MOUSE_FILTER_PASS     # no clipping (it would cut the selection glow): tiles outside the window fade out instead
+	_tiles_group.add_child(_tiles_clip)
 	for i in range(entries.size()):
 		var t := TileNode.new(i, self)
 		t.name = "Tile%d" % (i + 1)
-		_tiles_group.add_child(t)
+		_tiles_clip.add_child(t)
 		t.hovered.connect(_on_tile_hover)
 		t.unhovered.connect(_on_tile_unhover)
 		t.clicked.connect(_on_tile_clicked)
 		_tiles.append(t)
+	_arrow_up = _make_label(true)
+	_arrow_up.text = "▲"
+	_arrow_down = _make_label(true)
+	_arrow_down.text = "▼"
+	for a in [_arrow_up, _arrow_down]:
+		a.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		_tiles_group.add_child(a)
 	_desc_group = _group(_stage, "DescriptionPanel")
 	_desc_panel_rect = _tex_rect(desc_panel)
 	_desc_glow_rect = _tex_rect(desc_glow, true)
@@ -398,10 +423,19 @@ func _layout() -> void:
 		_put(_ab_icons[i], ability_icon_positions[i])
 		_style_label(_ab_labels[i], 18.0, 0.0, body_line_spacing)
 		_ab_labels[i].position = (ability_text_positions[i] + body_nudge) * _k
+	var clip_top := tile_origin.y - TILE_GLOW_MARGIN
+	_tiles_clip.position = Vector2(0.0, clip_top) * _k
+	_tiles_clip.size = Vector2(tile_origin.x * 2.0 + tile_size + TILE_GLOW_MARGIN, tile_step.y * (tiles_visible - 1) + tile_size + TILE_GLOW_MARGIN * 1.6) * _k
 	for i in range(_tiles.size()):
 		_tiles[i].k = _k
-		_tiles[i].rest = (tile_origin + tile_step * float(i)) * _k
 		_tiles[i].setup(entries[i])
+	_place_tiles()
+	for a in [_arrow_up, _arrow_down]:
+		_style_label(a, 26.0, 0.0)
+		a.size = Vector2(tile_size, 30.0) * _k
+	_arrow_up.position = Vector2(tile_origin.x, tile_origin.y - 48.0) * _k
+	_arrow_down.position = Vector2(tile_origin.x, tile_origin.y + tile_step.y * (tiles_visible - 1) + tile_size + 4.0) * _k
+	_update_arrows()
 	_continue_group.position = continue_hit_rect.position * _k
 	_continue_group.size = continue_hit_rect.size * _k
 	_put(_c_text, continue_text_position - continue_hit_rect.position)
@@ -416,6 +450,8 @@ func _layout() -> void:
 ## The pictures and texts that belong to one character.
 func _fill_entry(e: CharacterSelectEntry) -> void:
 	_name_label.text = e.display_name
+	if not e.locked:
+		_name_label.text += "  " + SaveData.star_text(SaveData.get_stars(e.display_name))
 	_story_label.text = e.story
 	_ult_bar.texture = e.ultimate_bar
 	_ult_label.text = e.ultimate_block()
@@ -435,6 +471,62 @@ func _fit_entry(e: CharacterSelectEntry) -> void:
 	_put(_ill, e.illustration_position)
 	_put(_sh, e.sprite_position)
 	_put(_sp, e.sprite_position)
+
+
+# ----------------------------------------------------------------------------- scrolling the tile column
+
+func _max_scroll() -> int:
+	return maxi(entries.size() - tiles_visible, 0)
+
+
+## Puts every tile at its place in the column, shifted by the current scroll.
+func _place_tiles() -> void:
+	if _tiles_clip == null:
+		return
+	var offset := Vector2(0.0, tile_origin.y - TILE_GLOW_MARGIN)
+	for i in range(_tiles.size()):
+		var t := _tiles[i]
+		t.rest = (tile_origin + tile_step * (float(i) - _scroll) - offset) * _k
+		t.position = t.rest
+		var rel := float(i) - _scroll
+		var shown := clampf(1.0 - maxf(-rel, rel - float(tiles_visible - 1)), 0.0, 1.0)
+		t.visible = shown > 0.01
+		if t.visible and shown < 1.0:
+			t.modulate.a = shown
+		elif t.visible and _scroll_tw != null and _scroll_tw.is_valid():
+			t.modulate.a = 1.0
+
+
+func _set_scroll_value(v: float) -> void:
+	_scroll = v
+	_place_tiles()
+
+
+func _scroll_to(target: int) -> void:
+	target = clampi(target, 0, _max_scroll())
+	if target == _scroll_target:
+		return
+	_scroll_target = target
+	if _scroll_tw != null and _scroll_tw.is_valid():
+		_scroll_tw.kill()
+	_scroll_tw = create_tween()
+	_scroll_tw.tween_method(_set_scroll_value, _scroll, float(target), 0.18).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	_update_arrows()
+
+
+## Scrolls just enough that tile `i` is in view.
+func _scroll_into_view(i: int) -> void:
+	if i < _scroll_target:
+		_scroll_to(i)
+	elif i >= _scroll_target + tiles_visible:
+		_scroll_to(i - tiles_visible + 1)
+
+
+func _update_arrows() -> void:
+	if _arrow_up == null:
+		return
+	_arrow_up.visible = _scroll_target > 0
+	_arrow_down.visible = _scroll_target < _max_scroll()
 
 
 # ----------------------------------------------------------------------------- the opening
@@ -598,6 +690,14 @@ func _play(p: AudioStreamPlayer) -> void:
 # ----------------------------------------------------------------------------- keyboard and controller
 
 func _input(event: InputEvent) -> void:
+	if event is InputEventMouseButton and event.pressed and _tiles_clip != null \
+			and _tiles_clip.get_global_rect().has_point(event.position):
+		if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			_scroll_to(_scroll_target + 1)
+			get_viewport().set_input_as_handled()
+		elif event.button_index == MOUSE_BUTTON_WHEEL_UP:
+			_scroll_to(_scroll_target - 1)
+			get_viewport().set_input_as_handled()
 	if event is InputEventMouseMotion:
 		_mouse_mode = true
 	elif event is InputEventKey or event is InputEventJoypadButton:
@@ -611,6 +711,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		var step := 1 if event.is_action_pressed("ui_down") else -1
 		var from := _hover_index if _hover_index >= 0 else _selected          # the first key press moves away from the selected character
 		_hover_index = (from + step + entries.size()) % entries.size()
+		_scroll_into_view(_hover_index)
 		_refresh_tiles(true)
 		_play(_hover_player)
 		get_viewport().set_input_as_handled()

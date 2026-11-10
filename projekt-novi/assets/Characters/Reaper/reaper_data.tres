@@ -1,18 +1,33 @@
 [gd_resource type="Resource" script_class="CharacterData" format=3 uid="uid://d2s6f7bynanqf"]
 
-[ext_resource type="Script" uid="uid://d0168il77yx0e" path="res://scripts/Temp_Scripts/AbilityFanBurst.gd" id="1_uvxgd"]
-[ext_resource type="Script" uid="uid://c1f4e37o2sy4n" path="res://scripts/Temp_Scripts/AbilityShockwave.gd" id="2_g7a6r"]
-[ext_resource type="Script" uid="uid://bvlbg5t2grliw" path="res://scripts/Temp_Scripts/AbilityDash.gd" id="3_78n7f"]
-[ext_resource type="Script" uid="uid://1xtmfxmy7vct" path="res://scripts/Temp_Scripts/AbilityUltimate.gd" id="4_0luf1"]
+[ext_resource type="Script" uid="uid://djq7ivwgxo72h" path="res://scripts/Temp_Scripts/AbilityReap.gd" id="1_ohdd3"]
+[ext_resource type="Script" uid="uid://bxbqjlrusu5my" path="res://scripts/Temp_Scripts/AbilityShadowStep.gd" id="2_01plo"]
+[ext_resource type="Script" uid="uid://b5cxush6eiuy2" path="res://scripts/Temp_Scripts/AbilityDeathMark.gd" id="3_eb826"]
+[ext_resource type="Script" uid="uid://csnplpuiqcbrg" path="res://scripts/Temp_Scripts/AbilityGrimHarvest.gd" id="4_b8wn3"]
+[ext_resource type="Texture2D" uid="uid://djo5m8pklcjrg" path="res://assets/Characters/Reaper/reaper_hud_portrait.png" id="5_ta3rl"]
 [ext_resource type="Script" uid="uid://dad7ood8pbv8u" path="res://scripts/Temp_Scripts/CharacterData.gd" id="5_y8463"]
+[ext_resource type="Texture2D" uid="uid://brr4fitud7jin" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_slash1.png" id="7_7iy02"]
+[ext_resource type="Texture2D" uid="uid://buopv076uct5m" path="res://assets/Characters/Reaper/Reaper_Sprites/reaper_slash2.png" id="8_8mg3j"]
+[ext_resource type="SpriteFrames" uid="uid://bq7d64w4tls80" path="res://assets/Characters/Reaper/reaper_frames.tres" id="9_n0yp5"]
+[ext_resource type="Texture2D" uid="uid://cd3rvjuuudxg5" path="res://assets/Characters/Reaper/reaper_ult_portrait.png" id="10_fl6kv"]
 
 [resource]
 script = ExtResource("5_y8463")
 character_name = "Reaper"
-basic_damage = 10.0
-fire_cooldown = 5.0
-ability_1_script = ExtResource("1_uvxgd")
-ability_2_script = ExtResource("2_g7a6r")
-ability_3_script = ExtResource("3_78n7f")
-ability_4_script = ExtResource("4_0luf1")
+max_health = 100.0
+move_speed = 240.0
+basic_damage = 16.0
+fire_cooldown = 0.55
+attack_range = 150.0
+bullet_speed = 650.0
+ability_1_script = ExtResource("1_ohdd3")
+ability_2_script = ExtResource("2_01plo")
+ability_3_script = ExtResource("3_eb826")
+ability_4_script = ExtResource("4_b8wn3")
+sprite_frames = ExtResource("9_n0yp5")
+slash_frames = Array[Texture2D]([ExtResource("7_7iy02"), ExtResource("8_8mg3j")])
+slash_width = 200.0
+hud_portrait = ExtResource("5_ta3rl")
+ultimate_portrait = ExtResource("10_fl6kv")
+ultimate_title = "GRIM HARVEST"
 metadata/_custom_type_script = "uid://dad7ood8pbv8u"

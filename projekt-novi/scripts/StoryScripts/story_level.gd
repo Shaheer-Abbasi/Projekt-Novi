@@ -584,6 +584,8 @@ func get_or_grant_ability(kind: String, grant: bool = true) -> Ability:
 	if script == null:
 		push_warning("StoryLevel: no ability script called '%s' was found, so it could not be given to the player. The ability scripts in this project are: %s.  On the room's node, type the exact one in 'Prompt Ability Name'." % [kind, _known_ability_names()])
 		return null
+	if script == AbilityDash and player.dash_ability != null:
+		return player.dash_ability
 	for a in player.abilities:
 		if a != null and a.get_script() == script:
 			return a
@@ -596,7 +598,11 @@ func get_or_grant_ability(kind: String, grant: bool = true) -> Ability:
 		return null
 	player.add_child(ab)
 	ab.setup(player)
-	player.abilities.append(ab)
+	if script == AbilityDash:
+		player.dash_ability = ab                   # the dash has its own key, not a numbered slot
+	else:
+		player.abilities.append(ab)
+		player.sort_abilities()                    # slot order (1, 2, 3, Ultimate), whatever order the rooms teach them in
 	_refresh_hud_abilities()
 	ability_granted.emit(kind)
 	var action := action_for_ability(ab)
@@ -611,6 +617,8 @@ func get_or_grant_ability(kind: String, grant: bool = true) -> Ability:
 func action_for_ability(ab: Ability) -> String:
 	if player == null or ab == null:
 		return ""
+	if ab == player.dash_ability:
+		return "dash"
 	var i := player.abilities.find(ab)
 	return "" if i < 0 else "ability_%d" % (i + 1)
 
@@ -977,6 +985,10 @@ func _clear_abilities() -> void:
 			a.queue_free()
 			removed += 1
 	player.abilities.clear()
+	if player.dash_ability != null and is_instance_valid(player.dash_ability):
+		player.dash_ability.queue_free()
+		removed += 1
+	player.dash_ability = null
 	print("StoryLevel: Start With No Abilities removed %d abilities from the player." % removed)
 
 

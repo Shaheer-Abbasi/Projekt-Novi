@@ -33,6 +33,8 @@ var last_run_level: int = 1
 var last_run_scene: String = ""
 ## True once a boss has been killed this round.
 var boss_defeated: bool = false
+## Premium Shop coins earned this round (already added to the save as they are earned).
+var run_coins: int = 0
 
 
 func _ready() -> void:
@@ -78,6 +80,14 @@ func set_survival_time(seconds: float) -> void:
 	survival_time = maxf(seconds, 0.0)
 	survival_time_changed.emit(survival_time)
 
+## Premium Shop coins: saved right away, so quitting mid-run keeps them.
+func earn_coins(amount: int) -> void:
+	if amount <= 0:
+		return
+	run_coins += amount
+	SaveData.add_coins(amount)
+
+
 func spend_currency(amount: int) -> bool:
 	if amount <= 0 or currency < amount:
 		return false
@@ -100,6 +110,7 @@ func reset() -> void:
 	kills = 0
 	survival_time = 0.0
 	boss_defeated = false
+	run_coins = 0
 	_rewarded.clear()
 	currency_changed.emit(currency)
 	kills_changed.emit(kills)

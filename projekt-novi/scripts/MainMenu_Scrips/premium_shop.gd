@@ -1,6 +1,7 @@
 extends Control
 
-const STARTING_COINS := 10
+## Who can come out of the machine. Pull 1 is a Vow duplicate and pull 2 is Reaper (see _pick_character); after that it is random.
+const POOL := ["Vow", "Reaper"]
 const VOW_TEXTURE := preload("res://assets/Characters/Vow/Vow_New_Sprites/vow_idle.png")
 const REAPER_TEXTURE := preload("res://assets/Characters/Reaper/Reaper_Sprites/reaper_idle.png")
 
@@ -12,8 +13,8 @@ const REAPER_TEXTURE := preload("res://assets/Characters/Reaper/Reaper_Sprites/r
 @onready var reward_name: Label = $Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/RewardPanel/RewardLayout/RewardName
 @onready var capsule: TextureRect = $Margin/Layout/MainPanel/PanelPadding/Content/MachineArea/CapsuleTexture
 @onready var character_pop: TextureRect = $Margin/Layout/MainPanel/PanelPadding/Content/MachineArea/CharacterPop
+@onready var reward_title: Label = $Margin/Layout/MainPanel/PanelPadding/Content/ShopSide/RewardPanel/RewardLayout/RewardTitle
 
-var coins := STARTING_COINS
 var rolling := false
 
 func _ready() -> void:
@@ -23,35 +24,66 @@ func _ready() -> void:
     _update_coin_display()
 
 func _update_coin_display() -> void:
+    var coins := SaveData.get_coins()
     coin_count_label.text = str(coins)
     roll_button.disabled = rolling or coins <= 0
 
+## Pull 1: a duplicate of who you already have. Pull 2: Reaper. After that: anyone in the pool.
+func _pick_character() -> String:
+    var pulls := SaveData.get_pulls()
+    if pulls == 0:
+        return "Vow"
+    if pulls == 1 and not SaveData.is_unlocked("Reaper"):
+        return "Reaper"
+    return POOL.pick_random()
+
 func _on_roll_button_pressed() -> void:
-    if rolling or coins <= 0:
+    if rolling or not SaveData.spend_coins(1):
         return
 
     rolling = true
-    coins -= 1
     reward_panel.visible = false
     character_pop.visible = false
     status_label.text = "Dispensing capsule..."
     _update_coin_display()
 
-    var pulled_reaper := randf() < 0.5
-    var character_name := "REAPER" if pulled_reaper else "VOW"
-    var character_texture: Texture2D = REAPER_TEXTURE if pulled_reaper else VOW_TEXTURE
+    var character := _pick_character()
+    SaveData.count_pull()
+    var before := SaveData.get_stars(character)
+    var stars := SaveData.add_copy(character)
+    var maxed := before >= SaveData.MAX_STARS
+    if maxed:
+        SaveData.add_coins(1)                     # nothing left to give: the coin comes back
+    var character_texture: Texture2D = REAPER_TEXTURE if character == "Reaper" else VOW_TEXTURE
 
     character_pop.texture = character_texture
     reward_sprite.texture = character_texture
-    reward_name.text = character_name
+    reward_name.text = "%s\n%s" % [character.to_upper(), SaveData.star_text(stars)]
 
     await _dispense_capsule()
-    await _pop_character_from_capsule(character_name)
+    await _pop_character_from_capsule(character.to_upper())
 
+    if before == 0:
+        reward_title.text = "NEW CHARACTER!"
+        status_label.text = character + " unlocked! Pick her on the Hiring Board."
+    elif maxed:
+        reward_title.text = "DUPLICATE"
+        status_label.text = "%s is already max stars. Coin refunded." % character
+    else:
+        reward_title.text = "DUPLICATE  -  %d STARS" % stars
+        status_label.text = "%s's damage increased! (+%d%% total)" % [character, roundi((SaveData.damage_multiplier(character) - 1.0) * 100.0)]
     reward_panel.visible = true
-    status_label.text = character_name.capitalize() + " unlocked!"
     rolling = false
     _update_coin_display()
+
+## F9 (debug builds only): wipe coins and characters, so the next showcase visitor starts fresh.
+func _unhandled_input(event: InputEvent) -> void:
+    if OS.is_debug_build() and event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_F9:
+        SaveData.reset_gacha()
+        reward_panel.visible = false
+        character_pop.visible = false
+        status_label.text = "Save reset (F9)"
+        _update_coin_display()
 
 func _dispense_capsule() -> void:
     capsule.visible = true

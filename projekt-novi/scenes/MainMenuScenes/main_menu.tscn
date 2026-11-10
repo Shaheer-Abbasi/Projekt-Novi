@@ -122,6 +122,7 @@ texture_pressed = ExtResource("5_yck0h")
 texture_hover = ExtResource("6_g72vb")
 
 [node name="Level-Select_button" type="TextureButton" parent="MainButtons" unique_id=148709334]
+visible = false
 layout_mode = 2
 texture_normal = ExtResource("13_kyccw")
 texture_pressed = ExtResource("14_jj6og")

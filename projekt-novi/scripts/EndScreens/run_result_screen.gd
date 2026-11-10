@@ -43,6 +43,7 @@ func _ready() -> void:
 	_count_up(credits_value, RoundStats.currency, _format_int)
 	_set_text(level_value, str(RoundStats.last_run_level))
 	_set_text(boss_value, "YES" if RoundStats.boss_defeated else "NO")
+	_show_coins()
 
 	if is_instance_valid(retry_button):
 		retry_button.pressed.connect(_retry)
@@ -56,6 +57,21 @@ func _ready() -> void:
 	# Fade the whole screen in.
 	modulate.a = 0.0
 	create_tween().tween_property(self, "modulate:a", 1.0, 0.5)
+
+
+## Premium Shop coins from this run, and the new total.
+func _show_coins() -> void:
+	var l := Label.new()
+	l.text = "+%d PREMIUM COINS    (you have %d)" % [RoundStats.run_coins, SaveData.get_coins()]
+	l.add_theme_font_size_override("font_size", 28)
+	l.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
+	l.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	l.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM)
+	l.offset_left = -400.0
+	l.offset_right = 400.0
+	l.offset_top = -130.0
+	l.offset_bottom = -95.0
+	add_child(l)
 
 
 func _unhandled_input(event: InputEvent) -> void:

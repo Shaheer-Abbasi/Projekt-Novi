@@ -16,9 +16,10 @@ var input_actions = {
 	"interact": "Interact",
 	"pause_menu": "Options",
 	"basic attack": "Basic Attack",
-	"ability_3": "Dash",
+	"dash": "Dash",
 	"ability_1": "Ability 1",
 	"ability_2": "Ability 2",
+	"ability_3": "Ability 3",
 	"ability_4": "Ultimate"
 }
 
